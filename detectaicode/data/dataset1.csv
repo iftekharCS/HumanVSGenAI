@@ -1,0 +1,4504 @@
+Collected By,Problem No.,Problem Title,Problem Prompt/Description,Primary Category,Difficulty,Sol-1,Sol-1 Source/Author Link,Sol-2,Sol-2 Source/Author Link,Sol-3,Sol-3 Source/Author Link,AI Sol-1,AI Sol-1 Model,AI Sol-2,AI Sol-2 Model,AI Sol-3,AI Sol-3 Model
+Iftekhar,1,Two Sum,"Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
+
+You may assume that each input would have exactly one solution, and you may not use the same element twice.
+
+You can return the answer in any order.
+
+ 
+
+Example 1:
+
+Input: nums = [2,7,11,15], target = 9
+Output: [0,1]
+Explanation: Because nums[0] + nums[1] == 9, we return [0, 1].
+Example 2:
+
+Input: nums = [3,2,4], target = 6
+Output: [1,2]
+Example 3:
+
+Input: nums = [3,3], target = 6
+Output: [0,1]
+ 
+
+Constraints:
+
+2 <= nums.length <= 10^4
+-10^9 <= nums[i] <= 10^9
+-10^9 <= target <= 10^9
+Only one valid answer exists.",Array,Easy,"def twoSum(nums, target):
+        """"""
+        :type nums: List[int]
+        :type target: int
+        :rtype: List[int]
+        """"""
+        hash_dict = {}
+        for i in range(len(nums)):
+            compl = target-nums[i]
+            if compl in hash_dict:
+                return [hash_dict[compl], i]
+            hash_dict[nums[i]] = i",Ratul Saha ( https://github.com/RatulSaha/leetcode/blob/master/001-050/001-two-sum.py ),"def twoSum(self, nums: List[int], target: int) -> List[int]:
+        seen = {}
+        for i, x in enumerate(nums):
+            if target - x in seen: return [seen[target-x], i]
+            seen[x] = i",Ye Gao (https://github.com/gaosanyong),"def twoSum(self, nums, target):
+        # two point
+        nums_index = [(v, index) for index, v in enumerate(nums)]
+        nums_index.sort()
+        begin, end = 0, len(nums) - 1
+        while begin < end:
+            curr = nums_index[begin][0] + nums_index[end][0]
+            if curr == target:
+                return [nums_index[begin][1], nums_index[end][1]]
+            elif curr < target:
+                begin += 1
+            else:
+                end -= 1",Qiyuan Gong ( https://github.com/qiyuangong/leetcode/blob/master/python/062_Unique_Paths.py ),"def two_sum(nums, target):
+    num_map = {}  # Dictionary to store number and its index
+    
+    for i, num in enumerate(nums):
+        complement = target - num  # Find the complement
+        
+        if complement in num_map:
+            return [num_map[complement], i]  # Return indices
+        
+        num_map[num] = i  # Store the index of the current number
+
+    return []  # This won't be reached due to the problem constraints
+",GPT-4,"def two_sum(nums, target):
+    """"""
+    Find indices of two numbers that add up to target.
+    
+    Args:
+        nums: List of integers
+        target: Target sum
+        
+    Returns:
+        List of two indices whose corresponding values sum to target
+    """"""
+    # Create a dictionary to store numbers and their indices
+    num_map = {}
+    
+    # Iterate through the array
+    for i, num in enumerate(nums):
+        # Calculate the complement (the number we need to find)
+        complement = target - num
+        
+        # Check if the complement exists in our dictionary
+        if complement in num_map:
+            # Return the indices of the two numbers
+            return [num_map[complement], i]
+        
+        # Store the current number and its index
+        num_map[num] = i
+    
+    # No solution found (though the problem guarantees one exists)
+    return []",Claude 3.7 Sonnet,"def twoSum(nums, target):
+    # Create a dictionary to store the value and its index
+    num_map = {}
+    
+    # Iterate through the list
+    for i, num in enumerate(nums):
+        # Calculate the complement
+        complement = target - num
+        
+        # Check if the complement exists in the dictionary
+        if complement in num_map:
+            # If it exists, return the current index and the complement's index
+            return [num_map[complement], i]
+        
+        # If not, add the current number and its index to the dictionary
+        num_map[num] = i
+    
+    # Since the problem states there's exactly one solution, we don't need to handle the case where no solution is found",DeepSeek-V3
+Iftekhar,62,Unique Paths,"There is a robot on an m x n grid. The robot is initially located at the top-left corner (i.e., grid[0][0]). The robot tries to move to the bottom-right corner (i.e., grid[m - 1][n - 1]). The robot can only move either down or right at any point in time.
+
+Given the two integers m and n, return the number of possible unique paths that the robot can take to reach the bottom-right corner.
+
+The test cases are generated so that the answer will be less than or equal to 2 * 109.
+
+ 
+
+Example 1:
+
+
+Input: m = 3, n = 7
+Output: 28
+Example 2:
+
+Input: m = 3, n = 2
+Output: 3
+Explanation: From the top-left corner, there are a total of 3 ways to reach the bottom-right corner:
+1. Right -> Down -> Down
+2. Down -> Down -> Right
+3. Down -> Right -> Down
+ 
+
+Constraints:
+
+1 <= m, n <= 100",Dynamic Programming,Medium,"def uniquePaths(self, m, n):
+        """"""
+        :type m: int
+        :type n: int
+        :rtype: int
+        """"""
+        dmap = [[0] * n for _ in range(m)]
+        for i in range(m):
+            dmap[i][0] = 1
+        for j in range(n):
+            dmap[0][j] = 1
+        for i in range(1, m):
+            for j in range(1, n):
+                l = u = 0
+                if i-1 >= 0:
+                    u = dmap[i-1][j]
+                if j-1>= 0:
+                    l = dmap[i][j-1]
+                dmap[i][j] = l + u
+        return dmap[m-1][n-1]",Qiyuan Gong ( https://github.com/qiyuangong/leetcode/blob/master/python/062_Unique_Paths.py ),"def uniquePaths(self, m: int, n: int) -> int:
+        # Initialize a 2D dp grid of size m x n with all values set to 1.
+        dp = [[1] * n for _ in range(m)]
+
+        # Fill in the dp grid using dynamic programming.
+        for i in range(1, m):
+            for j in range(1, n):
+                dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
+
+        # The value in dp[m-1][n-1] represents the number of unique paths.
+        return dp[m - 1][n - 1]",Mohammed Muzakkir Fazal ( https://github.com/mdmzfzl/NeetCode-Solutions/blob/main/14_2-D_Dynamic_Programming/01_Unique_Paths/0062-unique-paths.py ),"def uniquePaths(self, m: int, n: int) -> int:
+
+        def choose(n, k):
+            """"""Return n choose k""""""
+            ans = 1
+            for i in range(min(k, n-k)):
+                ans *= n-i
+                ans //= i+1
+            return ans
+
+        return choose(m+n-2, m-1)",Ye Gao (https://github.com/gaosanyong),"def unique_paths(m, n):
+    dp = [[1] * n for _ in range(m)]  # Initialize a grid with 1s
+
+    for i in range(1, m):
+        for j in range(1, n):
+            dp[i][j] = dp[i - 1][j] + dp[i][j - 1]
+
+    return dp[m - 1][n - 1]",GPT-4,"def unique_paths(m, n):
+    """"""
+    Calculate the number of unique paths from top-left to bottom-right in an m×n grid.
+    The robot can only move down or right at each step.
+    
+    Args:
+        m: Number of rows in the grid
+        n: Number of columns in the grid
+        
+    Returns:
+        Number of unique paths from (0,0) to (m-1,n-1)
+    """"""
+    # Create a 2D dp array filled with 1s
+    dp = [[1 for _ in range(n)] for _ in range(m)]
+    
+    # Fill the dp array
+    for i in range(1, m):
+        for j in range(1, n):
+            dp[i][j] = dp[i-1][j] + dp[i][j-1]
+    
+    # Return the bottom-right value
+    return dp[m-1][n-1]",Claude 3.7 Sonnet,"def uniquePaths(m, n):
+    # Create a 2D DP table of size m x n, initialized with 0
+    dp = [[0] * n for _ in range(m)]
+    
+    # Base case: There's only 1 way to reach the starting cell (0, 0)
+    dp[0][0] = 1
+    
+    # Fill the DP table
+    for i in range(m):
+        for j in range(n):
+            # If we're not at the starting cell
+            if i == 0 and j == 0:
+                continue
+            # Paths from the top cell (if exists)
+            from_top = dp[i-1][j] if i > 0 else 0
+            # Paths from the left cell (if exists)
+            from_left = dp[i][j-1] if j > 0 else 0
+            # Total paths to (i, j)
+            dp[i][j] = from_top + from_left
+    
+    # The answer is the value at the bottom-right corner
+    return dp[m-1][n-1]",DeepSeek-V3
+Chong,200,Number of Islands,"Given an m x n 2D binary grid grid which represents a map of '1's (land) and '0's (water), return the number of islands.
+
+An island is surrounded by water and is formed by connecting adjacent lands horizontally or vertically. You may assume all four edges of the grid are all surrounded by water.","Array, DFS, BFS",Medium,"class Solution:
+    def numIslands(self, grid: List[List[str]]) -> int:
+        if not grid:
+            return 0
+        island = 0
+        noRows = len(grid)
+        noCols = len(grid[0])
+        for row in range(noRows):
+            for col in range(noCols):
+                if grid[row][col] == ""1"":
+                    self.dfs(grid, row, col)
+                    island+=1
+        return island
+
+    def dfs(self,grid,row,col):
+            if row<0 or row>=len(grid) or col<0 or col>=len(grid[0]) or grid[row][col]==""0"":
+                return
+
+            grid[row][col] = ""0""
+
+            self.dfs(grid,row-1,col)
+            self.dfs(grid,row+1,col)
+            self.dfs(grid,row,col-1)
+            self.dfs(grid,row,col+1)",Shikha Pandey (https://github.com/Shikha-code36),"class Solution:
+  def numIslands(self, grid: List[List[str]]) -> int:
+    if not grid:
+      return 0
+
+    count = 0
+    for i in range(len(grid)):
+      for j in range(len(grid[0])):
+        if grid[i][j] == '1':
+          self.dfs(grid, i, j)
+          count += 1
+
+    return count
+
+  def dfs(self, grid, i, j):
+    if i < 0 or j < 0 or i >= len(grid) or j >= len(grid[0]) or grid[i][j] != '1':
+      return
+
+    grid[i][j] = '#'
+    self.dfs(grid, i + 1, j)
+    self.dfs(grid, i - 1, j)
+    self.dfs(grid, i, j + 1)
+    self.dfs(grid, i, j - 1)",Huajian Mao (https://github.com/huajianmao),"class Solution:
+    """"""
+    Time:   O(n*m)
+    Memory: O(n*m)
+    """"""
+
+    LAND = '1'
+    WATER = '0'
+
+    def numIslands(self, grid: List[List[str]]) -> int:
+        n, m = len(grid), len(grid[0])
+
+        islands = 0
+        for row in range(n):
+            for col in range(m):
+                if grid[row][col] == self.LAND:
+                    self._visit(row, col, grid)
+                    islands += 1
+
+        return islands
+
+    @classmethod
+    def _visit(cls, row: int, col: int, grid: List[List[str]]):
+        n, m = len(grid), len(grid[0])
+        grid[row][col] = cls.WATER
+
+        if row > 0 and grid[row - 1][col] == cls.LAND:
+            cls._visit(row - 1, col, grid)
+        if row + 1 < n and grid[row + 1][col] == cls.LAND:
+            cls._visit(row + 1, col, grid)
+        if col > 0 and grid[row][col - 1] == cls.LAND:
+            cls._visit(row, col - 1, grid)
+        if col + 1< m and grid[row][col + 1] == cls.LAND:
+            cls._visit(row, col + 1, grid)",Kyrylo Kotelevets( https://leetcode.com/Kyrylo-Ktl/),"def numIslands(grid):
+    if not grid:
+        return 0
+
+    rows, cols = len(grid), len(grid[0])
+    visited = [[False] * cols for _ in range(rows)]
+
+    def dfs(r, c):
+        if r < 0 or c < 0 or r >= rows or c >= cols or grid[r][c] == ""0"" or visited[r][c]:
+            return
+        visited[r][c] = True
+        dfs(r+1, c)
+        dfs(r-1, c)
+        dfs(r, c+1)
+        dfs(r, c-1)
+
+    count = 0
+    for r in range(rows):
+        for c in range(cols):
+            if grid[r][c] == ""1"" and not visited[r][c]:
+                dfs(r, c)
+                count += 1
+
+    return count",GPT-4,"def numIslands(grid):
+    if not grid:
+        return 0
+    
+    m, n = len(grid), len(grid[0])
+    count = 0
+    
+    def dfs(i, j):
+        if i < 0 or i >= m or j < 0 or j >= n or grid[i][j] == ""0"":
+            return
+        
+        grid[i][j] = ""0""  # Mark as visited
+        
+        dfs(i+1, j)
+        dfs(i-1, j)
+        dfs(i, j+1)
+        dfs(i, j-1)
+    
+    for i in range(m):
+        for j in range(n):
+            if grid[i][j] == ""1"":
+                count += 1
+                dfs(i, j)
+    
+    return count",Claude 3.7 Sonnet,"def numIslands(grid):
+    if not grid:
+        return 0
+    
+    def dfs(i, j):
+        if i < 0 or j < 0 or i >= len(grid) or j >= len(grid[0]) or grid[i][j] == '0':
+            return
+        grid[i][j] = '0'
+        dfs(i+1, j)
+        dfs(i-1, j)
+        dfs(i, j+1)
+        dfs(i, j-1)
+    
+    count = 0
+    for i in range(len(grid)):
+        for j in range(len(grid[0])):
+            if grid[i][j] == '1':
+                dfs(i, j)
+                count += 1
+    return count",DeepSeek-V3
+Chong,94,Binary Tree Inorder Traversal,"Given the root of a binary tree, return the inorder traversal of its nodes' values","Tree, Stack",Easy,"class Solution2(object):
+    def inorderTraversal(self, root):
+        """"""
+        :type root: TreeNode
+        :rtype: List[int]
+        """"""
+        result, stack = [], [(root, False)]
+        while stack:
+            root, is_visited = stack.pop()
+            if root is None:
+                continue
+            if is_visited:
+                result.append(root.val)
+            else:
+                stack.append((root.right, False))
+                stack.append((root, True))
+                stack.append((root.left, False))
+        return result",kamyu (https://github.com/kamyu104),"class Solution:
+    def inorderTraversal(self, root: TreeNode) -> List[int]:
+        self.res = []
+        def dfs(node):
+            if not node: return
+            dfs(node.left)
+            self.res.append(node.val)
+            dfs(node.right)
+        dfs(root)
+        return self.res",Cenkay Arapisaoglu (https://github.com/cnkyrpsgl),"class Solution:
+    def inorderTraversal(self, root: TreeNode) -> List[int]:
+        inorder = []
+        self.traverse(root, inorder)
+        return inorder
+        
+    def traverse(self, root, inorder):
+        if not root:
+            return 0
+        self.traverse(root.left, inorder)
+        inorder.append(root.val)
+        self.traverse(root.right, inorder)",Iurii Spiridonov (https://github.com/YuriSpiridonov),"class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def inorderTraversal(root):
+    result = []
+    def dfs(node):
+        if not node:
+            return
+        dfs(node.left)
+        result.append(node.val)
+        dfs(node.right)
+    dfs(root)
+    return result",GPT-4,"def inorderTraversal(root):
+    result = []
+    
+    def dfs(node):
+        if not node:
+            return
+        
+        dfs(node.left)
+        result.append(node.val)
+        dfs(node.right)
+    
+    dfs(root)
+    return result",Claude 3.7 Sonnet,"def inorderTraversal(root):
+    result = []
+    stack = []
+    current = root
+    while current or stack:
+        while current:
+            stack.append(current)
+            current = current.left
+        current = stack.pop()
+        result.append(current.val)
+        current = current.right
+    return result",DeepSeek-V3
+Chong,37,Sudoku Solver,"Write a program to solve a Sudoku puzzle by filling the empty cells.
+
+A sudoku solution must satisfy all of the following rules:
+
+Each of the digits 1-9 must occur exactly once in each row.
+Each of the digits 1-9 must occur exactly once in each column.
+Each of the digits 1-9 must occur exactly once in each of the 9 3x3 sub-boxes of the grid.
+The '.' character indicates empty cells.","Array, Hashtable, Backracking",Hard,"class Solution:
+    def solveSudoku(self, board):
+        rows, cols, triples, visit = collections.defaultdict(set), collections.defaultdict(set), collections.defaultdict(set), collections.deque([])
+        for r in range(9):
+            for c in range(9):
+                if board[r][c] != ""."":
+                    rows[r].add(board[r][c])
+                    cols[c].add(board[r][c])
+                    triples[(r // 3, c // 3)].add(board[r][c])
+                else:
+                    visit.append((r, c))
+        def dfs():
+            if not visit:
+                return True
+            r, c = visit[0]
+            t = (r // 3, c // 3)
+            for dig in {""1"", ""2"", ""3"", ""4"", ""5"", ""6"", ""7"", ""8"", ""9""}:
+                if dig not in rows[r] and dig not in cols[c] and dig not in triples[t]:
+                    board[r][c] = dig
+                    rows[r].add(dig)
+                    cols[c].add(dig)
+                    triples[t].add(dig)
+                    visit.popleft()
+                    if dfs():
+                        return True
+                    else:
+                        board[r][c] = "".""
+                        rows[r].discard(dig)
+                        cols[c].discard(dig)
+                        triples[t].discard(dig)
+                        visit.appendleft((r, c))
+            return False
+        dfs()",Cenkay Arapisaoglu (https://github.com/cnkyrpsgl),"class Solution(object):
+    # @param board, a 9x9 2D array
+    # Solve the Sudoku by modifying the input board in-place.
+    # Do not return any value.
+    def solveSudoku(self, board):
+        def isValid(board, x, y):
+            for i in xrange(9):
+                if i != x and board[i][y] == board[x][y]:
+                    return False
+            for j in xrange(9):
+                if j != y and board[x][j] == board[x][y]:
+                    return False
+            i = 3 * (x / 3)
+            while i < 3 * (x / 3 + 1):
+                j = 3 * (y / 3)
+                while j < 3 * (y / 3 + 1):
+                    if (i != x or j != y) and board[i][j] == board[x][y]:
+                        return False
+                    j += 1
+                i += 1
+            return True
+
+        def solver(board):
+            for i in xrange(len(board)):
+                for j in xrange(len(board[0])):
+                    if(board[i][j] == '.'):
+                        for k in xrange(9):
+                            board[i][j] = chr(ord('1') + k)
+                            if isValid(board, i, j) and solver(board):
+                                return True
+                            board[i][j] = '.'
+                        return False
+            return True
+
+        solver(board)",kamyu (https://github.com/kamyu104),"class Solution(object):
+    def solveSudoku(self, board):
+        """"""
+        :type board: List[List[str]]
+        :rtype: void Do not return anything, modify board in-place instead.
+        """"""
+        #https://leetcode.com/discuss/84831/java-backtracking-stack-20ms
+        empty = []
+        for i in range(9):
+            for j in range(9):
+                if board[i][j] == '.':
+                    empty.append(9 * i + j)
+        self.solve(board, empty)
+
+    def solve(self, board, empty):
+        if len(empty) == 0:
+            return True
+        first_value = empty[-1]
+        row, col = first_value / 9, first_value % 9
+        for k in range(1, 10):
+            if self.is_safe(board, row, col, str(k)):
+                board[row][col] = str(k)
+                empty.pop()
+                if self.solve(board, empty):
+                    return True
+                board[row][col] = '.'
+                empty.append(first_value)
+        return False
+
+    def is_safe(self, board, row, col, ch):
+        for k in range(9):
+            if board[k][col] == ch:
+                return False
+            if board[row][k] == ch:
+                return False
+        start_row, start_col = 3 * (row / 3), 3 * (col / 3)
+        for i in range(start_row, start_row + 3):
+            for j in range(start_col, start_col + 3):
+                if board[i][j] == ch:
+                    return False
+        return True",Qiyuan Gong ( https://github.com/qiyuangong/leetcode/blob/master/python/062_Unique_Paths.py ),"def solveSudoku(board):
+    def isValid(r, c, ch):
+        for i in range(9):
+            if board[r][i] == ch or board[i][c] == ch or board[3*(r//3)+i//3][3*(c//3)+i%3] == ch:
+                return False
+        return True
+
+    def solve():
+        for r in range(9):
+            for c in range(9):
+                if board[r][c] == '.':
+                    for ch in '123456789':
+                        if isValid(r, c, ch):
+                            board[r][c] = ch
+                            if solve():
+                                return True
+                            board[r][c] = '.'
+                    return False
+        return True
+
+    solve()",GPT-4,"def solveSudoku(board):
+    def is_valid(row, col, num):
+        # Check row
+        for x in range(9):
+            if board[row][x] == num:
+                return False
+        
+        # Check column
+        for x in range(9):
+            if board[x][col] == num:
+                return False
+        
+        # Check 3x3 box
+        start_row, start_col = 3 * (row // 3), 3 * (col // 3)
+        for i in range(3):
+            for j in range(3):
+                if board[i + start_row][j + start_col] == num:
+                    return False
+        
+        return True
+    
+    def solve():
+        for i in range(9):
+            for j in range(9):
+                if board[i][j] == ""."":
+                    for num in ""123456789"":
+                        if is_valid(i, j, num):
+                            board[i][j] = num
+                            if solve():
+                                return True
+                            board[i][j] = "".""  # Backtrack
+                    return False
+        return True
+    
+    solve()
+    return board",Claude 3.7 Sonnet,"def solveSudoku(board):
+    def is_valid(row, col, num):
+        for i in range(9):
+            if board[row][i] == num or board[i][col] == num or board[3 * (row // 3) + i // 3][3 * (col // 3) + i % 3] == num:
+                return False
+        return True
+
+    def solve():
+        for row in range(9):
+            for col in range(9):
+                if board[row][col] == '.':
+                    for num in map(str, range(1, 10)):
+                        if is_valid(row, col, num):
+                            board[row][col] = num
+                            if solve():
+                                return True
+                            board[row][col] = '.'
+                    return False
+        return True
+
+    solve()",DeepSeek-V3
+Chong,29,Divide Two Integers,"Given two integers dividend and divisor, divide two integers without using multiplication, division, and mod operator.
+
+The integer division should truncate toward zero, which means losing its fractional part. For example, 8.345 would be truncated to 8, and -2.7335 would be truncated to -2.
+
+Return the quotient after dividing dividend by divisor.
+
+Note: Assume we are dealing with an environment that could only store integers within the 32-bit signed integer range: [−231, 231 − 1]. For this problem, if the quotient is strictly greater than 231 - 1, then return 231 - 1, and if the quotient is strictly less than -231, then return -231.","Math, Bit Manioulation",Medium,"class Solution(object):
+    def divide(self, dividend, divisor):
+        if divisor == 0:
+            return MAX_INT
+        if dividend == 0:
+            return 0
+        isPositive = (dividend < 0) == (divisor < 0)
+        m = abs(dividend)
+        n = abs(divisor)
+        # ln and exp
+        res = math.log(m) - math.log(n)
+        res = int(math.exp(res))
+        if isPositive:
+            return min(res, 2147483647)
+        return max(0 - res, -2147483648)",Qiyuan Gong ( https://github.com/qiyuangong/leetcode/blob/master/python/062_Unique_Paths.py ),"class Solution:
+    def divide(self, dividend: int, divisor: int) -> int:
+        min_number = -2**31
+        max_number = 2**31 - 1
+        result = abs(dividend) // abs(divisor)
+        if (dividend > 0 and divisor > 0) or (dividend < 0 and divisor < 0):
+            return min(result, max_number)
+        else:
+             return max(-result, min_number)",Iurii Spiridonov (https://github.com/YuriSpiridonov),"class Solution:
+    def divide(self, dividend, divisor):
+        """"""
+        :type dividend: int
+        :type divisor: int
+        :rtype: int
+        """"""
+        positive = (dividend < 0) is (divisor < 0)
+        dividend, divisor, res = abs(dividend), abs(divisor), 0
+        while dividend >= divisor:
+            temp, i = divisor, 1
+            while dividend >= temp:
+                dividend -= temp
+                res += i
+                i <<= 1
+                temp <<= 1
+        if not positive: res = -res
+        return min(max(-2 ** 31, res), 2 ** 31 - 1)",Cenkay Arapisaoglu (https://github.com/cnkyrpsgl),"def divide(dividend, divisor):
+    INT_MAX, INT_MIN = 2**31 - 1, -2**31
+    if dividend == INT_MIN and divisor == -1:
+        return INT_MAX
+
+    sign = (dividend > 0) == (divisor > 0)
+    dividend, divisor = abs(dividend), abs(divisor)
+    quotient = 0
+
+    while dividend >= divisor:
+        temp, multiple = divisor, 1
+        while dividend >= (temp << 1):
+            temp <<= 1
+            multiple <<= 1
+        dividend -= temp
+        quotient += multiple
+
+    return quotient if sign else -quotient",GPT-4,"def divide(dividend, divisor):
+    # Handle edge cases
+    INT_MAX = 2**31 - 1
+    INT_MIN = -2**31
+    
+    # Special case: overflow
+    if dividend == INT_MIN and divisor == -1:
+        return INT_MAX
+    
+    # Determine sign of result
+    sign = -1 if (dividend < 0) ^ (divisor < 0) else 1
+    
+    # Make both dividend and divisor positive
+    dividend, divisor = abs(dividend), abs(divisor)
+    
+    # Initialize result
+    quotient = 0
+    
+    while dividend >= divisor:
+        # Use bit manipulation for faster subtraction
+        temp, multiple = divisor, 1
+        while dividend >= (temp << 1):
+            temp <<= 1
+            multiple <<= 1
+        
+        dividend -= temp
+        quotient += multiple
+    
+    return sign * quotient",Claude 3.7 Sonnet,"def divide(dividend, divisor):
+    if dividend == -2**31 and divisor == -1:
+        return 2**31 - 1
+    
+    negative = (dividend < 0) != (divisor < 0)
+    dividend, divisor = abs(dividend), abs(divisor)
+    quotient = 0
+    
+    while dividend >= divisor:
+        temp_divisor, count = divisor, 1
+        while dividend >= (temp_divisor << 1):
+            temp_divisor <<= 1
+            count <<= 1
+        dividend -= temp_divisor
+        quotient += count
+    
+    if negative:
+        quotient = -quotient
+    
+    return min(max(-2**31, quotient), 2**31 - 1)",DeepSeek-V3
+Chong,127, Word Ladder,"A transformation sequence from word beginWord to word endWord using a dictionary wordList is a sequence of words beginWord -> s1 -> s2 -> ... -> sk such that:
+
+Every adjacent pair of words differs by a single letter.
+Every si for 1 <= i <= k is in wordList. Note that beginWord does not need to be in wordList.
+sk == endWord
+Given two words, beginWord and endWord, and a dictionary wordList, return the number of words in the shortest transformation sequence from beginWord to endWord, or 0 if no such sequence exists.
+
+ ","Hashtable, String, BFS",Hard,"class Solution:
+    def ladderLength(self, beginWord, endWord, wordList):
+        words, layer = set(wordList), {beginWord: [[beginWord]]}
+        while layer:
+            newlayer = collections.defaultdict(list)
+            for w in layer:
+                if w == endWord: 
+                    return len(layer[w][0])
+                else:
+                    for i in range(len(w)):
+                        for c in string.ascii_lowercase:
+                            neww = w[:i] + c + w[i + 1:]
+                            if neww in words:
+                                newlayer[neww] += [j + [neww] for j in layer[w]]
+            words -= set(newlayer.keys())
+            layer = newlayer
+        return 0",Cenkay Arapisaoglu (https://github.com/cnkyrpsgl),"class Solution(object):
+    def ladderLength(self, beginWord, endWord, wordList):
+        """"""
+        :type beginWord: str
+        :type endWord: str
+        :type wordList: List[str]
+        :rtype: int
+        """"""
+        d = {}
+        for word in wordList:
+                for i in range(len(word)):
+                        s = word[:i] + ""_"" + word[i+1:]
+                        if s in d:
+                                d[s].append(word)
+                        else:
+                                d[s] = [word]
+        print d
+        queue, visited = [], set()
+        queue.append((beginWord, 1))
+        while queue:
+                word, steps = queue.pop(0)
+                if word not in visited:
+                        visited.add(word)
+
+                        if word == endWord:
+                                return steps
+                        else:
+                                for index in range(len(word)):
+                                        s = word[:index] + ""_"" + word[index+1:]
+                                        neigh_words = []
+                                        if s in d:
+                                                neigh_words = d[s]
+
+                                        for neigh in neigh_words:
+                                                if neigh not in visited:
+                                                        queue.append((neigh, steps+1))
+        return 0
+",Aman Chadha (https://github.com/amanchadha),"class Solution:
+    # @param start, a string
+    # @param end, a string
+    # @param dict, a set of string
+    # @return an integer
+    def ladderLength(self, start, end, dict):
+        distance, cur, visited = 0, [start], set([start])
+        dict.add(end)
+        
+        while cur:
+            next = []
+            for word in cur:
+                if word == end:
+                    return distance + 1
+                for i in xrange(len(word)):
+                    for j in 'abcdefghijklmnopqrstuvwxyz':
+                        candidate = word[:i] + j + word[i + 1:]
+                        if candidate not in visited and candidate in dict:
+                            next.append(candidate)
+                            visited.add(candidate)
+            distance += 1
+            cur = next
+        
+        return 0",Emmanuel Awa (https://github.com/awaemmanuel),"from collections import deque, defaultdict
+
+def ladderLength(beginWord, endWord, wordList):
+    if endWord not in wordList:
+        return 0
+
+    L = len(beginWord)
+    all_combo_dict = defaultdict(list)
+    for word in wordList:
+        for i in range(L):
+            all_combo_dict[word[:i] + ""*"" + word[i+1:]].append(word)
+
+    queue = deque([(beginWord, 1)])
+    visited = set([beginWord])
+
+    while queue:
+        current_word, level = queue.popleft()
+        for i in range(L):
+            intermediate = current_word[:i] + ""*"" + current_word[i+1:]
+            for word in all_combo_dict[intermediate]:
+                if word == endWord:
+                    return level + 1
+                if word not in visited:
+                    visited.add(word)
+                    queue.append((word, level + 1))
+            all_combo_dict[intermediate] = []
+    return 0",GPT-4,"from collections import deque
+
+def ladderLength(beginWord, endWord, wordList):
+    # Create a set for O(1) lookups and check if endWord exists
+    word_set = set(wordList)
+    if endWord not in word_set:
+        return 0
+    
+    # Queue for BFS
+    queue = deque([(beginWord, 1)])  # (word, level)
+    visited = set([beginWord])
+    
+    while queue:
+        current_word, level = queue.popleft()
+        
+        if current_word == endWord:
+            return level
+        
+        # Try changing each character of the word
+        for i in range(len(current_word)):
+            # Try all possible letters
+            for c in 'abcdefghijklmnopqrstuvwxyz':
+                next_word = current_word[:i] + c + current_word[i+1:]
+                
+                if next_word in word_set and next_word not in visited:
+                    visited.add(next_word)
+                    queue.append((next_word, level + 1))
+    
+    return 0",Claude 3.7 Sonnet,"from collections import deque
+
+def ladderLength(beginWord, endWord, wordList):
+    wordSet = set(wordList)
+    if endWord not in wordSet:
+        return 0
+    
+    queue = deque([(beginWord, 1)])
+    while queue:
+        word, length = queue.popleft()
+        if word == endWord:
+            return length
+        for i in range(len(word)):
+            for c in 'abcdefghijklmnopqrstuvwxyz':
+                next_word = word[:i] + c + word[i+1:]
+                if next_word in wordSet:
+                    wordSet.remove(next_word)
+                    queue.append((next_word, length + 1))
+    return 0",DeepSeek-V3
+Chong,100,Same Tree,"Given the roots of two binary trees p and q, write a function to check if they are the same or not.
+
+Two binary trees are considered the same if they are structurally identical, and the nodes have the same value.","Tree, BFS, DFS",Easy,"class TreeNode(object):
+    def __init__(self, x):
+        self.val = x
+        self.left = None
+        self.right = None
+
+class Solution(object):
+    # @param p, a tree node
+    # @param q, a tree node
+    # @return a boolean
+    def isSameTree(self, p, q):
+        if p is None and q is None:
+            return True
+
+        if p is not None and q is not None:
+            return p.val == q.val and self.isSameTree(p.left, q.left) and self.isSameTree(p.right, q.right)
+
+        return False",kamyu (https://github.com/kamyu104),"class Solution(object):
+    def isSameTree(self, p, q):
+        """"""
+        :type p: TreeNode
+        :type q: TreeNode
+        :rtype: bool
+        """"""
+        if not p and not q:
+                return True 
+
+        stack = [(p, q)]
+
+        while stack:
+                node1, node2 = stack.pop()
+                if node1 and node2 and node1.val == node2.val:
+                        stack.append((node1.left, node2.left))
+                        stack.append((node1.right, node2.right))
+                else:
+                        if not node1 == node2:
+                                return False 
+
+        return True",Aman Chadha (https://github.com/amanchadha),"class Solution:
+
+    def isSameTree(self, p: TreeNode, q: TreeNode) -> bool:
+        result = []
+        self.preorder(p, q, result)
+        return min(result)
+
+    def preorder(self, p, q, result):
+        if not p and not q:
+            result.append(True)
+            return
+        if not p or not q:
+            result.append(False)
+            return
+        if p.val != q.val:
+            result.append(False)
+        if p.val == q.val:
+            result.append(True)
+            self.preorder(p.left, q.left, result)
+            self.preorder(p.right, q.right, result)",Iurii Spiridonov (https://github.com/YuriSpiridonov),"class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def isSameTree(p, q):
+    if not p and not q:
+        return True
+    if not p or not q or p.val != q.val:
+        return False
+    return isSameTree(p.left, q.left) and isSameTree(p.right, q.right)",GPT-4,"def isSameTree(p, q):
+    # Base cases: both nodes are None (empty trees)
+    if not p and not q:
+        return True
+    
+    # One node is None, other is not
+    if not p or not q:
+        return False
+    
+    # Check current node values
+    if p.val != q.val:
+        return False
+    
+    # Recursively check left and right subtrees
+    return isSameTree(p.left, q.left) and isSameTree(p.right, q.right)",Claude 3.7 Sonnet,"def isSameTree(p, q):
+    if not p and not q:
+        return True
+    if not p or not q:
+        return False
+    if p.val != q.val:
+        return False
+    return isSameTree(p.left, q.left) and isSameTree(p.right, q.right)",DeepSeek-V3
+Chong,20,Valid Parentheses,"Given a string s containing just the characters '(', ')', '{', '}', '[' and ']', determine if the input string is valid.
+
+An input string is valid if:
+
+Open brackets must be closed by the same type of brackets.
+Open brackets must be closed in the correct order.
+Every close bracket has a corresponding open bracket of the same type.","String, Stack",Easy,"class Solution:
+    def isValid(self, s: str) -> bool:
+        tracker = []
+
+        for char in s:
+            if char == ""("" or char == ""["" or char == ""{"":
+                tracker.append(char)
+            else:
+                # It's a closing character, use it to pop the last one
+                if len(tracker) == 0 or abs(ord(char) - ord(tracker[-1])) > 2:
+                    return False
+                    """"""Popping order must be correct. Check last element. Per their ASCII decimal values, open and closed parentheses and brackets are 1 or 2 positions away.""""""
+                else:
+                    tracker.pop()  # Remove (close) existing open symbol
+
+        # By the end, the tracker list has to be empty.
+        return len(tracker) == 0",Isaac Asante (https://github.com/IsaacAsante),"class Solution:
+    def isValid(self, s: str) -> bool:
+        parentheses = {'(':')', '{':'}', '[':']'}
+        stack = []
+        for b in s: # take bracket 'b' from string 's'
+            if b in parentheses: # if bracket in parentheses
+                stack.append(parentheses[b]) # append it's opposite to stack
+            elif not stack or stack.pop() != b: # if not stack or bracket not 
+                return False                    # equal last bracket in stack
+        return not stack # if stack still exists -> False else True",Iurii Spiridonov (https://github.com/YuriSpiridonov),"class Solution:
+    def isValid(self, s):
+        brackets_stack, lefts, rights = [], (""("", ""["", ""{""), ("")"", ""]"", ""}"") 
+        for char in s:
+            if char in lefts: 
+                brackets_stack.append(char)
+            elif not brackets_stack or lefts.index(brackets_stack.pop()) != rights.index(char): 
+                return False
+        return not brackets_stack ",Cenkay Arapisaoglu (https://github.com/cnkyrpsgl),"def isValid(s):
+    stack = []
+    mapping = {')': '(', '}': '{', ']': '['}
+    for char in s:
+        if char in mapping:
+            top = stack.pop() if stack else '#'
+            if mapping[char] != top:
+                return False
+        else:
+            stack.append(char)
+    return not stack",GPT-4,"def isValid(s):
+    stack = []
+    mapping = {')': '(', '}': '{', ']': '['}
+    
+    for char in s:
+        # If it's an opening bracket, push to stack
+        if char in '([{':
+            stack.append(char)
+        # If it's a closing bracket
+        elif char in ')]}':
+            # Check if stack is empty or if the top element doesn't match
+            if not stack or stack.pop() != mapping[char]:
+                return False
+    
+    # Check if all brackets were closed
+    return len(stack) == 0",Claude 3.7 Sonnet,"def isValid(s):
+    stack = []
+    mapping = {')': '(', '}': '{', ']': '['}
+    for char in s:
+        if char in mapping:
+            top_element = stack.pop() if stack else '#'
+            if mapping[char] != top_element:
+                return False
+        else:
+            stack.append(char)
+    return not stack",DeepSeek-V3
+Chong,14,Longest Common Prefix,"Write a function to find the longest common prefix string amongst an array of strings.
+
+If there is no common prefix, return an empty string """".","String, Trie",Easy,"class TrieNode:
+    def __init__(self):
+        self.children = {}
+        self.isWord = False
+
+
+class Trie:
+    def __init__(self):
+        self.root = TrieNode()
+
+    def insert(self, word):
+        # Start from the root
+        node = self.root
+
+        # Iterate through characters
+        for char in word:
+            # Is the character a child of the current node?
+            if char not in node.children:
+                node.children[char] = TrieNode()
+            # Move to the child node
+            node = node.children[char]
+        # Mark the end of the processed word
+        node.isWord = True
+
+
+class Solution:
+    def longestCommonPrefix(self, strs: List[str]) -> str:
+        trie = Trie()
+        prefix = """"
+        node = trie.root
+
+        # Add every word into the Trie
+        for word in strs:
+            trie.insert(word)
+
+        while True:
+            """"""Follow the path where there's only one child node, until many child nodes have been found, as that path corresponds to the same initial characters in every word. Encountering a full word completes the prefix search.""""""
+            if len(node.children) == 1 and not node.isWord:
+                # The key is the character, the value is the TrieNode object.
+                char, next_node = next(iter(node.children.items()))
+                # Update the prefix
+                prefix += char
+                node = next_node
+            else:
+                break
+
+        return prefix",Isaac Asante (https://github.com/IsaacAsante),"class Solution(object):
+    def longestCommonPrefix(self, strs):
+        ls = len(strs)
+        if ls == 1:
+            return strs[0]
+        prefix = ''
+        pos = 0
+        while True:
+            try:
+                current = strs[0][pos]
+            except IndexError:
+                break
+            index = 1
+            while index < ls:
+                try:
+                    if strs[index][pos] != current:
+                        break
+                except IndexError:
+                    break
+                index += 1
+            if index == ls:
+                prefix = prefix + current
+            else:
+                break
+            pos += 1
+        return prefix",Qiyuan Gong ( https://github.com/qiyuangong/leetcode/blob/master/python/062_Unique_Paths.py ),"class Solution:
+    # @return a string
+    def longestCommonPrefix(self, strs):
+        lenstrs = len(strs)
+        if lenstrs == 0:
+            return ''
+        if lenstrs == 1:
+            return strs[0]
+
+        d = {}
+        s = len(strs[0])
+        for i in range(len(strs)):
+            val = strs[i]
+            lens = len(val)
+            if lens < s:
+                s = lens
+
+            if lens not in d:
+                d[lens] = []
+
+            d[lens].append(val)
+
+        if s == 0:
+            return ''
+        # forEach from small to high
+        search = d[s][0]
+        for i in range(len(search), 0, -1):
+            val = search[:i]
+            isLongest = True
+            for key in d:
+                contain = self.contains(d[key], val)
+                if not contain:
+                    isLongest = False
+                    break
+            if isLongest:
+                return val
+
+        return ''
+
+    def contains(self, strs, s):
+        for i in range(len(strs)):
+            val = strs[i]
+            if val.find(s) != 0:
+                return False
+
+        return True",Zhiye Li (https://github.com/zhiyelee),"def longestCommonPrefix(strs):
+    if not strs:
+        return """"
+    prefix = strs[0]
+    for s in strs[1:]:
+        while not s.startswith(prefix):
+            prefix = prefix[:-1]
+            if not prefix:
+                return """"
+    return prefix",GPT-4,"def longestCommonPrefix(strs):
+    # Edge case: empty list
+    if not strs:
+        return """"
+    
+    # Take first string as reference
+    prefix = strs[0]
+    
+    # Compare prefix with each string in the array
+    for string in strs[1:]:
+        # Reduce prefix until it matches the current string
+        i = 0
+        while i < len(prefix) and i < len(string) and prefix[i] == string[i]:
+            i += 1
+        
+        # Update prefix to matching portion
+        prefix = prefix[:i]
+        
+        # If prefix becomes empty, no need to continue
+        if not prefix:
+            break
+    
+    return prefix",Claude 3.7 Sonnet,"def longestCommonPrefix(strs):
+    if not strs:
+        return """"
+    shortest = min(strs, key=len)
+    for i, char in enumerate(shortest):
+        for other in strs:
+            if other[i] != char:
+                return shortest[:i]
+    return shortest",DeepSeek-V3
+Chong,51, N-Queens,"The n-queens puzzle is the problem of placing n queens on an n x n chessboard such that no two queens attack each other.
+
+Given an integer n, return all distinct solutions to the n-queens puzzle. You may return the answer in any order.
+
+Each solution contains a distinct board configuration of the n-queens' placement, where 'Q' and '.' both indicate a queen and an empty space, respectively.","Array, Backtracking",Hard,"class Solution(object):
+    def solveNQueens(self, n):
+        """"""
+        :type n: int
+        :rtype: List[List[str]]
+        """"""
+        def dfs(row):
+            if row == n:
+                result.append(map(lambda x: '.'*x + ""Q"" + '.'*(n-x-1), curr))
+                return
+            for i in xrange(n):
+                if cols[i] or main_diag[row+i] or anti_diag[row-i+(n-1)]:
+                    continue
+                cols[i] = main_diag[row+i] = anti_diag[row-i+(n-1)] = True
+                curr.append(i)
+                dfs(row+1)
+                curr.pop()
+                cols[i] = main_diag[row+i] = anti_diag[row-i+(n-1)] = False
+
+        result, curr = [], []
+        cols, main_diag, anti_diag = [False]*n, [False]*(2*n-1), [False]*(2*n-1)
+        dfs(0)
+        return result",kamyu (https://github.com/kamyu104),"class Solution:
+    def solveNQueens(self, n):
+        res = []
+        def dfs(i, l, r, m, arr):
+            if i == n:
+                res.append(arr)
+            else:
+                l = l[1:] + [0]
+                r = [0] + r[:-1]
+                for j in range(n):
+                    if m[j] == l[j] == r[j] == 0:
+                        l[j] = r[j] = m[j] = 1 
+                        dfs(i + 1, l, r, m, arr + [(""."" * j) + ""Q"" + (""."" * (n - j - 1))])
+                        l[j] = r[j] = m[j] = 0
+        dfs(0, [0] * n, [0] * n, [0] * n, [])
+        return res",Cenkay Arapisaoglu (https://github.com/cnkyrpsgl),"class Solution(object):
+    def solveNQueens(self, n):
+        """"""
+        :type n: int
+        :rtype: List[List[str]]
+        """"""
+        # recusive
+        if n == 0:
+            return 0
+        res = []
+        board = [['.'] * n for t in range(n)]
+        self.do_solveNQueens(res, board, n)
+        return res
+
+    def do_solveNQueens(self, res, board, num):
+        if num == 0:
+            res.append([''.join(t) for t in board])
+            return
+        ls = len(board)
+        pos = ls - num
+        check = [True] * ls
+        for i in range(pos):
+            for j in range(ls):
+                if board[i][j] == 'Q':
+                    check[j] = False
+                    step = pos - i
+                    if j + step < ls:
+                        check[j + step] = False
+                    if j - step >= 0:
+                        check[j - step] = False
+                    break
+        for j in range(ls):
+            if check[j]:
+                board[pos][j] = 'Q'
+                self.do_solveNQueens(res, board, num - 1)
+                board[pos][j] = '.'
+",Qiyuan Gong ( https://github.com/qiyuangong/leetcode/blob/master/python/062_Unique_Paths.py ),"def solveNQueens(n):
+    res = []
+    board = [["".""] * n for _ in range(n)]
+
+    def isValid(row, col):
+        for i in range(row):
+            if board[i][col] == ""Q"":
+                return False
+        i, j = row - 1, col - 1
+        while i >= 0 and j >= 0:
+            if board[i][j] == ""Q"":
+                return False
+            i -= 1
+            j -= 1
+        i, j = row - 1, col + 1
+        while i >= 0 and j < n:
+            if board[i][j] == ""Q"":
+                return False
+            i -= 1
+            j += 1
+        return True
+
+    def backtrack(row):
+        if row == n:
+            res.append(["""".join(r) for r in board])
+            return
+        for col in range(n):
+            if isValid(row, col):
+                board[row][col] = ""Q""
+                backtrack(row + 1)
+                board[row][col] = "".""
+
+    backtrack(0)
+    return res",GPT-4,"def solveNQueens(n):
+    solutions = []
+    
+    # Initialize empty board
+    board = [['.' for _ in range(n)] for _ in range(n)]
+    
+    # Track occupied columns, diagonals
+    col_used = set()
+    diag1_used = set()  # r+c diagonals
+    diag2_used = set()  # r-c diagonals
+    
+    def backtrack(row):
+        if row == n:
+            # Found a solution, convert board to required format
+            solution = [''.join(row) for row in board]
+            solutions.append(solution)
+            return
+        
+        for col in range(n):
+            diag1 = row + col
+            diag2 = row - col
+            
+            # Check if position is valid
+            if col in col_used or diag1 in diag1_used or diag2 in diag2_used:
+                continue
+            
+            # Place queen
+            board[row][col] = 'Q'
+            col_used.add(col)
+            diag1_used.add(diag1)
+            diag2_used.add(diag2)
+            
+            # Try next row
+            backtrack(row + 1)
+            
+            # Backtrack
+            board[row][col] = '.'
+            col_used.remove(col)
+            diag1_used.remove(diag1)
+            diag2_used.remove(diag2)
+    
+    backtrack(0)
+    return solutions",Claude 3.7 Sonnet,"def solveNQueens(n):
+    def backtrack(row, cols, diag1, diag2, state):
+        if row == n:
+            result.append(["""".join(row) for row in state])
+            return
+        for col in range(n):
+            if col not in cols and (row - col) not in diag1 and (row + col) not in diag2:
+                state[row][col] = 'Q'
+                backtrack(row + 1, cols | {col}, diag1 | {row - col}, diag2 | {row + col}, state)
+                state[row][col] = '.'
+    
+    result = []
+    state = [['.' for _ in range(n)] for _ in range(n)]
+    backtrack(0, set(), set(), set(), state)
+    return result",DeepSeek-V3
+Chong,46,Permutations,"Given an array nums of distinct integers, return all the possible permutations. You can return the answer in any order.","Array, Backtracking",Medium,"class Solution:
+    def permute(self, nums): return list(itertools.permutations(nums))",Cenkay Arapisaoglu (https://github.com/cnkyrpsgl),"import itertools
+
+class Solution:
+    def permute(self, nums: List[int]) -> List[List[int]]:
+        return itertools.permutations(nums)",Iurii Spiridonov (https://github.com/YuriSpiridonov)," def permute(self, nums):
+        # DPS with swapping
+        res = []
+        if len(nums) == 0:
+            return res
+        self.get_permute(res, nums, 0)
+        return res
+
+    def get_permute(self, res, nums, index):
+        if index == len(nums):
+            res.append(list(nums))
+            return
+        for i in range(index, len(nums)):
+            nums[i], nums[index] = nums[index], nums[i]
+            # s(n) = 1 + s(n-1)
+            self.get_permute(res, nums, index + 1)
+            nums[i], nums[index] = nums[index], nums[i]",Qiyuan Gong ( https://github.com/qiyuangong/leetcode/blob/master/python/062_Unique_Paths.py ),"def permute(nums):
+    res = []
+    def backtrack(path, used):
+        if len(path) == len(nums):
+            res.append(path[:])
+            return
+        for i in range(len(nums)):
+            if not used[i]:
+                used[i] = True
+                path.append(nums[i])
+                backtrack(path, used)
+                path.pop()
+                used[i] = False
+    backtrack([], [False] * len(nums))
+    return res",GPT-4,"def permute(nums):
+    result = []
+    
+    # Base case
+    if len(nums) == 1:
+        return [nums[:]]
+    
+    for i in range(len(nums)):
+        # Remove current number from the array
+        n = nums.pop(0)
+        
+        # Generate all permutations for the remaining numbers
+        perms = permute(nums)
+        
+        # Add current number to each permutation
+        for perm in perms:
+            perm.append(n)
+        
+        # Add all these permutations to result
+        result.extend(perms)
+        
+        # Put the current number back for the next iteration
+        nums.append(n)
+    
+    return result",Claude 3.7 Sonnet,"def permute(nums):
+    def backtrack(start):
+        if start == len(nums):
+            result.append(nums[:])
+            return
+        for i in range(start, len(nums)):
+            nums[start], nums[i] = nums[i], nums[start]
+            backtrack(start + 1)
+            nums[start], nums[i] = nums[i], nums[start]
+    
+    result = []
+    backtrack(0)
+    return result",DeepSeek-V3
+Chong,153, Find Minimum in Rotated Sorted Array,"Suppose an array of length n sorted in ascending order is rotated between 1 and n times. For example, the array nums = [0,1,2,4,5,6,7] might become:
+
+[4,5,6,7,0,1,2] if it was rotated 4 times.
+[0,1,2,4,5,6,7] if it was rotated 7 times.
+Notice that rotating an array [a[0], a[1], a[2], ..., a[n-1]] 1 time results in the array [a[n-1], a[0], a[1], a[2], ..., a[n-2]].
+
+Given the sorted rotated array nums of unique elements, return the minimum element of this array.
+
+You must write an algorithm that runs in O(log n) time.","Array, Binary Search",Medium," def findMin(self, nums):
+        # A[l] > A[r]
+        l, r = 0, len(nums) - 1
+        while l < r and nums[l] >= nums[r]:
+            mid = (l + r) / 2
+            if nums[mid] > nums[r]:
+                l = mid + 1
+            else:
+                r = mid
+        return nums[l]",Qiyuan Gong ( https://github.com/qiyuangong/leetcode/blob/master/python/062_Unique_Paths.py ),"class Solution:
+    def findMin(self, nums: List[int]) -> int:
+        l = 0
+        r = len(nums) - 1
+        while l <= r:
+            m = (l + r) // 2
+            if nums[l] <= nums[m] <= nums[r]:
+                return nums[l]
+            if nums[m] < nums[l]:
+                r = m
+            else:
+                l = m + 1 ",Iurii Spiridonov (https://github.com/YuriSpiridonov),"class Solution(object):
+    def findMin(self, nums):
+        """"""
+        :type nums: List[int]
+        :rtype: int
+        """"""
+        if not nums:
+        	return 0
+
+        if len(nums) == 1:
+        	return nums[0]
+        left, right = 0, len(nums)-1
+
+        if nums[left] < nums[right]:
+        	return nums[left]
+        while left <= right:
+        	while nums[left] == nums[right] and left != right:
+        		left += 1
+        		
+        	if nums[left] <= nums[right]:
+        		return nums[left]
+
+        	mid = (left + right)/2
+        	if nums[mid] >= nums[left]:
+        		left = mid+1
+        	else:
+        		right = mid
+        return -1",Aman Chadha (https://github.com/amanchadha),"def findMin(nums):
+    left, right = 0, len(nums) - 1
+    while left < right:
+        mid = (left + right) // 2
+        if nums[mid] > nums[right]:
+            left = mid + 1
+        else:
+            right = mid
+    return nums[left]",GPT-4,"def findMin(nums):
+    left, right = 0, len(nums) - 1
+    
+    # If array is not rotated or has just one element
+    if len(nums) == 1 or nums[left] < nums[right]:
+        return nums[0]
+    
+    while left <= right:
+        mid = (left + right) // 2
+        
+        # Check if mid is the minimum element
+        if mid > 0 and nums[mid] < nums[mid - 1]:
+            return nums[mid]
+        
+        # Check if mid+1 is the minimum element
+        if mid < len(nums) - 1 and nums[mid] > nums[mid + 1]:
+            return nums[mid + 1]
+        
+        # Decide which half to search
+        if nums[mid] > nums[0]:
+            # Minimum is in the right half
+            left = mid + 1
+        else:
+            # Minimum is in the left half
+            right = mid - 1
+    
+    # This line should not be reached if input is valid
+    return -1",Claude 3.7 Sonnet,"def findMin(nums):
+    left, right = 0, len(nums) - 1
+    while left < right:
+        mid = left + (right - left) // 2
+        if nums[mid] > nums[right]:
+            left = mid + 1
+        else:
+            right = mid
+    return nums[left]",DeepSeek-V3
+Chong,120, Triangle,"Given a triangle array, return the minimum path sum from top to bottom.
+
+For each step, you may move to an adjacent number of the row below. More formally, if you are on index i on the current row, you may move to either index i or index i + 1 on the next row.",Dynamic Programming,Medium,"class Solution(object):
+    def minimumTotal(self, triangle):
+        """"""
+        :type triangle: List[List[int]]
+        :rtype: int
+        """"""
+        length = len(triangle)
+        columns = len(triangle[length-1])
+        
+        matrix = [[ 0 for col in range(columns)] for row in range(length)]
+        row_index = 0
+        
+        for row in range(length):
+            elements = triangle[row]
+            col_index = 0
+            
+            for val in elements:
+                matrix[row_index][col_index] = val
+                col_index += 1
+            row_index += 1
+            
+        for row in range(length-2, -1, -1):
+            for col in range(row+1):
+                matrix[row][col] += min(matrix[row+1][col+1], matrix[row+1][col])
+        return matrix[0][0]",Aman Chadha (https://github.com/amanchadha),"class Solution:
+    # @param triangle, a list of lists of integers
+    # @return an integer
+    def minimumTotal(self, triangle):
+        if not triangle:
+            return 0
+        
+        cur = triangle[0] + [float(""inf"")]
+        for i in xrange(1, len(triangle)):
+            next = []
+            next.append(triangle[i][0] + cur[0])
+            for j in xrange(1, i + 1):
+                next.append(triangle[i][j] + min(cur[j - 1], cur[j]))
+            cur = next + [float(""inf"")]
+            
+        return reduce(min, cur)
+",kamyu (https://github.com/kamyu104),"class Solution:
+    def minimumTotal(self, triangle: List[List[int]]) -> int:
+        path = triangle.pop(0)
+        while triangle:
+            level = triangle.pop(0)
+            for i in range(len(level)):
+                if i-1 >= 0 and i+1 <= len(path):
+                    level[i] += min(path[i-1], path[i])
+                elif i-1 < 0:
+                    level[i] += path[i]
+                elif i+1 >= len(path):
+                    level[i] += path[i-1]
+            path = level
+        return min(path) ",Iurii Spiridonov (https://github.com/YuriSpiridonov),"def minimumTotal(triangle):
+    for i in range(len(triangle) - 2, -1, -1):
+        for j in range(len(triangle[i])):
+            triangle[i][j] += min(triangle[i+1][j], triangle[i+1][j+1])
+    return triangle[0][0]
+",GPT-4,"def minimumTotal(triangle):
+    # Start with the bottom row
+    dp = triangle[-1][:]
+    
+    # Work upwards
+    for i in range(len(triangle) - 2, -1, -1):
+        for j in range(len(triangle[i])):
+            # Choose the minimum of the two possible paths
+            dp[j] = triangle[i][j] + min(dp[j], dp[j + 1])
+    
+    return dp[0]",Claude 3.7 Sonnet,"def minimumTotal(triangle):
+    for row in range(len(triangle) - 2, -1, -1):
+        for col in range(len(triangle[row])):
+            triangle[row][col] += min(triangle[row + 1][col], triangle[row + 1][col + 1])
+    return triangle[0][0]",DeepSeek-V3
+Chong,115, Distinct Subsequences,"Given two strings s and t, return the number of distinct subsequences of s which equals t.
+
+The test cases are generated so that the answer fits on a 32-bit signed integer.",Dynamic Programming,Hard,"class Solution:
+    def numDistinct(self, s, t):
+        chars, index, dp = set(t), collections.defaultdict(list), [0] * len(t)
+        for i, c in enumerate(t): index[c] = [i] + index[c]
+        for c in s:
+            if c in chars:
+                for i in index[c]: dp[i] += dp[i - 1] if i > 0 else 1
+        return dp[-1]",Cenkay Arapisaoglu (https://github.com/cnkyrpsgl),"class Solution(object):
+    def numDistinct(self, s, t):
+        """"""
+        :type s: str
+        :type t: str
+        :rtype: int
+        """"""
+        # https://discuss.leetcode.com/topic/51131/space-o-mn-and-o-n-python-solutions
+        dp = [[0 for j in xrange(0, len(t) + 1)] for i in xrange(0, len(s) + 1)]
+        for j in xrange(1, len(t) + 1):
+            dp[0][j] = 0
+        for i in xrange(1, len(s) + 1):
+            dp[i][0] = 1
+        dp[0][0] = 1
+        for i in xrange(1, len(s) + 1):
+            for j in xrange(1, len(t) + 1):
+                dp[i][j] = dp[i - 1][j] + dp[i - 1][j - 1] * (s[i - 1] == t[j - 1])
+
+        return dp[-1][-1]",Qiyuan Gong ( https://github.com/qiyuangong/leetcode/blob/master/python/062_Unique_Paths.py ),"class Solution(object):
+    def numDistinct(self, s, t):
+        """"""
+        :type s: str
+        :type t: str
+        :rtype: int
+        """"""
+
+        row, col = len(s), len(t)
+
+        if col > row:
+        	return 0
+
+        dp = [[0 for _ in range(col+1)] for _ in range(row+1)]
+
+        for r in range(row+1):
+        	for c in range(col+1):
+        		if r == 0 and c == 0:
+        			dp[r][c] = 1
+        		elif r == 0:
+        			dp[r][c] = 0
+        		elif c == 0:
+        			dp[r][c] = 1
+        		else:
+        			dp[r][c] = dp[r-1][c]
+        			if s[r-1] == t[c-1]:
+        				dp[r][c] += dp[r-1][c-1]
+        return dp[row][col] ",Aman Chadha (https://github.com/amanchadha),"def numDistinct(s, t):
+    m, n = len(s), len(t)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    for i in range(m + 1):
+        dp[i][0] = 1
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if s[i - 1] == t[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j]
+            else:
+                dp[i][j] = dp[i - 1][j]
+    return dp[m][n]
+",GPT-4,"def numDistinct(s, t):
+    m, n = len(s), len(t)
+    
+    # Create dp table
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    
+    # Empty string t is a subsequence of any string s exactly once
+    for i in range(m + 1):
+        dp[i][0] = 1
+    
+    # Fill dp table
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            # If characters match, we have two options:
+            # 1. Use current char of s: dp[i-1][j-1]
+            # 2. Skip current char of s: dp[i-1][j]
+            if s[i-1] == t[j-1]:
+                dp[i][j] = dp[i-1][j-1] + dp[i-1][j]
+            else:
+                # If characters don't match, can only skip current char of s
+                dp[i][j] = dp[i-1][j]
+    
+    return dp[m][n]",Claude 3.7 Sonnet,"def numDistinct(s, t):
+    dp = [[0] * (len(t) + 1) for _ in range(len(s) + 1)]
+    for i in range(len(s) + 1):
+        dp[i][0] = 1
+    for i in range(1, len(s) + 1):
+        for j in range(1, len(t) + 1):
+            if s[i - 1] == t[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1] + dp[i - 1][j]
+            else:
+                dp[i][j] = dp[i - 1][j]
+    return dp[len(s)][len(t)]",DeepSeek-V3
+Chong,128, Longest Consecutive Sequence,"Given an unsorted array of integers nums, return the length of the longest consecutive elements sequence.
+
+You must write an algorithm that runs in O(n) time.","Array. Hashtable, Union Find",Medium,"class Solution:
+    def longestConsecutive(self, nums):
+        res, items = 0, set(nums)
+        for num in items:
+            if num - 1 not in items:
+                cur = 1
+                while num + 1 in items:
+                    num, cur = num + 1, cur + 1   
+                if cur > res: res = cur
+        return res",Cenkay Arapisaoglu (https://github.com/cnkyrpsgl),"class Solution:
+    def longestConsecutive(self, nums: List[int]) -> int:
+        if not nums:
+            return 0
+
+        nums = sorted(set(nums))
+        length = 0
+        prev = nums[0]
+        sub_length = 1
+
+        for num in nums[1:]:
+            if num-1 == prev:
+                sub_length += 1
+            else:
+                length = max(length, sub_length)
+                sub_length = 1
+            prev = num
+        return max(length, sub_length)",Iurii Spiridonov (https://github.com/YuriSpiridonov),"class Solution(object):
+    def longestConsecutive(self, nums):
+        """"""
+        :type nums: List[int]
+        :rtype: int
+        """"""
+        result = 0
+        nums = set(nums)
+
+        for num in nums:
+        	if num-1 not in nums:
+        		curr = num
+        		length = 1
+
+        		while curr+1 in nums:
+        			curr += 1
+        			length += 1
+        		result = max(result, length)
+        return result",Aman Chadha (https://github.com/amanchadha),"def longestConsecutive(nums):
+    num_set = set(nums)
+    longest = 0
+    for num in num_set:
+        if num - 1 not in num_set:
+            length = 1
+            while num + length in num_set:
+                length += 1
+            longest = max(longest, length)
+    return longest
+",GPT-4,"def longestConsecutive(nums):
+    if not nums:
+        return 0
+    
+    # Create a set for O(1) lookups
+    num_set = set(nums)
+    
+    max_length = 0
+    
+    for num in num_set:
+        # Only start counting sequences from the smallest number in the sequence
+        # This ensures O(n) time complexity
+        if num - 1 not in num_set:
+            current_num = num
+            current_length = 1
+            
+            # Count consecutive numbers
+            while current_num + 1 in num_set:
+                current_num += 1
+                current_length += 1
+            
+            # Update maximum length
+            max_length = max(max_length, current_length)
+    
+    return max_length",Claude 3.7 Sonnet,"def longestConsecutive(nums):
+    num_set = set(nums)
+    longest = 0
+    for num in num_set:
+        if num - 1 not in num_set:
+            current_num = num
+            current_streak = 1
+            while current_num + 1 in num_set:
+                current_num += 1
+                current_streak += 1
+            longest = max(longest, current_streak)
+    return longest",DeepSeek-V3
+Chong,139,"Word Break
+","Given a string s and a dictionary of strings wordDict, return true if s can be segmented into a space-separated sequence of one or more dictionary words.
+
+Note that the same word in the dictionary may be reused multiple times in the segmentation.","Array, Hashtable",Medium,"class Solution(object):
+    def wordBreak(self, s, wordDict):
+        """"""
+        :type s: str
+        :type wordDict: List[str]
+        :rtype: bool
+        """"""
+        dp = [False for _ in range(len(s)+1)]
+        dp[0] = True
+        for index in range(len(s)):
+        	for j in range(i, -1, -1):
+        		if dp[j] and s[j:i+1] in wordDict:
+        			dp[i+1] = True
+        			break
+        return dp[len(s)]",Aman Chadha (https://github.com/amanchadha),"class Solution(object):
+    def wordBreak(self, s, wordDict):
+        """"""
+        :type s: str
+        :type wordDict: Set[str]
+        :rtype: bool
+        """"""
+        queue = [0]
+        ls = len(s)
+        lenList = [l for l in set(map(len, wordDict))]
+        visited = [0 for _ in range(0, ls + 1)]
+        while queue:
+            start = queue.pop(0)
+            for l in lenList:
+                if s[start:start + l] in wordDict:
+                    if start + l == ls:
+                        return True
+                    if visited[start + l] == 0:
+                        queue.append(start + l)
+                        visited[start + l] = 1
+        return False",Qiyuan Gong ( https://github.com/qiyuangong/leetcode/blob/master/python/062_Unique_Paths.py ),"class Solution:
+    def wordBreak(self, s: str, wordDict: List[str]) -> bool:
+        s += ' '
+        length = len(s) - 1
+        words = [True] + [False] * length
+        for i in range(length+1):
+            j = 0
+            while j < i:
+                if words[j] and s[j:i] in wordDict:
+                    words[i] = True
+                    break
+                j += 1
+        return words[length]",Iurii Spiridonov (https://github.com/YuriSpiridonov),"def wordBreak(s, wordDict):
+    word_set = set(wordDict)
+    dp = [False] * (len(s) + 1)
+    dp[0] = True
+    for i in range(1, len(s) + 1):
+        for j in range(i):
+            if dp[j] and s[j:i] in word_set:
+                dp[i] = True
+                break
+    return dp[-1]",GPT-4,"def wordBreak(s, wordDict):
+    n = len(s)
+    # Convert wordDict to set for O(1) lookups
+    word_set = set(wordDict)
+    
+    # dp[i] indicates whether s[0:i] can be segmented into words from wordDict
+    dp = [False] * (n + 1)
+    dp[0] = True  # Empty string can always be segmented
+    
+    for i in range(1, n + 1):
+        for j in range(i):
+            # If s[0:j] can be segmented and s[j:i] is in wordDict
+            if dp[j] and s[j:i] in word_set:
+                dp[i] = True
+                break
+    
+    return dp[n]",Claude 3.7 Sonnet,"def wordBreak(s, wordDict):
+    word_set = set(wordDict)
+    dp = [False] * (len(s) + 1)
+    dp[0] = True
+    for i in range(1, len(s) + 1):
+        for j in range(i):
+            if dp[j] and s[j:i] in word_set:
+                dp[i] = True
+                break
+    return dp[len(s)]",DeepSeek-V3
+Chong,188,Best Time to Buy and Sell Stock IV,"You are given an integer array prices where prices[i] is the price of a given stock on the ith day, and an integer k.
+
+Find the maximum profit you can achieve. You may complete at most k transactions: i.e. you may buy at most k times and sell at most k times.
+
+Note: You may not engage in multiple transactions simultaneously (i.e., you must sell the stock before you buy again).",Dynamic Programming,Hard,"class Solution:
+    def maxProfit(self, k, prices):
+        if k >= len(prices) // 2: return sum(sell - buy for sell, buy in zip(prices[1:], prices[:-1]) if sell - buy > 0)
+        dp = [[0, -float(""inf"")] for _ in range(k + 1)]
+        for p in prices:
+            for i in range(k + 1):
+                if i and dp[i - 1][1] + p > dp[i][0]: dp[i][0] = dp[i - 1][1] + p 
+                if dp[i][0] - p > dp[i][1]: dp[i][1] = dp[i][0] - p
+        return dp[-1][0]",Cenkay Arapisaoglu (https://github.com/cnkyrpsgl),"class Solution:
+    def maxProfit(self, k, prices):
+        """"""
+        DP
+        local_{i,j} = \max(global_{i-1.j-1}+\Delta, local_{i-1,j}+\Delta)
+
+        global_{i,j} = \max(local_{i, j}, global_{i-1,j})
+        :type k: int
+        :type prices: List[int]
+        :rtype: int
+        """"""
+        n = len(prices)
+        if k >= n:
+            return self.maxProfit_unlimited_transactions(prices)
+
+        l = [0 for _ in xrange(k+1)]  # local max
+        g = [0 for _ in xrange(k+1)]  # global max
+        gmax = 0
+        for i in xrange(1, n):
+            diff = prices[i] - prices[i-1]
+            for j in xrange(k, 0, -1):
+                l[j] = max(g[j-1]+diff, l[j]+diff)
+                g[j] = max(l[j], g[j])
+                gmax = max(gmax, g[j])
+
+        return gmax
+
+    def maxProfit_unlimited_transactions(self, prices):
+        profit = 0
+        for i in xrange(1, len(prices)):
+            profit += max(0, prices[i] - prices[i-1])
+        return profit
+
+if __name__ == ""__main__"":
+    print Solution().maxProfit(2, [1, 2, 4])",Danil Zhang (https://github.com/idf),"class Solution:
+    def maxProfit(self, k: int, prices: List[int]) -> int:
+        def get_transactions(prices):
+            if len(prices) < 2:
+                return []
+            ret = []
+            start = prices[0]
+            for i, price in enumerate(prices):
+                if i == 0:
+                    continue
+                if price < prices[i - 1]:
+                    if start < prices[i - 1]:
+                        ret.append(start)
+                        ret.append(prices[i - 1])
+                    start = price
+            if prices[-1] > start:
+                ret.append(start)
+                ret.append(prices[-1])
+            return ret
+        
+        def remove_one_transaction(prices):
+            merge_pos = 0
+            cost = None
+            for i, price in enumerate(prices):
+                if i == 0:
+                    continue
+                if cost is None or cost > abs(prices[i] - prices[i - 1]):
+                    merge_pos = i - 1
+                    cost = abs(prices[i] - prices[i - 1])
+            del prices[merge_pos:merge_pos + 2]
+        
+        def get_profit(prices):
+            ret = 0
+            for i in range(0, len(prices), 2):
+                ret = ret + prices[i + 1] - prices[i]
+            return ret
+        
+        prices = get_transactions(prices)
+        while len(prices) // 2 > k:
+            remove_one_transaction(prices)
+        return get_profit(prices)",franklingu (https://github.com/franklingu),"def maxProfit(k, prices):
+    if not prices:
+        return 0
+    n = len(prices)
+    if k >= n // 2:
+        profit = 0
+        for i in range(1, n):
+            profit += max(0, prices[i] - prices[i - 1])
+        return profit
+    dp = [[0] * n for _ in range(k + 1)]
+    for i in range(1, k + 1):
+        max_diff = -prices[0]
+        for j in range(1, n):
+            dp[i][j] = max(dp[i][j - 1], prices[j] + max_diff)
+            max_diff = max(max_diff, dp[i - 1][j] - prices[j])
+    return dp[k][n - 1]
+",GPT-4,"def maxProfit(k, prices):
+    if not prices or k == 0:
+        return 0
+    
+    n = len(prices)
+    
+    # If k is large enough, we can make as many transactions as we want
+    if k >= n // 2:
+        return sum(max(0, prices[i] - prices[i-1]) for i in range(1, n))
+    
+    # dp[i][j][0] = max profit with i transactions on day j without stock
+    # dp[i][j][1] = max profit with i transactions on day j with stock
+    dp = [[[0, 0] for _ in range(n)] for _ in range(k + 1)]
+    
+    # Initialize: with 0 transactions, profit is 0 without stock, -prices[0] with stock
+    for j in range(n):
+        dp[0][j][0] = 0
+        dp[0][j][1] = float('-inf')
+    
+    for i in range(1, k + 1):
+        dp[i][0][0] = 0
+        dp[i][0][1] = -prices[0]
+        
+        for j in range(1, n):
+            # If we don't have stock, either keep it that way or sell
+            dp[i][j][0] = max(dp[i][j-1][0], dp[i][j-1][1] + prices[j])
+            
+            # If we have stock, either keep it or buy (buying uses a transaction)
+            dp[i][j][1] = max(dp[i][j-1][1], dp[i-1][j-1][0] - prices[j])
+    
+    return dp[k][n-1][0]",Claude 3.7 Sonnet,"def maxProfit(k, prices):
+    if not prices:
+        return 0
+    n = len(prices)
+    if k >= n // 2:
+        return sum(max(prices[i + 1] - prices[i], 0) for i in range(n - 1))
+    dp = [[0] * n for _ in range(k + 1)]
+    for i in range(1, k + 1):
+        max_diff = -prices[0]
+        for j in range(1, n):
+            dp[i][j] = max(dp[i][j - 1], prices[j] + max_diff)
+            max_diff = max(max_diff, dp[i - 1][j] - prices[j])
+    return dp[k][n - 1]",DeepSeek-V3
+Chong,207, Course Schedule,"There are a total of numCourses courses you have to take, labeled from 0 to numCourses - 1. You are given an array prerequisites where prerequisites[i] = [ai, bi] indicates that you must take course bi first if you want to take course ai.
+
+For example, the pair [0, 1], indicates that to take course 0 you have to first take course 1.
+Return true if you can finish all courses. Otherwise, return false","BFS, DFS, Topological sorting",Medium,"class Solution(object):
+    def canFinish(self, numCourses, prerequisites):
+        """"""
+        :type numCourses: int
+        :type prerequisites: List[List[int]]
+        :rtype: List[int]
+        """"""
+        adj = collections.defaultdict(list)
+        in_degree = collections.Counter()
+        for u, v in prerequisites:
+            in_degree[u] += 1
+            adj[v].append(u)
+        result = []
+        q = [u for u in xrange(numCourses) if u not in in_degree]
+        while q:
+            new_q = []
+            for u in q:
+                result.append(u)
+                for v in adj[u]:
+                    in_degree[v] -= 1
+                    if in_degree[v] == 0:
+                        new_q.append(v)
+            q = new_q
+        return len(result) == numCourses
+",kamyu (https://github.com/kamyu104),"class Solution:
+    def canFinish(self, numCourses, prerequisites):
+        def cycle(course):
+            visited[course] = 0
+            for Next in route[course]:
+                if visited[Next] == 0 or (visited[Next] == -1 and cycle(Next)): return True
+            visited[course] = 1
+            return False
+        route, visited = {i: [] for i in range(numCourses)}, [-1] * numCourses 
+        for req in prerequisites: route[req[1]].append(req[0])
+        for course in range(numCourses):
+            if visited[course] == -1 and cycle(course): return False
+        return True",Cenkay Arapisaoglu (https://github.com/cnkyrpsgl),"class Solution(object):
+    def canFinish(self, numCourses, prerequisites):
+        """"""
+        :type numCourses: int
+        :type prerequisites: List[List[int]]
+        :rtype: bool
+        """"""
+
+        graph = [[] for _ in range(numCourses)]
+        visited = [False for _ in range(numCourses)]
+        stack = [False for _ in range(numCourses)]
+
+        for pair in prerequisites:
+            x, y = pair
+            graph[x].append(y)
+
+        for course in range(numCourses):
+                if visited[course] == False:
+                        if self.dfs(graph, visited, stack, course):
+                                return False 
+        return True
+
+    def dfs(self, graph, visited, stack, course):
+            visited[course] = True
+            stack[course] = True
+
+            for neigh in graph[course]:
+                    if visited[neigh] == False:
+                            if self.dfs(graph, visited, stack, neigh):
+                                    return True
+
+                    elif stack[neigh]:
+                            return True
+            stack[course] = False
+            return False
+        ",Aman Chadha (https://github.com/amanchadha),"def canFinish(numCourses, prerequisites):
+    from collections import defaultdict, deque
+    graph = defaultdict(list)
+    indegree = [0] * numCourses
+    for a, b in prerequisites:
+        graph[b].append(a)
+        indegree[a] += 1
+    queue = deque([i for i in range(numCourses) if indegree[i] == 0])
+    count = 0
+    while queue:
+        node = queue.popleft()
+        count += 1
+        for nei in graph[node]:
+            indegree[nei] -= 1
+            if indegree[nei] == 0:
+                queue.append(nei)
+    return count == numCourses
+",GPT-4,"def canFinish(numCourses, prerequisites):
+    # Create adjacency list representation of the graph
+    graph = [[] for _ in range(numCourses)]
+    for dest, src in prerequisites:
+        graph[src].append(dest)
+    
+    # 0 = unvisited, 1 = visiting (in current DFS path), 2 = visited
+    visited = [0] * numCourses
+    
+    def has_cycle(node):
+        # If node is in current DFS path, we found a cycle
+        if visited[node] == 1:
+            return True
+        # If node was already fully explored, no cycle through this node
+        if visited[node] == 2:
+            return False
+        
+        # Mark as currently visiting
+        visited[node] = 1
+        
+        # Check all neighbors
+        for neighbor in graph[node]:
+            if has_cycle(neighbor):
+                return True
+        
+        # Mark as fully visited
+        visited[node] = 2
+        return False
+    
+    # Check for cycles starting from each unvisited node
+    for i in range(numCourses):
+        if visited[i] == 0:
+            if has_cycle(i):
+                return False
+    
+    return True",Claude 3.7 Sonnet,"def canFinish(numCourses, prerequisites):
+    graph = [[] for _ in range(numCourses)]
+    in_degree = [0] * numCourses
+    for u, v in prerequisites:
+        graph[v].append(u)
+        in_degree[u] += 1
+    queue = [i for i in range(numCourses) if in_degree[i] == 0]
+    count = 0
+    while queue:
+        node = queue.pop(0)
+        count += 1
+        for neighbor in graph[node]:
+            in_degree[neighbor] -= 1
+            if in_degree[neighbor] == 0:
+                queue.append(neighbor)
+    return count == numCourses",DeepSeek-V3
+Iftekhar,1047,Remove All Adjacent Duplicates In String,"You are given a string s consisting of lowercase English letters. A duplicate removal consists of choosing two adjacent and equal letters and removing them.
+
+We repeatedly make duplicate removals on s until we no longer can.
+
+Return the final string after all such duplicate removals have been made. It can be proven that the answer is unique.
+
+ 
+
+Example 1:
+
+Input: s = ""abbaca""
+Output: ""ca""
+Explanation: 
+For example, in ""abbaca"" we could remove ""bb"" since the letters are adjacent and equal, and this is the only possible move.  The result of this move is that the string is ""aaca"", of which only ""aa"" is possible, so the final string is ""ca"".
+Example 2:
+
+Input: s = ""azxxzy""
+Output: ""ay""
+ 
+
+Constraints:
+
+1 <= s.length <= 10^5
+s consists of lowercase English letters.","String, Stack",Easy,"class Solution:
+    def removeDuplicates(self, S: str) -> str:
+        stk = []
+        for a in S:
+            if stk and stk[-1] == a:
+                stk.pop()
+                continue
+            stk.append(a)
+        return ''.join(stk)",franklingu (https://github.com/franklingu),"class Solution:
+    def removeDuplicates(self, S: str) -> str:
+        stack = []
+        for s in S:
+            if stack and stack[-1] == s:
+                stack.pop()
+            else:
+                stack.append(s)
+        return ''.join(stack)",Cenkay Arapisaoglu (https://github.com/cnkyrpsgl),"class Solution:
+    def removeDuplicates(self, S: str) -> str:
+        stack1=[]
+        stack2=[]
+        for i in S:
+            stack1.append(i)
+        while len(stack1)>0:
+            if len(stack2)==0:
+                stack2.append(stack1[-1])
+                stack1.pop()
+            else:
+                if stack1[-1]==stack2[-1]:
+                    stack2.pop()
+                    stack1.pop()
+                else:
+                    stack2.append(stack1[-1])
+                    stack1.pop()
+        result=""""
+        for i in range(len(stack2)-1,-1,-1):
+            result+=stack2[i]
+        return result",Bao Hoang (https://github.com/hoangcaobao),"def removeDuplicates(s: str) -> str:
+    stack = []
+    for char in s:
+        if stack and stack[-1] == char:
+            stack.pop()  # Remove the duplicate
+        else:
+            stack.append(char)  # Add current character to the stack
+    return ''.join(stack)",GPT-4,"def removeDuplicates(s: str) -> str:
+    stack = []
+    
+    for char in s:
+        if stack and stack[-1] == char:
+            stack.pop()
+        else:
+            stack.append(char)
+    
+    return ''.join(stack)",Claude 3.7 Sonnet,"def removeDuplicates(s: str) -> str:
+    stack = []
+    for char in s:
+        if stack and stack[-1] == char:
+            stack.pop()
+        else:
+            stack.append(char)
+    return ''.join(stack)",DeepSeek-V3
+Iftekhar,1249,Minimum Remove to Make Valid Parentheses,"Given a string s of '(' , ')' and lowercase English characters.
+
+Your task is to remove the minimum number of parentheses ( '(' or ')', in any positions ) so that the resulting parentheses string is valid and return any valid string.
+
+Formally, a parentheses string is valid if and only if:
+
+It is the empty string, contains only lowercase characters, or
+It can be written as AB (A concatenated with B), where A and B are valid strings, or
+It can be written as (A), where A is a valid string.
+ 
+
+Example 1:
+
+Input: s = ""lee(t(c)o)de)""
+Output: ""lee(t(c)o)de""
+Explanation: ""lee(t(co)de)"" , ""lee(t(c)ode)"" would also be accepted.
+Example 2:
+
+Input: s = ""a)b(c)d""
+Output: ""ab(c)d""
+Example 3:
+
+Input: s = ""))((""
+Output: """"
+Explanation: An empty string is also valid.
+ 
+
+Constraints:
+
+1 <= s.length <= 10^5
+s[i] is either '(' , ')', or lowercase English letter.","String, Stack",Medium,"class Solution:
+    def minRemoveToMakeValid(self, s: str) -> str:
+        stack = []
+        for i, ch in enumerate(s):
+            if ch == ""("":
+                stack.append(i)
+            elif ch == "")"":
+                if stack and s[stack[-1]] == ""("":
+                    stack.pop()
+                else:
+                    stack.append(i)
+        remove_idx = set(stack)
+        return """".join([ch for i, ch in enumerate(s) if i not in remove_idx])",xhu (https://github.com/MrHuxu),"class Solution:
+    def minRemoveToMakeValid(self, s: str) -> str:
+        remove = set()
+        stk = []
+        for i, c in enumerate(s):
+            if c == '(':
+                stk.append(i)
+            elif c == ')':
+                if not stk:
+                    remove.add(i)
+                else:
+                    stk.pop()
+        for i in stk:
+            remove.add(i)
+        return ''.join([c for i, c in enumerate(s) if i not in remove])",franklingu (https://github.com/franklingu),"class Solution:
+    def minRemoveToMakeValid(
+        self, s: str, res: str = """", l: str = ""("", r: str = "")"", b: int = 0
+    ) -> str:
+        for _ in range(2):
+            for c in s:
+                if c == r and b <= 0:
+                    continue
+                b += c == l
+                b -= c == r
+                res += c
+            res, s, l, r, b = """", res[::-1], r, l, 0
+        return s",Cenkay Arapisaoglu (https://github.com/cnkyrpsgl),"def minRemoveToMakeValid(s: str) -> str:
+    stack = []
+    to_remove = set()
+
+    for i, char in enumerate(s):
+        if char == '(':
+            stack.append(i)
+        elif char == ')':
+            if stack:
+                stack.pop()
+            else:
+                to_remove.add(i)
+
+    # Add remaining unmatched '(' indices to remove
+    to_remove.update(stack)
+
+    result = []
+    for i, char in enumerate(s):
+        if i not in to_remove:
+            result.append(char)
+
+    return ''.join(result)
+",GPT-4,"def minRemoveToMakeValid(s: str) -> str:
+    # Step 1: Identify indices of parentheses to remove
+    stack = []
+    to_remove = set()
+    
+    for i, char in enumerate(s):
+        if char == '(':
+            stack.append(i)
+        elif char == ')':
+            if stack:  # There's a matching open parenthesis
+                stack.pop()
+            else:  # No matching open parenthesis, mark for removal
+                to_remove.add(i)
+    
+    # Add unmatched opening parentheses to the removal set
+    to_remove.update(stack)
+    
+    # Step 2: Build the result string, skipping the indices in to_remove
+    result = []
+    for i, char in enumerate(s):
+        if i not in to_remove:
+            result.append(char)
+    
+    return ''.join(result)",Claude 3.7 Sonnet,"def minRemoveToMakeValid(s: str) -> str:
+    stack = []
+    remove_indices = set()
+    
+    for i, char in enumerate(s):
+        if char == '(':
+            stack.append(i)
+        elif char == ')':
+            if stack:
+                stack.pop()
+            else:
+                remove_indices.add(i)
+    
+    # Add remaining unmatched '(' indices
+    remove_indices.update(stack)
+    
+    # Build the result string
+    result = []
+    for i, char in enumerate(s):
+        if i not in remove_indices:
+            result.append(char)
+    
+    return ''.join(result)",DeepSeek-V3
+Iftekhar,503,Next Greater Element II,"Given a circular integer array nums (i.e., the next element of nums[nums.length - 1] is nums[0]), return the next greater number for every element in nums.
+
+The next greater number of a number x is the first greater number to its traversing-order next in the array, which means you could search circularly to find its next greater number. If it doesn't exist, return -1 for this number.
+
+ 
+
+Example 1:
+
+Input: nums = [1,2,1]
+Output: [2,-1,2]
+Explanation: The first 1's next greater number is 2; 
+The number 2 can't find next greater number. 
+The second 1's next greater number needs to search circularly, which is also 2.
+Example 2:
+
+Input: nums = [1,2,3,4,3]
+Output: [2,3,4,-1,4]
+ 
+
+Constraints:
+
+1 <= nums.length <= 10^4
+-10^9 <= nums[i] <= 10^9","String, Stack, Monotonic Stack",Medium,"from bisect import bisect
+
+
+class Solution:
+    def nextGreaterElements(self, nums):
+        """"""
+        scan the nums from right to left, since next largest number, you can
+        drop certain information about the A[i:]. Use stack to keep a increasing
+        numbers. if A[i] > any A[i+1: j] but A[i] < A[j], we can safely drop
+        the numbers A[i+1:j] since they won't be useful.
+
+        :type nums: List[int]
+        :rtype: List[int]
+        """"""
+        # initalize the stack
+        stk = []
+        for n in nums[::-1]:
+            while stk and stk[-1] <= n:
+                stk.pop()
+            stk.append(n)
+
+        ret = []
+        for n in nums[::-1]:
+            while stk and stk[-1] <= n:
+                stk.pop()
+            ret.append(stk[-1] if stk else -1)
+            stk.append(n)
+
+        return ret[::-1]
+
+    def nextGreaterElements_error(self, nums):
+        """"""
+        brute force O(n^2)
+
+        bisect O(n lgn) - error cannot binary search
+        :type nums: List[int]
+        :rtype: List[int]
+        """"""
+        A = nums + nums
+        print(A)
+        ret = []
+        for e in nums:
+            t = bisect(A, e)
+            if t == len(A):
+                ret.append(-1)
+            else:
+                ret.append(A[t])
+
+        print(ret)
+        return ret
+
+
+if __name__ == ""__main__"":
+    assert Solution().nextGreaterElements([1,2,1]) == [2, -1, 2]",Danil Zhang (https://github.com/idf),"from heapq import heapify, heappop, heappush
+from typing import List
+
+
+class Solution:
+    def nextGreaterElements(self, nums: List[int]) -> List[int]:
+        ret = [-1] * len(nums)
+        nums += nums
+        visited_nums, num_indices = [], {}
+        heapify(visited_nums)
+        for i, num in enumerate(nums):
+            if num not in num_indices or not num_indices[num]:
+                heappush(visited_nums, num)
+            num_indices.setdefault(num, []).append(i)
+            while visited_nums and visited_nums[0] < num:
+                visited_num = heappop(visited_nums)
+                for idx in num_indices[visited_num]:
+                    if idx < len(nums) // 2:
+                        ret[idx] = num
+                num_indices[visited_num] = []
+        return ret
+
+
+print(Solution().nextGreaterElements([1, 2, 1]))
+print(Solution().nextGreaterElements(nums=[1, 2, 3, 4, 3]))",xhu (https://github.com/MrHuxu),"class Solution:
+    def nextGreaterElements(self, nums):
+        stack, res = [], [-1] * len(nums)
+        for j in range(2):
+            for i in range(len(nums)):
+                while stack and (nums[stack[-1]] < nums[i]): res[stack.pop()] = nums[i]
+                if j == 1 and not stack: break
+                stack += i, 
+        return res",Cenkay Arapisaoglu (https://github.com/cnkyrpsgl),"def nextGreaterElements(nums):
+    n = len(nums)
+    res = [-1] * n
+    stack = []
+
+    for i in range(2 * n):
+        current = nums[i % n]
+        while stack and nums[stack[-1]] < current:
+            res[stack.pop()] = current
+        if i < n:
+            stack.append(i)
+    return res",GPT-4,"def nextGreaterElements(nums: list[int]) -> list[int]:
+    n = len(nums)
+    result = [-1] * n
+    stack = []
+    
+    # Process the array twice to handle circular nature
+    for i in range(n * 2):
+        # Use modulo to handle circular indexing
+        current_idx = i % n
+        current_val = nums[current_idx]
+        
+        # Check if current value is greater than values saved in stack
+        # If so, those elements have found their next greater element
+        while stack and nums[stack[-1]] < current_val:
+            idx = stack.pop()
+            result[idx] = current_val
+        
+        # Only add indices from first pass to avoid duplicates
+        if i < n:
+            stack.append(current_idx)
+    
+    return result",Claude 3.7 Sonnet,"def nextGreaterElements(nums):
+    n = len(nums)
+    result = [-1] * n
+    stack = []
+    
+    for i in range(2 * n):
+        current_num = nums[i % n]
+        while stack and nums[stack[-1]] < current_num:
+            result[stack.pop()] = current_num
+        if i < n:
+            stack.append(i)
+    
+    return result",DeepSeek-V3
+Iftekhar,692,Top K Frequent Words,"Given an array of strings words and an integer k, return the k most frequent strings.
+
+Return the answer sorted by the frequency from highest to lowest. Sort the words with the same frequency by their lexicographical order.
+
+ 
+
+Example 1:
+
+Input: words = [""i"",""love"",""leetcode"",""i"",""love"",""coding""], k = 2
+Output: [""i"",""love""]
+Explanation: ""i"" and ""love"" are the two most frequent words.
+Note that ""i"" comes before ""love"" due to a lower alphabetical order.
+Example 2:
+
+Input: words = [""the"",""day"",""is"",""sunny"",""the"",""the"",""the"",""sunny"",""is"",""is""], k = 4
+Output: [""the"",""is"",""sunny"",""day""]
+Explanation: ""the"", ""is"", ""sunny"" and ""day"" are the four most frequent words, with the number of occurrence being 4, 3, 2 and 1 respectively.
+ 
+
+Constraints:
+
+1 <= words.length <= 500
+1 <= words[i].length <= 10
+words[i] consists of lowercase English letters.
+k is in the range [1, The number of unique words[i]]","Array, Hash Table, String, Trie
+Sorting
+Heap (Priority Queue)
+Bucket Sort
+Counting",Medium,"import heapq
+from collections import defaultdict
+from typing import List
+
+
+class Word:
+    def __init__(self, content, count):
+        self.content = content
+        self.count = count
+
+    def __lt__(self, other):
+        if self.count == other.count:
+            return self.content > other.content
+
+        return self.count < other.count
+
+
+class Solution:
+    def topKFrequent(self, words: List[str], k: int) -> List[str]:
+        """"""
+        quick select log n
+        heap log k
+        """"""
+        h = []
+        counter = defaultdict(int)
+        for w in words:
+            counter[w] += 1
+
+        for w, c in counter.items():
+            heapq.heappush(h, Word(w, c))
+            if len(h) > k:
+                heapq.heappop(h)
+
+        ret = []
+        while h:
+            w = heapq.heappop(h).content
+            ret.append(w)
+
+        return ret[::-1]
+
+
+if __name__ == ""__main__"":
+    assert Solution().topKFrequent([""i"", ""love"", ""leetcode"", ""i"", ""love"", ""coding""], 2)",Danil Zhang (https://github.com/idf),"class Solution:
+    def topKFrequent(self, words: List[str], k: int) -> List[str]:
+        from collections import Counter
+        counter = Counter(words)
+        # can use heap for ordering, in theory faster but slower to code out
+        return [x[0] for x in sorted(counter.items(), key=lambda x: (-x[1], x[0]))[:k]]",franklingu (https://github.com/franklingu),"class Solution:
+    def topKFrequent(self, words, k):
+        return [w for w, v in sorted(collections.Counter(words).items(), key = lambda x: (-x[1], x[0])) [:k]]",Cenkay Arapisaoglu (https://github.com/cnkyrpsgl),"from collections import Counter
+import heapq
+
+def topKFrequent(words, k):
+    count = Counter(words)
+    # Use a heap with (-freq, word) so that higher freq comes first,
+    # and words with same freq are sorted lexicographically
+    heap = [(-freq, word) for word, freq in count.items()]
+    heapq.heapify(heap)
+
+    result = [heapq.heappop(heap)[1] for _ in range(k)]
+    return result",GPT-4,"from collections import Counter
+import heapq
+
+def topKFrequent(words: list[str], k: int) -> list[str]:
+    # Count the frequency of each word
+    word_counts = Counter(words)
+    
+    # Create a list of (frequency, word) pairs
+    # Using negative frequency for max heap, and word for lexicographical ordering
+    heap = [(-freq, word) for word, freq in word_counts.items()]
+    
+    # Heapify the list
+    heapq.heapify(heap)
+    
+    # Extract the k most frequent words
+    result = []
+    for _ in range(k):
+        if heap:
+            _, word = heapq.heappop(heap)
+            result.append(word)
+    
+    return result",Claude 3.7 Sonnet,"from collections import defaultdict
+
+def topKFrequent(words, k):
+    frequency = defaultdict(int)
+    for word in words:
+        frequency[word] += 1
+    
+    sorted_words = sorted(frequency.items(), key=lambda item: (-item[1], item[0]))
+    
+    return [word for word, count in sorted_words[:k]]",DeepSeek-V3
+Iftekhar,218,The Skyline Problem,"A city's skyline is the outer contour of the silhouette formed by all the buildings in that city when viewed from a distance. Given the locations and heights of all the buildings, return the skyline formed by these buildings collectively.
+
+The geometric information of each building is given in the array buildings where buildings[i] = [lefti, righti, heighti]:
+
+lefti is the x coordinate of the left edge of the ith building.
+righti is the x coordinate of the right edge of the ith building.
+heighti is the height of the ith building.
+You may assume all buildings are perfect rectangles grounded on an absolutely flat surface at height 0.
+
+The skyline should be represented as a list of ""key points"" sorted by their x-coordinate in the form [[x1,y1],[x2,y2],...]. Each key point is the left endpoint of some horizontal segment in the skyline except the last point in the list, which always has a y-coordinate 0 and is used to mark the skyline's termination where the rightmost building ends. Any ground between the leftmost and rightmost buildings should be part of the skyline's contour.
+
+Note: There must be no consecutive horizontal lines of equal height in the output skyline. For instance, [...,[2 3],[4 5],[7 5],[11 5],[12 7],...] is not acceptable; the three lines of height 5 should be merged into one in the final output as such: [...,[2 3],[4 5],[12 7],...]
+
+ 
+
+Example 1:
+
+
+Input: buildings = [[2,9,10],[3,7,15],[5,12,12],[15,20,10],[19,24,8]]
+Output: [[2,10],[3,15],[7,12],[12,0],[15,10],[20,8],[24,0]]
+Explanation:
+
+Example 2:
+
+Input: buildings = [[0,2,3],[2,5,3]]
+Output: [[0,3],[5,0]]
+ 
+
+Constraints:
+
+1 <= buildings.length <= 10^4
+0 <= left_i < righti <= 2^31 - 1
+1 <= height_i <= 2^31 - 1
+buildings is sorted by left_i in non-decreasing order.","Array, Divide and Conquer, Binary Indexed Tree
+Segment Tree
+Line Sweep
+Heap (Priority Queue)
+Ordered Set",Hard,"def getSkyline(self, buildings: List[List[int]]) -> List[List[int]]:
+        ans, hp = [], [] #front of heap => current height
+        buildings.append([inf, inf, 0]) #trick
+        for li, ri, hi in buildings:
+            #down-slope
+            while hp and -hp[0][1] < li:                  #current height cannot reach li
+                _, rj = heappop(hp)                       #current height ends at rj
+                while hp and -hp[0][1] <= -rj: heappop(hp) #useless height ends earlier than rj
+                hj = hp[0][0] if hp else 0                #next height
+                ans.append((-rj, -hj))
+            #up-slope
+            if hi > 0 and (not hp or -hp[0][0] < hi):     #new height higher than current height
+                if ans and ans[-1][0] == li: ans.pop()    #same left => update in-place
+                ans.append([li, hi])
+            heappush(hp, (-hi, -ri))
+        return ans",Ye Gao (https://github.com/gaosanyong),"from collections import defaultdict, namedtuple
+import heapq
+
+
+class Building(object):
+    def __init__(self, h):
+        self.h = h
+        self.deleted = False  # lazy deletion
+
+    def __cmp__(self, other):
+        # Reverse order by height to get max-heap
+        assert isinstance(other, Building)
+        return other.h - self.h
+
+# An event represents the buildings that start and end at a particular
+# x-coordinate.
+Event = namedtuple('Event', 'starts ends')
+
+
+class Solution:
+    def getSkyline(self, buildings):
+        """"""
+        Sweep line
+        The change of skyline only happens at start and end of buildings.
+
+        Treat a building as entering line and leaving line
+        :type buildings: list[list[int]]
+        :rtype: list[list[int]]
+        """"""
+        # Map from x-coordinate to event.
+        events = defaultdict(lambda: Event(starts=[], ends=[]))
+        for left, right, height in buildings:
+            building = Building(height)
+            events[left].starts.append(building)  # possible multiple building at the same x-coordinate.
+            events[right].ends.append(building)
+
+        heap_h = []  # Heap of buildings currently standing.
+        cur_h = 0  # current max height of standing buildings. the current skyline
+        ret = []
+        # Process events in order by x-coordinate.
+        for x, event in sorted(events.items()):  # sort the dictionary by key
+            for building in event.starts:
+                heapq.heappush(heap_h, building)
+            for building in event.ends:
+                building.deleted = True
+
+            # Pop any finished buildings from the top of the heap.
+            # To avoid using multiset - lazy deletion.
+            while heap_h and heap_h[0].deleted:
+                heapq.heappop(heap_h)
+
+            # Top of heap (if any) is the highest standing building, so
+            # its height is the current height of the skyline.
+            new_h = heap_h[0].h if heap_h else 0
+
+            if new_h != cur_h:
+                cur_h = new_h
+                ret.append([x, cur_h])
+
+        return ret
+
+
+if __name__ == ""__main__"":
+    assert Solution().getSkyline([[2, 9, 10], [3, 7, 15], [5, 12, 12], [15, 20, 10], [19, 24, 8]]) == \
+           [[2, 10], [3, 15], [7, 12], [12, 0], [15, 10], [20, 8], [24, 0]]",Danil Zhang (https://github.com/idf),"class Solution:
+    def getSkyline(self, buildings: List[List[int]]) -> List[List[int]]:
+        import heapq
+        events = sorted([(L, -H, R) for L, R, H in buildings] + list({(R, 0, None) for _, R, _ in buildings}))
+        res, hp = [[0, 0]], [(0, float(""inf""))]
+        for x, negH, R in events:
+            while x >= hp[0][1]: 
+                heapq.heappop(hp)
+            if negH: 
+                heapq.heappush(hp, (negH, R))
+            if res[-1][1] + hp[0][0]: 
+                res += [x, -hp[0][0]],
+        return res[1:]",franklingu (https://github.com/franklingu),"import heapq
+
+def getSkyline(buildings):
+    # Step 1: Create events
+    events = []
+    for left, right, height in buildings:
+        events.append((left, -height))  # building enters: negative height
+        events.append((right, height))  # building exits: positive height
+    
+    # Step 2: Sort events
+    events.sort()
+
+    # Step 3: Process events with max heap
+    res = []
+    max_heap = [0]  # initial ground level
+    height_counter = {0: 1}  # counter to manage removals
+    prev_max = 0
+
+    for x, h in events:
+        if h < 0:
+            # Entering building
+            heapq.heappush(max_heap, h)
+            height_counter[-h] = height_counter.get(-h, 0) + 1
+        else:
+            # Exiting building
+            height_counter[h] -= 1
+            if height_counter[h] == 0:
+                del height_counter[h]
+
+        # Remove heights from heap that are no longer in counter
+        while -max_heap[0] not in height_counter:
+            heapq.heappop(max_heap)
+
+        current_max = -max_heap[0]
+        if current_max != prev_max:
+            res.append([x, current_max])
+            prev_max = current_max
+
+    return res",GPT-4,"import heapq
+
+def getSkyline(buildings: list[list[int]]) -> list[list[int]]:
+    # Create a list of events (start and end of buildings)
+    events = []
+    for left, right, height in buildings:
+        # Start event: negative height means building starts
+        events.append((left, -height, right))
+        # End event: height = 0 means building ends
+        events.append((right, 0, 0))
+    
+    # Sort events by x-coordinate
+    # If same x-coordinate, sort by height (starts before ends)
+    events.sort()
+    
+    # Initialize result list and max heap
+    result = [[0, 0]]  # Start with ground level
+    heap = [(0, float('inf'))]  # (height, ending x-coordinate)
+    
+    # Process events
+    for x, h, r in events:
+        # Remove buildings that have ended
+        while heap[0][1] <= x:
+            heapq.heappop(heap)
+        
+        # If it's a start event, add building to heap
+        if h < 0:
+            heapq.heappush(heap, (h, r))
+        
+        # Check if current max height changed
+        current_max_height = -heap[0][0]  # Negate back to get actual height
+        
+        # If height changed, add new key point
+        if result[-1][1] != current_max_height:
+            result.append([x, current_max_height])
+    
+    # Remove the initial [0,0] point
+    return result[1:]",Claude 3.7 Sonnet,"import heapq
+
+def getSkyline(buildings):
+    events = []
+    for left, right, height in buildings:
+        events.append((left, -height, right))  # start event
+        events.append((right, 0, 0))           # end event
+    
+    # Sort the events:
+    # 1. By x-coordinate
+    # 2. For same x, start events come before end events
+    # 3. For same x and both starts, higher height comes first
+    # 4. For same x and both ends, lower height comes first
+    events.sort()
+    
+    res = []
+    max_heap = [(0, float('inf'))]  # (negative height, right)
+    heapq.heapify(max_heap)
+    current_max = 0
+    
+    for x, neg_h, right in events:
+        # Process start event
+        if neg_h != 0:
+            heapq.heappush(max_heap, (neg_h, right))
+            # If the new height is the new max, add to skyline
+            if -neg_h > current_max:
+                current_max = -neg_h
+                res.append([x, current_max])
+        else:
+            # Process end event: remove all heights that end at or before x
+            while max_heap[0][1] <= x:
+                heapq.heappop(max_heap)
+            # If the max height changed, add to skyline
+            if -max_heap[0][0] != current_max:
+                current_max = -max_heap[0][0]
+                res.append([x, current_max])
+    
+    return res",DeepSeek-V3
+Iftekhar,857,Minimum Cost to Hire K Workers,"There are n workers. You are given two integer arrays quality and wage where quality[i] is the quality of the ith worker and wage[i] is the minimum wage expectation for the ith worker.
+
+We want to hire exactly k workers to form a paid group. To hire a group of k workers, we must pay them according to the following rules:
+
+Every worker in the paid group must be paid at least their minimum wage expectation.
+In the group, each worker's pay must be directly proportional to their quality. This means if a worker’s quality is double that of another worker in the group, then they must be paid twice as much as the other worker.
+Given the integer k, return the least amount of money needed to form a paid group satisfying the above conditions. Answers within 10^-5 of the actual answer will be accepted.
+
+ 
+
+Example 1:
+
+Input: quality = [10,20,5], wage = [70,50,30], k = 2
+Output: 105.00000
+Explanation: We pay 70 to 0th worker and 35 to 2nd worker.
+Example 2:
+
+Input: quality = [3,1,10,10,1], wage = [4,8,2,2,7], k = 3
+Output: 30.66667
+Explanation: We pay 4 to 0th worker, 13.33333 to 2nd and 3rd workers separately.
+ 
+
+Constraints:
+
+n == quality.length == wage.length
+1 <= k <= n <= 10^4
+1 <= quality[i], wage[i] <= 10^4","Array, Greedy, Sorting, Heap (Priority Queue)",Hard,"def mincostToHireWorkers(self, quality: List[int], wage: List[int], k: int) -> float:
+        ans = inf
+        prefix = 0
+        pq = []
+        for q, w in sorted(zip(quality, wage), key=lambda x: x[1]/x[0]):
+            prefix += q
+            heappush(pq, -q)
+            if len(pq) > k: prefix += heappop(pq)
+            if len(pq) == k: ans = min(ans, prefix * w/q)
+        return ans",Ye Gao (https://github.com/gaosanyong),"import heapq
+import math
+from typing import List
+
+
+class Solution:
+    def mincostToHireWorkers(
+        self, quality: List[int], wage: List[int], k: int
+    ) -> float:
+        ret = math.inf
+        # 根据 w/q 排序, 那么遍历到一项的时候, 可以保证前面的项 w/q 都小于向前项, 可以被选择
+        workers = sorted([(w / q, q) for q, w in zip(quality, wage)])
+        worker_quality_sum = 0
+        heap = []
+        for ratio, q in workers:
+            heapq.heappush(heap, -q)
+            worker_quality_sum += q
+            if len(heap) > k:
+                worker_quality_sum += heapq.heappop(heap)
+            if len(heap) == k:
+                ret = min(ret, worker_quality_sum * ratio)
+        return ret
+
+
+print(Solution().mincostToHireWorkers([10, 20, 5], [70, 50, 30], 2))
+print(Solution().mincostToHireWorkers([3, 1, 10, 10, 1], [4, 8, 2, 2, 7], 3))",xhu (https://github.com/MrHuxu),"class Solution(object):
+    def mincostToHireWorkers(self, quality, wage, K):
+        from fractions import Fraction
+        workers = sorted((Fraction(w, q), q, w)
+                         for q, w in zip(quality, wage))
+
+        ans = float('inf')
+        pool = []
+        sumq = 0
+        for ratio, q, w in workers:
+            heapq.heappush(pool, -q)
+            sumq += q
+            if len(pool) > K:
+                sumq += heapq.heappop(pool)
+            if len(pool) == K:
+                ans = min(ans, ratio * sumq)
+        return float(ans)",franklingu (https://github.com/franklingu),"import heapq
+
+def mincostToHireWorkers(quality, wage, k):
+    workers = sorted([(w / q, q) for q, w in zip(quality, wage)])
+    heap = []
+    total_quality = 0
+    min_cost = float('inf')
+
+    for ratio, q in workers:
+        heapq.heappush(heap, -q)
+        total_quality += q
+
+        if len(heap) > k:
+            total_quality += heapq.heappop(heap)  # remove largest quality (negated)
+
+        if len(heap) == k:
+            min_cost = min(min_cost, ratio * total_quality)
+
+    return min_cost",GPT-4,"import heapq
+
+def mincostToHireWorkers(quality: list[int], wage: list[int], k: int) -> float:
+    # Calculate the wage-to-quality ratio for each worker
+    workers = sorted([(wage[i] / quality[i], quality[i]) for i in range(len(quality))])
+    
+    # Initialize a max heap to keep track of k workers with lowest quality
+    max_heap = []
+    quality_sum = 0
+    
+    # Minimum cost to hire k workers
+    min_cost = float('inf')
+    
+    for ratio, q in workers:
+        heapq.heappush(max_heap, -q)  # Use negative for max heap
+        quality_sum += q
+        
+        # If we have more than k workers, remove the one with highest quality
+        if len(max_heap) > k:
+            quality_sum += heapq.heappop(max_heap)  # Add because we're using negatives
+            
+        # If we have exactly k workers, calculate the cost
+        if len(max_heap) == k:
+            # Cost = ratio * sum of qualities of selected workers
+            min_cost = min(min_cost, ratio * quality_sum)
+    
+    return min_cost",Claude 3.7 Sonnet,"import heapq
+
+def mincostToHireWorkers(quality, wage, k):
+    workers = sorted((w / q, q) for w, q in zip(wage, quality))
+    max_heap = []
+    sum_quality = 0
+    res = float('inf')
+    
+    for ratio, q in workers:
+        heapq.heappush(max_heap, -q)
+        sum_quality += q
+        
+        if len(max_heap) > k:
+            sum_quality += heapq.heappop(max_heap)
+        
+        if len(max_heap) == k:
+            res = min(res, ratio * sum_quality)
+    
+    return res",DeepSeek-V3
+Iftekhar,871,Minimum Number of Refueling Stops,"A car travels from a starting position to a destination which is target miles east of the starting position.
+
+There are gas stations along the way. The gas stations are represented as an array stations where stations[i] = [position_i, fuel_i] indicates that the ith gas station is position_i miles east of the starting position and has fuel_i liters of gas.
+
+The car starts with an infinite tank of gas, which initially has startFuel liters of fuel in it. It uses one liter of gas per one mile that it drives. When the car reaches a gas station, it may stop and refuel, transferring all the gas from the station into the car.
+
+Return the minimum number of refueling stops the car must make in order to reach its destination. If it cannot reach the destination, return -1.
+
+Note that if the car reaches a gas station with 0 fuel left, the car can still refuel there. If the car reaches the destination with 0 fuel left, it is still considered to have arrived.
+
+ 
+
+Example 1:
+
+Input: target = 1, startFuel = 1, stations = []
+Output: 0
+Explanation: We can reach the target without refueling.
+Example 2:
+
+Input: target = 100, startFuel = 1, stations = [[10,100]]
+Output: -1
+Explanation: We can not reach the target (or even the first gas station).
+Example 3:
+
+Input: target = 100, startFuel = 10, stations = [[10,60],[20,30],[30,30],[60,40]]
+Output: 2
+Explanation: We start with 10 liters of fuel.
+We drive to position 10, expending 10 liters of fuel.  We refuel from 0 liters to 60 liters of gas.
+Then, we drive from position 10 to position 60 (expending 50 liters of fuel),
+and refuel from 10 liters to 50 liters of gas.  We then drive to and reach the target.
+We made 2 refueling stops along the way, so we return 2.
+ 
+
+Constraints:
+
+1 <= target, startFuel <= 10^9
+0 <= stations.length <= 500
+1 <= position_i < position_i+1 < target
+1 <= fuel_i < 10^9","Array, Dynamic Programming, Greedy, Heap (Priority Queue)",Hard,"def minRefuelStops(self, target: int, startFuel: int, stations: List[List[int]]) -> int:
+        ans = k = 0
+        total = startFuel
+        pq = []
+        while total < target:
+            while k < len(stations) and stations[k][0] <= total:
+                heappush(pq, -stations[k][1])
+                k += 1
+            if not pq: return -1
+            total -= heappop(pq)
+            ans += 1
+        return ans",Ye Gao (https://github.com/gaosanyong),"class Solution:
+    def minRefuelStops(self, target: int, startFuel: int, stations: List[List[int]]) -> int:
+        hp = []
+        s = [[0, 0]] + stations + [[target, 0]]
+        n, ret = len(s), 0
+        fuel = startFuel
+        for i in range(1, n):
+            fuel -= s[i][0] - s[i - 1][0]
+            while hp and fuel < 0:
+                fuel += -heapq.heappop(hp)
+                ret += 1
+            if fuel < 0:
+                return -1
+            heapq.heappush(hp, -s[i][1])
+        return ret",franklingu (https://github.com/franklingu),"class Solution:
+    def minRefuelStops(self, target, startFuel, stations):
+        q, n, memo = [(0, -startFuel, 0, 0)], len(stations), set()
+        while q:
+            refill, fuel, pos, index = heapq.heappop(q)
+            fuel *= -1
+            if index == n:
+                if fuel - (target - pos) >= 0:
+                    return refill
+            else:
+                sPos, add = stations[index]
+                if (index, refill) not in memo and fuel - (sPos - pos) >= 0:
+                    memo.add((index, refill))
+                    f1 = (fuel - (sPos - pos) + add) * -1
+                    f2 = (fuel - (sPos - pos)) * -1
+                    heapq.heappush(q, (refill + 1, f1, sPos, index + 1))
+                    heapq.heappush(q, (refill, f2, sPos, index + 1))
+        return -1",Cenkay Arapisaoglu (https://github.com/cnkyrpsgl),"import heapq
+
+def minRefuelStops(target, startFuel, stations):
+    max_heap = []
+    stations.append([target, 0])  # Add the target as the last station
+    fuel = startFuel
+    prev = 0
+    refuels = 0
+
+    for pos, cap in stations:
+        fuel -= (pos - prev)
+        while fuel < 0 and max_heap:
+            fuel += -heapq.heappop(max_heap)  # Refuel from the station with most fuel
+            refuels += 1
+        if fuel < 0:
+            return -1
+        heapq.heappush(max_heap, -cap)  # Store negative for max-heap
+        prev = pos
+
+    return refuels",GPT-4,"import heapq
+
+def minRefuelStops(target: int, startFuel: int, stations: list[list[int]]) -> int:
+    # Initialize variables
+    max_distance = startFuel  # Maximum distance car can travel
+    num_stops = 0             # Number of refueling stops
+    station_index = 0         # Current station index
+    fuel_options = []         # Max heap to store fuel options (using negative values)
+    
+    # While we haven't reached the target
+    while max_distance < target:
+        # Add all reachable stations to our options
+        while station_index < len(stations) and stations[station_index][0] <= max_distance:
+            # Add negative fuel amount to create a max heap
+            heapq.heappush(fuel_options, -stations[station_index][1])
+            station_index += 1
+        
+        # If no stations are reachable and we haven't reached target, return -1
+        if not fuel_options:
+            return -1
+        
+        # Choose the station with the most fuel
+        max_distance += -heapq.heappop(fuel_options)  # Negate to get positive value
+        num_stops += 1
+    
+    return num_stops",Claude 3.7 Sonnet,"import heapq
+
+def minRefuelStops(target, startFuel, stations):
+    max_heap = []
+    stops = 0
+    current_fuel = startFuel
+    previous_position = 0
+    stations.append([target, 0])  # Add the destination as a station with 0 fuel
+    
+    for position, fuel in stations:
+        distance = position - previous_position
+        current_fuel -= distance
+        
+        while current_fuel < 0 and max_heap:
+            current_fuel += -heapq.heappop(max_heap)
+            stops += 1
+        
+        if current_fuel < 0:
+            return -1
+        
+        heapq.heappush(max_heap, -fuel)
+        previous_position = position
+    
+    return stops",DeepSeek-V3
+Iftekhar,11,Container With Most Water,"You are given an integer array height of length n. There are n vertical lines drawn such that the two endpoints of the ith line are (i, 0) and (i, height[i]).
+
+Find two lines that together with the x-axis form a container, such that the container contains the most water.
+
+Return the maximum amount of water a container can store.
+
+Notice that you may not slant the container.
+
+ 
+
+Example 1:
+
+
+Input: height = [1,8,6,2,5,4,8,3,7]
+Output: 49
+Explanation: The above vertical lines are represented by array [1,8,6,2,5,4,8,3,7]. In this case, the max area of water (blue section) the container can contain is 49.
+Example 2:
+
+Input: height = [1,1]
+Output: 1
+ 
+
+Constraints:
+
+n == height.length
+2 <= n <= 10^5
+0 <= height[i] <= 10^4","Array, Two Pointers, Greedy",Medium,"class Solution:
+    def maxArea(self, height: List[int]) -> int:
+        result=0
+        left=0
+        right=len(height)-1
+        while left<right:
+            a=right-left
+            if height[left]>height[right]:
+                if result<a*height[right]:
+                    result=a*height[right]
+                right-=1
+            elif height[left]<=height[right]:
+                if result<a*height[left]:
+                    result=a*height[left]
+                left+=1
+        return result",Bao Hoang (https://github.com/hoangcaobao),"class Solution:
+    def maxArea(self, height):
+        left, right, mx = 0, len(height) - 1, 0
+        while left < right:
+            mx = max(mx, (right - left) * min(height[left], height[right]))
+            if height[left] < height[right]: 
+                left += 1
+            else: 
+                right -= 1
+        return mx",Cenkay Arapisaoglu (https://github.com/cnkyrpsgl),"class Solution:
+    def maxArea(self, heights: List[int]) -> int:
+        start, end = 0, len(heights) - 1
+        mm = None
+        while start < end:
+            area = min(heights[start], heights[end]) * (end - start)
+            if mm is None or area > mm:
+                mm = area
+            if heights[start] < heights[end]:
+                start += 1
+            else:
+                end -= 1
+        return mm",franklingu (https://github.com/franklingu),"def maxArea(height):
+    left, right = 0, len(height) - 1
+    max_area = 0
+
+    while left < right:
+        h = min(height[left], height[right])
+        w = right - left
+        max_area = max(max_area, h * w)
+
+        # Move the pointer pointing to the shorter line
+        if height[left] < height[right]:
+            left += 1
+        else:
+            right -= 1
+
+    return max_area",GPT-4,"def maxArea(height: list[int]) -> int:
+    # Initialize pointers at both ends of the array
+    left = 0
+    right = len(height) - 1
+    max_water = 0
+    
+    # Move pointers inward until they meet
+    while left < right:
+        # Calculate width between lines
+        width = right - left
+        
+        # Calculate height of the container (limited by the shorter line)
+        h = min(height[left], height[right])
+        
+        # Calculate and update the maximum water
+        max_water = max(max_water, width * h)
+        
+        # Move the pointer pointing to the shorter line inward
+        # (Moving the taller line would only decrease the area)
+        if height[left] < height[right]:
+            left += 1
+        else:
+            right -= 1
+    
+    return max_water",Claude 3.7 Sonnet,"def maxArea(height):
+    left = 0
+    right = len(height) - 1
+    max_area = 0
+    
+    while left < right:
+        current_width = right - left
+        current_height = min(height[left], height[right])
+        current_area = current_width * current_height
+        max_area = max(max_area, current_area)
+        
+        if height[left] < height[right]:
+            left += 1
+        else:
+            right -= 1
+    
+    return max_area",DeepSeek-V3
+Iftekhar,845,Longest Mountain in Array,"You may recall that an array arr is a mountain array if and only if:
+
+arr.length >= 3
+There exists some index i (0-indexed) with 0 < i < arr.length - 1 such that:
+arr[0] < arr[1] < ... < arr[i - 1] < arr[i]
+arr[i] > arr[i + 1] > ... > arr[arr.length - 1]
+Given an integer array arr, return the length of the longest subarray, which is a mountain. Return 0 if there is no mountain subarray.
+
+ 
+
+Example 1:
+
+Input: arr = [2,1,4,7,3,2,5]
+Output: 5
+Explanation: The largest mountain is [1,4,7,3,2] which has length 5.
+Example 2:
+
+Input: arr = [2,2,2]
+Output: 0
+Explanation: There is no mountain.
+ 
+
+Constraints:
+
+1 <= arr.length <= 10^4
+0 <= arr[i] <= 10^4","Array
+Two Pointers
+Dynamic Programming
+Enumeration",Medium,"class Solution:
+    def longestMountain(self, A: List[int]) -> int:
+        i=0
+        j=0
+        N=len(A)
+        result=0
+        while i<N:
+            j=i
+            if j+1<N and A[j]<A[j+1]:
+                while j+1<N and A[j]<A[j+1]:
+                    j+=1
+                if j+1<N and A[j]>A[j+1]:
+                    while j+1<N and A[j]>A[j+1]:
+                        j+=1
+                    result=max(result,j-i+1)
+            i=max(i+1,j)
+        return result",Bao Hoang (https://github.com/hoangcaobao)," def longestMountain(self, A: List[int]) -> int:
+        ans = 0
+        for i in range(1, len(A)-1):
+            if A[i-1] < A[i] > A[i+1]:
+                lo = hi = i
+                while 0 < lo and A[lo-1] < A[lo]: lo -= 1
+                while hi < len(A)-1 and A[hi] > A[hi+1]: hi += 1
+                ans = max(ans, hi - lo + 1)
+        return ans",Ye Gao (https://github.com/gaosanyong),"class Solution:
+    def longestMountain(self, A, res = 0):
+        for i in range(1, len(A) - 1):
+            if A[i + 1] < A[i] > A[i - 1]:
+                l = r = i
+                while l and A[l] > A[l - 1]: l -= 1
+                while r + 1 < len(A) and A[r] > A[r + 1]: r += 1
+                if r - l + 1 > res: res = r - l + 1
+        return res",Cenkay Arapisaoglu (https://github.com/cnkyrpsgl),"def longestMountain(arr):
+    n = len(arr)
+    max_len = 0
+    i = 1
+
+    while i < n - 1:
+        # Check if arr[i] is a peak
+        if arr[i - 1] < arr[i] > arr[i + 1]:
+            # Expand left
+            left = i - 1
+            while left > 0 and arr[left - 1] < arr[left]:
+                left -= 1
+
+            # Expand right
+            right = i + 1
+            while right < n - 1 and arr[right] > arr[right + 1]:
+                right += 1
+
+            max_len = max(max_len, right - left + 1)
+            i = right  # Skip processed elements
+        else:
+            i += 1
+
+    return max_len",GPT-4,"def longestMountain(arr: list[int]) -> int:
+    n = len(arr)
+    if n < 3:
+        return 0
+    
+    longest_mountain = 0
+    i = 1
+    
+    while i < n - 1:
+        # Check if current position is a peak
+        is_peak = arr[i] > arr[i-1] and arr[i] > arr[i+1]
+        
+        if not is_peak:
+            i += 1
+            continue
+        
+        # Expand to the left
+        left = i - 1
+        while left > 0 and arr[left] > arr[left-1]:
+            left -= 1
+        
+        # Expand to the right
+        right = i + 1
+        while right < n - 1 and arr[right] > arr[right+1]:
+            right += 1
+        
+        # Calculate the length of this mountain
+        mountain_length = right - left + 1
+        longest_mountain = max(longest_mountain, mountain_length)
+        
+        # Skip to the end of this mountain
+        i = right + 1
+    
+    return longest_mountain",Claude 3.7 Sonnet,"def longestMountain(arr):
+    n = len(arr)
+    if n < 3:
+        return 0
+    
+    max_length = 0
+    i = 1
+    
+    while i < n - 1:
+        if arr[i] > arr[i - 1] and arr[i] > arr[i + 1]:
+            left = i - 1
+            while left > 0 and arr[left] > arr[left - 1]:
+                left -= 1
+            
+            right = i + 1
+            while right < n - 1 and arr[right] > arr[right + 1]:
+                right += 1
+            
+            current_length = right - left + 1
+            if current_length > max_length:
+                max_length = current_length
+            
+            i = right
+        else:
+            i += 1
+    
+    return max_length if max_length >= 3 else 0",DeepSeek-V3
+Iftekhar,283,Move Zeroes,"Given an integer array nums, move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+
+Note that you must do this in-place without making a copy of the array.
+
+ 
+
+Example 1:
+
+Input: nums = [0,1,0,3,12]
+Output: [1,3,12,0,0]
+Example 2:
+
+Input: nums = [0]
+Output: [0]
+ 
+
+Constraints:
+
+1 <= nums.length <= 10^4
+-2^31 <= nums[i] <= 2^31 - 1","Array
+Two Pointers",Easy,"class Solution:
+    def moveZeroes(self, nums):
+        """"""
+        :type nums: List[int]
+        :rtype: void Do not return anything, modify nums in-place instead.
+        """"""
+        l, r = 0, 0
+
+        while True:
+            while r < len(nums) and nums[r] != 0: r += 1
+            while l < len(nums) and (nums[l] == 0 or l < r): l += 1
+            if l == len(nums) or r == len(nums): break
+            nums[l], nums[r] = nums[r], nums[l]
+            l += 1
+            r += 1",Jared Gillespie (https://github.com/JaredLGillespie),"class Solution:
+    def moveZeroes(self, nums: List[int]) -> None:
+        """"""
+        Do not return anything, modify nums in-place instead.
+        """"""
+        i=0
+        for j in range(0,len(nums)):
+            if nums[j]!=0:
+                nums[i]=nums[j]
+                i+=1
+        for j in range(i,len(nums)):
+            nums[j]=0",Bao Hoang (https://github.com/hoangcaobao),"class Solution:
+    def moveZeroes(self, nums):
+        """"""
+        :type nums: List[int]
+        :rtype: void Do not return anything, modify nums in-place instead.
+        """"""
+        i, items=0, 0
+        while i<len(nums) and items<=len(nums):
+            if nums[i]==0: nums.append(0); nums.pop(i); i-=1
+            i+=1; items+=1",Cenkay Arapisaoglu (https://github.com/cnkyrpsgl),"def moveZeroes(nums):
+    last_non_zero = 0
+
+    # Step 1: Move all non-zero elements to the front
+    for i in range(len(nums)):
+        if nums[i] != 0:
+            nums[last_non_zero] = nums[i]
+            last_non_zero += 1
+
+    # Step 2: Fill the remaining positions with 0
+    for i in range(last_non_zero, len(nums)):
+        nums[i] = 0",GPT-4,"def moveZeroes(nums: list[int]) -> None:
+    """"""
+    Moves all 0's to the end of the array in-place while
+    maintaining the relative order of non-zero elements.
+    """"""
+    # Position to place the next non-zero element
+    position = 0
+    
+    # First pass: move all non-zero elements to the front
+    for i in range(len(nums)):
+        if nums[i] != 0:
+            nums[position] = nums[i]
+            position += 1
+    
+    # Second pass: fill the rest with zeros
+    for i in range(position, len(nums)):
+        nums[i] = 0",Claude 3.7 Sonnet,"def moveZeroes(nums):
+    # Initialize the pointer for the position of the next non-zero element
+    non_zero_ptr = 0
+    
+    # Iterate through the array
+    for i in range(len(nums)):
+        if nums[i] != 0:
+            # Swap the current element with the element at non_zero_ptr
+            nums[non_zero_ptr], nums[i] = nums[i], nums[non_zero_ptr]
+            non_zero_ptr += 1",DeepSeek-V3
+Iftekhar,222,Count Complete Tree Nodes,"Given the root of a complete binary tree, return the number of the nodes in the tree.
+
+According to Wikipedia, every level, except possibly the last, is completely filled in a complete binary tree, and all nodes in the last level are as far left as possible. It can have between 1 and 2^h nodes inclusive at the last level h.
+
+Design an algorithm that runs in less than O(n) time complexity.
+
+ 
+
+Example 1:
+
+
+Input: root = [1,2,3,4,5,6]
+Output: 6
+Example 2:
+
+Input: root = []
+Output: 0
+Example 3:
+
+Input: root = [1]
+Output: 1
+ 
+
+Constraints:
+
+The number of nodes in the tree is in the range [0, 5 * 10^4].
+0 <= Node.val <= 5 * 10^4
+The tree is guaranteed to be complete.","Binary Search
+Bit Manipulation
+Tree
+Binary Tree",Easy,"def countNodes(root):
+  """"""
+  :type root: TreeNode
+  :rtype: int
+  """"""
+  if not root:
+      return 0
+  level = root
+  height = 0
+  while level.left != None:
+      height += 1
+      level = level.left
+  if not height:
+      return 1
+  return (2**(height))-1 + _countLeaves(root, height)
+
+def _countLeaves(root, height):
+  if height == 0:
+      return 0
+
+  h, level = height, root
+  while level.left != None:
+      h -= 1
+      level = level.left
+  if h:
+      return 0
+
+  h, level = height, root
+  while level.right != None:
+      h -= 1
+      level = level.right
+  if not h:
+      return 2**height
+
+  level, h = root.left, height-1
+  if level == None:
+      return 1
+  while level.right != None:
+      h -= 1
+      level = level.right
+  if not h:
+      return 2**(height-1) + _countLeaves(root.right, height-1)
+  else:
+      return _countLeaves(root.left, height-1)",Ratul Saha ( https://github.com/RatulSaha/leetcode/blob/master/001-050/001-two-sum.py ),"class Solution:
+    def countNodes(self, root):
+        """"""
+        :type root: TreeNode
+        :rtype: int
+        """"""
+        def get_height(root):
+            if not root: return -1
+            return get_height(root.left) + 1
+
+        nodes, height = 0, get_height(root)
+        while root:
+            if get_height(root.right) == height - 1:
+                nodes += 1 << height
+                root = root.right
+            else:
+                nodes += 1 << height - 1
+                root = root.left
+            height -= 1
+        return nodes",Jared Gillespie (https://github.com/JaredLGillespie),"class Solution:
+
+    def countNodes(self, root: TreeNode) -> int:
+        visited = []
+        self.counter(root, visited)
+        return len(visited)
+
+    def counter(self, root, visited):
+        if not root:
+            return
+        visited.append(root.val)
+        self.counter(root.left, visited)
+        self.counter(root.right, visited)",Iurii Spiridonov (https://github.com/YuriSpiridonov),"class TreeNode:
+    def __init__(self, val=0, left=None, right=None):
+        self.val = val
+        self.left = left
+        self.right = right
+
+def countNodes(root):
+    # Helper function to compute height of a tree (leftmost path)
+    def get_height(node):
+        height = 0
+        while node:
+            height += 1
+            node = node.left
+        return height
+
+    if not root:
+        return 0
+
+    left_height = get_height(root.left)
+    right_height = get_height(root.right)
+
+    if left_height == right_height:
+        # Left subtree is perfect: 2^left_height - 1 nodes + root + right subtree
+        return (1 << left_height) + countNodes(root.right)
+    else:
+        # Right subtree is perfect: 2^right_height - 1 nodes + root + left subtree
+        return (1 << right_height) + countNodes(root.left)",GPT-4,"class Solution:
+    def countNodes(self, root: TreeNode) -> int:
+        if not root:
+            return 0
+        
+        # Get the height of the left-most path
+        left_height = 0
+        node = root
+        while node:
+            left_height += 1
+            node = node.left
+        
+        # Get the height of the right-most path
+        right_height = 0
+        node = root
+        while node:
+            right_height += 1
+            node = node.right
+        
+        # If the tree is a perfect binary tree
+        if left_height == right_height:
+            return (1 << left_height) - 1  # 2^height - 1
+        
+        # Otherwise, recursively count left and right subtrees
+        return 1 + self.countNodes(root.left) + self.countNodes(root.right)",Claude 3.7 Sonnet,"class Solution:
+    def countNodes(self, root: Optional[TreeNode]) -> int:
+        if not root:
+            return 0
+        
+        left_height = self.get_height(root.left)
+        right_height = self.get_height(root.right)
+        
+        if left_height == right_height:
+            # Left subtree is perfect, right is complete
+            return (1 << left_height) + self.countNodes(root.right)
+        else:
+            # Right subtree is perfect, left is complete
+            return (1 << right_height) + self.countNodes(root.left)
+    
+    def get_height(self, node):
+        height = 0
+        while node:
+            height += 1
+            node = node.left
+        return height",DeepSeek-V3
+Iftekhar,973,K Closest Points to Origin,"Given an array of points where points[i] = [xi, yi] represents a point on the X-Y plane and an integer k, return the k closest points to the origin (0, 0).
+
+The distance between two points on the X-Y plane is the Euclidean distance (i.e., √(x1 - x2)^2 + (y1 - y2)^2).
+
+You may return the answer in any order. The answer is guaranteed to be unique (except for the order that it is in).
+
+ 
+
+Example 1:
+
+
+Input: points = [[1,3],[-2,2]], k = 1
+Output: [[-2,2]]
+Explanation:
+The distance between (1, 3) and the origin is sqrt(10).
+The distance between (-2, 2) and the origin is sqrt(8).
+Since sqrt(8) < sqrt(10), (-2, 2) is closer to the origin.
+We only want the closest k = 1 points from the origin, so the answer is just [[-2,2]].
+Example 2:
+
+Input: points = [[3,3],[5,-1],[-2,4]], k = 2
+Output: [[3,3],[-2,4]]
+Explanation: The answer [[-2,4],[3,3]] would also be accepted.
+ 
+
+Constraints:
+
+1 <= k <= points.length <= 10^4
+-10^4 <= xi, yi <= 10^4","Array
+Math
+Divide and Conquer
+Geometry
+Sorting
+Heap (Priority Queue)
+Quickselect",Medium,"from heapq import *
+
+
+class Solution(object):
+    def kClosest(self, points, K):
+        """"""
+        :type points: List[List[int]]
+        :type K: int
+        :rtype: List[List[int]]
+        """"""
+        heap = []
+
+        for p in points:
+            heappush(heap, (-(p[0]**2 + p[1]**2), p))
+            if len(heap) > K: heappop(heap)
+
+        return [p[1] for p in heap]",Jared Gillespie (https://github.com/JaredLGillespie),"import heapq
+
+class Solution:
+    
+    @staticmethod
+    def getDistance(x :int ,y :int) -> int:
+        return pow(x*x + y*y,1/2)
+    
+    def kClosest(self, points: List[List[int]], K: int) -> List[List[int]]:
+        listPoints = list()
+        heap = list()
+        for point in points:
+            distance = Solution.getDistance(point[0], point[1])
+            if len(heap)>=K:
+                heapq.heappushpop(heap,(-distance,point))
+            else:
+                heapq.heappush(heap,(-distance, point))
+        while len(heap):
+            listPoints.append(heapq.heappop(heap)[1])
+            
+        return listPoints",Aditya Aggarwal (https://github.com/adaggarwal),"from heapq import heappush, heappop, heapreplace
+
+class Solution:
+    def _compute_dist(self, point):
+        return point[0] ** 2 + point[1] ** 2
+
+
+    def kClosest(self, points: List[List[int]], k: int) -> List[List[int]]:
+        if not points or len(points) == 0 or k <= 0:
+            return []
+
+        heap = []
+        for point in points:
+
+            dist = self._compute_dist(point)
+            if len(heap) < k:
+                heappush(heap, (-dist, point))
+            else:
+                if dist < -heap[0][0]:
+                    heapreplace(heap, (-dist, point))
+
+        return [p for _, p in heap]
+
+
+    def kClosest2(self, points: List[List[int]], K: int) -> List[List[int]]:
+        if not points or len(points) <= K:
+            return points
+
+        results, origin = [], [0, 0]
+        for point in points:
+            distance = self.computerDistance(origin, point)
+            if len(results) < K:
+                heappush(results, (- distance, point))
+            else:
+                if distance < - results[0][0]:
+                    heappop(results)
+                    heappush(results, (- distance, point))
+
+        return [result[1] for result in results]
+
+    def computerDistance(self, pointA, pointB):
+        return (pointA[0] - pointB[0]) ** 2 + (pointA[1] - pointB[1]) ** 2",Zhenye (Nathan) Na (https://github.com/Zhenye-Na),"import heapq
+
+def kClosest(points, k):
+    return heapq.nsmallest(k, points, key=lambda p: p[0]**2 + p[1]**2)
+",GPT-4,"import heapq
+
+def kClosest(points: list[list[int]], k: int) -> list[list[int]]:
+    # Calculate squared distance to avoid unnecessary sqrt operations
+    # Use a max heap to keep track of the k closest points
+    max_heap = []
+    
+    for x, y in points:
+        # Calculate squared distance from origin
+        dist = x*x + y*y
+        
+        # If we haven't reached k points yet, add the point to the heap
+        if len(max_heap) < k:
+            # Use negative distance to create a max heap
+            heapq.heappush(max_heap, (-dist, [x, y]))
+        # If the current point is closer than the furthest point in our heap
+        elif -dist > max_heap[0][0]:
+            # Replace the furthest point with the current point
+            heapq.heappushpop(max_heap, (-dist, [x, y]))
+    
+    # Extract the points from the heap
+    return [point for _, point in max_heap]
+
+# Alternatively, using a more straightforward approach:
+def kClosest_simple(points: list[list[int]], k: int) -> list[list[int]]:
+    # Sort points by distance to origin
+    return sorted(points, key=lambda point: point[0]**2 + point[1]**2)[:k]",Claude 3.7 Sonnet,"import heapq
+
+def kClosest(points, k):
+    heap = []
+    for (x, y) in points:
+        dist = x**2 + y**2
+        heapq.heappush(heap, (dist, x, y))
+    
+    res = []
+    for _ in range(k):
+        dist, x, y = heapq.heappop(heap)
+        res.append([x, y])
+    return res",DeepSeek-V3
+Iftekhar,295,Find Median from Data Stream,"The median is the middle value in an ordered integer list. If the size of the list is even, there is no middle value, and the median is the mean of the two middle values.
+
+For example, for arr = [2,3,4], the median is 3.
+For example, for arr = [2,3], the median is (2 + 3) / 2 = 2.5.
+Implement the MedianFinder class:
+
+MedianFinder() initializes the MedianFinder object.
+void addNum(int num) adds the integer num from the data stream to the data structure.
+double findMedian() returns the median of all elements so far. Answers within 10-5 of the actual answer will be accepted.
+ 
+
+Example 1:
+
+Input
+[""MedianFinder"", ""addNum"", ""addNum"", ""findMedian"", ""addNum"", ""findMedian""]
+[[], [1], [2], [], [3], []]
+Output
+[null, null, null, 1.5, null, 2.0]
+
+Explanation
+MedianFinder medianFinder = new MedianFinder();
+medianFinder.addNum(1);    // arr = [1]
+medianFinder.addNum(2);    // arr = [1, 2]
+medianFinder.findMedian(); // return 1.5 (i.e., (1 + 2) / 2)
+medianFinder.addNum(3);    // arr[1, 2, 3]
+medianFinder.findMedian(); // return 2.0
+ 
+
+Constraints:
+
+-10^5 <= num <= 10^5
+There will be at least one element in the data structure before calling findMedian.
+At most 5 * 10^4 calls will be made to addNum and findMedian.","Two Pointers
+Design
+Sorting
+Heap (Priority Queue)
+Data Stream",Hard,"from heapq import *
+
+
+class MedianFinder(object):
+
+    def __init__(self):
+        """"""
+        initialize your data structure here.
+        """"""
+        self.heap_left = []
+        self.heap_right = []
+
+    def addNum(self, num):
+        """"""
+        :type num: int
+        :rtype: void
+        """"""
+        heappush(self.heap_left, -num)
+        heappush(self.heap_right, -heappop(self.heap_left))
+
+        if len(self.heap_left) < len(self.heap_right):
+            heappush(self.heap_left, -heappop(self.heap_right))
+
+    def findMedian(self):
+        """"""
+        :rtype: float
+        """"""
+        if not self.heap_left and not self.heap_right: return 0
+        if len(self.heap_left) > len(self.heap_right): return -self.heap_left[0]
+        return (-self.heap_left[0] + self.heap_right[0]) / 2",Jared Gillespie (https://github.com/JaredLGillespie),"class MedianFinder:
+
+    def __init__(self):
+        """"""
+        initialize your data structure here.
+        """"""
+        self.array = []
+        self.length = 0
+
+    def addNum(self, num: int) -> None:
+        self.length += 1
+        if not self.array:
+            self.array.append(num)
+        else:
+            self.binarySearch(num)
+
+    def binarySearch(self, num):
+        l = 0
+        r = len(self.array) - 1
+        while l <= r:
+            m = (l + r) // 2
+            if  self.array[m-1] <= num <= self.array[m]:
+                return self.array.insert(m, num)
+            elif num > self.array[m]:
+                l = m + 1
+            else:
+                r = m - 1
+        return self.array.insert(l, num)
+
+    def findMedian(self) -> float:
+        if self.length % 2:
+            return self.array[self.length//2]
+        else:
+            return (self.array[-1+self.length//2] + self.array[self.length//2]) / 2",Iurii Spiridonov (https://github.com/YuriSpiridonov),"from heapq import heappush, heappop
+
+class MedianFinder:
+
+    def __init__(self):
+        """"""
+        initialize your data structure here.
+        """"""
+        self.greater = []
+        self.lower = []
+
+    def addNum(self, num: int) -> None:
+        if len(self.lower) == 0 or num <= - self.lower[0]:
+            heappush(self.lower, - num)
+        else:
+            heappush(self.greater, num)
+
+        self._balance()
+
+
+    def findMedian(self) -> float:
+        if abs(len(self.greater) - len(self.lower)) == 1:
+            return - self.lower[0]
+        else:
+            return (self.greater[0] - self.lower[0]) / 2
+
+    def _balance(self):
+        if len(self.lower) < len(self.greater):
+            heappush(self.lower, - heappop(self.greater))
+        if len(self.lower) > len(self.greater) + 1:
+            heappush(self.greater, - heappop(self.lower))",Zhenye (Nathan) Na (https://github.com/Zhenye-Na),"import heapq
+
+class MedianFinder:
+    def __init__(self):
+        self.left = []  # Max heap (invert values)
+        self.right = [] # Min heap
+
+    def addNum(self, num: int) -> None:
+        # Add to max heap (left)
+        heapq.heappush(self.left, -num)
+
+        # Balance: move largest from left to right
+        heapq.heappush(self.right, -heapq.heappop(self.left))
+
+        # Maintain size invariant
+        if len(self.right) > len(self.left):
+            heapq.heappush(self.left, -heapq.heappop(self.right))
+
+    def findMedian(self) -> float:
+        if len(self.left) == len(self.right):
+            return (-self.left[0] + self.right[0]) / 2
+        else:
+            return -self.left[0]",GPT-4,"import heapq
+
+class MedianFinder:
+    def __init__(self):
+        # Max heap for the lower half of numbers
+        self.small = []  # (negative numbers to simulate max heap)
+        # Min heap for the upper half of numbers
+        self.large = []
+
+    def addNum(self, num: int) -> None:
+        # Add to max heap first
+        heapq.heappush(self.small, -num)
+        
+        # Ensure all elements in small are <= all elements in large
+        # Move the largest element from small to large
+        if self.small and self.large and -self.small[0] > self.large[0]:
+            heapq.heappush(self.large, -heapq.heappop(self.small))
+        
+        # Balance the heaps to maintain size difference <= 1
+        # If small has 2 more elements than large
+        if len(self.small) > len(self.large) + 1:
+            heapq.heappush(self.large, -heapq.heappop(self.small))
+        # If large has more elements than small
+        elif len(self.large) > len(self.small):
+            heapq.heappush(self.small, -heapq.heappop(self.large))
+
+    def findMedian(self) -> float:
+        # If odd number of elements (small has one more)
+        if len(self.small) > len(self.large):
+            return -self.small[0]
+        # If even number of elements
+        else:
+            return (-self.small[0] + self.large[0]) / 2",Claude 3.7 Sonnet,"import heapq
+
+class MedianFinder:
+
+    def __init__(self):
+        self.max_heap = []  # stores the smaller half, using max heap (simulated with negative values)
+        self.min_heap = []  # stores the larger half, using min heap
+
+    def addNum(self, num: int) -> None:
+        if not self.max_heap or num <= -self.max_heap[0]:
+            heapq.heappush(self.max_heap, -num)
+        else:
+            heapq.heappush(self.min_heap, num)
+        
+        # Balance the heaps
+        if len(self.max_heap) > len(self.min_heap) + 1:
+            heapq.heappush(self.min_heap, -heapq.heappop(self.max_heap))
+        elif len(self.min_heap) > len(self.max_heap):
+            heapq.heappush(self.max_heap, -heapq.heappop(self.min_heap))
+
+    def findMedian(self) -> float:
+        if len(self.max_heap) == len(self.min_heap):
+            return (-self.max_heap[0] + self.min_heap[0]) / 2
+        else:
+            return -self.max_heap[0]",DeepSeek-V3
+Iftekhar,123,Best Time to Buy and Sell Stock III,"You are given an array prices where prices[i] is the price of a given stock on the ith day.
+
+Find the maximum profit you can achieve. You may complete at most two transactions.
+
+Note: You may not engage in multiple transactions simultaneously (i.e., you must sell the stock before you buy again).
+
+ 
+
+Example 1:
+
+Input: prices = [3,3,5,0,0,3,1,4]
+Output: 6
+Explanation: Buy on day 4 (price = 0) and sell on day 6 (price = 3), profit = 3-0 = 3.
+Then buy on day 7 (price = 1) and sell on day 8 (price = 4), profit = 4-1 = 3.
+Example 2:
+
+Input: prices = [1,2,3,4,5]
+Output: 4
+Explanation: Buy on day 1 (price = 1) and sell on day 5 (price = 5), profit = 5-1 = 4.
+Note that you cannot buy on day 1, buy on day 2 and sell them later, as you are engaging multiple transactions at the same time. You must sell before buying again.
+Example 3:
+
+Input: prices = [7,6,4,3,1]
+Output: 0
+Explanation: In this case, no transaction is done, i.e. max profit = 0.
+ 
+
+Constraints:
+
+1 <= prices.length <= 10^5
+0 <= prices[i] <= 10^5","Array, Dynamic Programming",Hard,"from typing import List
+
+class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        dp_i_2_0, dp_i_1_0 = 0, 0
+        # dp_i_2_1, dp_i_1_1 = -prices[0], -prices[0]  # 会报错：list index out of range
+        dp_i_2_1, dp_i_1_1 = float('-inf'), float('-inf')  # 负无穷
+        for i in range(len(prices)):
+            # 昨天没有股票，昨天有股票今天卖出
+            dp_i_2_0 = max(dp_i_2_0, dp_i_2_1 + prices[i])
+            # 昨天有股票，昨天没有股票今天买入
+            dp_i_2_1 = max(dp_i_2_1, dp_i_1_0 - prices[i])
+            # 昨天没有股票，昨天有股票今天卖出
+            dp_i_1_0 = max(dp_i_1_0, dp_i_1_1 + prices[i])
+            # 昨天有股票，昨天没有股票今天买入
+            dp_i_1_1 = max(dp_i_1_1, -prices[i])
+            
+        return dp_i_2_0
+
+if __name__ == ""__main__"":
+    prices = [3,3,5,0,0,3,1,4]
+    print(Solution().maxProfit(prices))",Wonz (https://github.com/Wonz5130),"class Solution:
+    def maxProfit(self, prices):
+        """"""
+        :type prices: List[int]
+        :rtype: int
+        """"""
+        b1, b2, s1, s2 = -float('inf'), -float('inf'), 0, 0
+        for price in prices:
+            s2 = max(s2, b2 + price)
+            b2 = max(b2, s1 - price)
+            s1 = max(s1, b1 + price)
+            b1 = max(b1, -price)
+        return s2",Jared Gillespie (https://github.com/JaredLGillespie),"class Solution:
+    def maxProfit(self, prices: List[int]) -> int:
+        transaction_one = float(inf)
+        transaction_two = float(inf)
+        current_profit = 0
+        total_profit = 0
+        for price in prices:
+            transaction_one = min(transaction_one, price)
+            current_profit = max(current_profit, price - transaction_one)
+            transaction_two = min(transaction_two, price - current_profit)
+            total_profit = max(total_profit, price - transaction_two)
+        return total_profit",Iurii Spiridonov (https://github.com/YuriSpiridonov),"def maxProfit(prices):
+    buy1 = buy2 = float('-inf')
+    sell1 = sell2 = 0
+
+    for price in prices:
+        buy1 = max(buy1, -price)          # First buy
+        sell1 = max(sell1, buy1 + price)  # First sell
+        buy2 = max(buy2, sell1 - price)   # Second buy
+        sell2 = max(sell2, buy2 + price)  # Second sell
+
+    return sell2",GPT-4,"def maxProfit(prices: list[int]) -> int:
+    if not prices:
+        return 0
+    
+    n = len(prices)
+    
+    # Initialize the state variables
+    # buy1: maximum profit after first buy
+    # sell1: maximum profit after first sell
+    # buy2: maximum profit after second buy
+    # sell2: maximum profit after second sell
+    buy1 = -prices[0]
+    sell1 = 0
+    buy2 = -prices[0]
+    sell2 = 0
+    
+    for i in range(1, n):
+        # Calculate the maximum profit if we buy the stock today for the first transaction
+        # Either keep the previous buying state or buy today
+        buy1 = max(buy1, -prices[i])
+        
+        # Calculate the maximum profit if we sell the stock today for the first transaction
+        # Either keep the previous selling state or sell today
+        sell1 = max(sell1, buy1 + prices[i])
+        
+        # Calculate the maximum profit if we buy the stock today for the second transaction
+        # Either keep the previous buying state or buy today using the profit from first transaction
+        buy2 = max(buy2, sell1 - prices[i])
+        
+        # Calculate the maximum profit if we sell the stock today for the second transaction
+        # Either keep the previous selling state or sell today
+        sell2 = max(sell2, buy2 + prices[i])
+    
+    # The maximum profit will be after the second sell
+    return sell2",Claude 3.7 Sonnet,"def maxProfit(prices):
+    if not prices:
+        return 0
+    
+    # Initialize variables for the first and second transactions
+    first_buy = -prices[0]
+    first_sell = 0
+    second_buy = -prices[0]
+    second_sell = 0
+    
+    for price in prices[1:]:
+        # Update first buy and sell
+        first_buy = max(first_buy, -price)
+        first_sell = max(first_sell, first_buy + price)
+        
+        # Update second buy and sell
+        second_buy = max(second_buy, first_sell - price)
+        second_sell = max(second_sell, second_buy + price)
+    
+    return second_sell",DeepSeek-V3
+Iftekhar,365,Water and Jug Problem,"You are given two jugs with capacities x liters and y liters. You have an infinite water supply. Return whether the total amount of water in both jugs may reach target using the following operations:
+
+Fill either jug completely with water.
+Completely empty either jug.
+Pour water from one jug into another until the receiving jug is full, or the transferring jug is empty.
+ 
+
+Example 1:
+
+Input: x = 3, y = 5, target = 4
+
+Output: true
+
+Explanation:
+
+Follow these steps to reach a total of 4 liters:
+
+Fill the 5-liter jug (0, 5).
+Pour from the 5-liter jug into the 3-liter jug, leaving 2 liters (3, 2).
+Empty the 3-liter jug (0, 2).
+Transfer the 2 liters from the 5-liter jug to the 3-liter jug (2, 0).
+Fill the 5-liter jug again (2, 5).
+Pour from the 5-liter jug into the 3-liter jug until the 3-liter jug is full. This leaves 4 liters in the 5-liter jug (3, 4).
+Empty the 3-liter jug. Now, you have exactly 4 liters in the 5-liter jug (0, 4).
+Reference: The Die Hard example.
+
+Example 2:
+
+Input: x = 2, y = 6, target = 5
+
+Output: false
+
+Example 3:
+
+Input: x = 1, y = 2, target = 3
+
+Output: true
+
+Explanation: Fill both jugs. The total amount of water in both jugs is equal to 3 now.
+
+ 
+
+Constraints:
+
+1 <= x, y, target <= 10^3","Math
+Depth-First Search
+Breadth-First Search",Medium,"class Solution(object):
+    def canMeasureWater(self, x, y, z):
+        """"""
+        Number theory
+        Use the property of Bezout's identity and check if z is a multiple of GCD(x, y)
+        https://discuss.leetcode.com/topic/49238/math-solution-java-solution
+
+        ax + by = d
+        :type x: int
+        :type y: int
+        :type z: int
+        :rtype: bool
+        """"""
+        if x + y < z: return False
+        if x == z or y == z: return True
+
+        return z % self.gcd(x, y) == 0
+
+    def gcd(self, a, b):
+        while b:
+            a, b = b, a%b
+        return a",Danil Zhang (https://github.com/idf),"class Solution:
+    def canMeasureWater(self, x, y, z):
+        def gcd(x, y):
+            for i in range(min(x, y), -1, -1):
+                if not x % i and not y % i: return i      
+        div = gcd(x, y) if x * y else 0
+        return not z % div and z <= x + y if div else not z",Cenkay Arapisaoglu (https://github.com/cnkyrpsgl),"class Solution:
+    def canMeasureWater(self, x: int, y: int, z: int) -> bool:
+        # solution one: BFS
+        from collections import deque
+        queue = deque([[0, 0]])
+        visited = set([(0, 0)])
+
+        while queue:
+            cur_x, cur_y = queue.pop()
+            if z in [cur_x, cur_y, cur_x + cur_y]:
+                return True
+            for item in [
+                # x 加满水，y 加满水
+                (x, cur_y), (cur_x, y),
+                # x 清空水，y 清空水
+                (0, cur_y), (cur_x, 0),
+                # 把 x 壶的水灌进 y 壶，直至灌满或倒空
+                (cur_x + cur_y - y, y) if cur_x + cur_y >= y else (0, cur_x + cur_y),
+                # 把 X 壶的水灌进 Y 壶，直至灌满或倒空
+                (x, cur_x + cur_y - x) if cur_x + cur_y >= x else (cur_x + cur_y, 0)]:
+                if item not in visited:
+                    queue.appendleft(item)  # 从队列左边加入元素
+                    visited.add(item)
+        return False
+
+        # solution two: 裴蜀定理
+        import math
+        if x + y < z:
+            return False
+        if x == z or y == z or x + y == z:
+            return True
+        return z % math.gcd(x, y) == 0",Wonz (https://github.com/Wonz5130),"from math import gcd
+
+def canMeasureWater(x, y, target):
+    if target > x + y:
+        return False
+    return target % gcd(x, y) == 0",GPT-4,"def canMeasureWater(x: int, y: int, target: int) -> bool:
+    # Edge cases
+    if target > x + y:
+        return False
+    if target == 0:
+        return True
+    if x == 0 and y == 0:
+        return False
+    
+    # Bézout's identity: ax + by = gcd(x,y)
+    # We can measure any quantity that's a multiple of gcd(x,y)
+    from math import gcd
+    return target % gcd(x, y) == 0",Claude 3.7 Sonnet,"import math
+
+def canMeasureWater(x: int, y: int, target: int) -> bool:
+    if target == 0:
+        return True
+    if target > x + y:
+        return False
+    return target % math.gcd(x, y) == 0",DeepSeek-V3
+Iftekhar,763,Partition Labels,"You are given a string s. We want to partition the string into as many parts as possible so that each letter appears in at most one part. For example, the string ""ababcc"" can be partitioned into [""abab"", ""cc""], but partitions such as [""aba"", ""bcc""] or [""ab"", ""ab"", ""cc""] are invalid.
+
+Note that the partition is done so that after concatenating all the parts in order, the resultant string should be s.
+
+Return a list of integers representing the size of these parts.
+
+ 
+
+Example 1:
+
+Input: s = ""ababcbacadefegdehijhklij""
+Output: [9,7,8]
+Explanation:
+The partition is ""ababcbaca"", ""defegde"", ""hijhklij"".
+This is a partition so that each letter appears in at most one part.
+A partition like ""ababcbacadefegde"", ""hijhklij"" is incorrect, because it splits s into less parts.
+Example 2:
+
+Input: s = ""eccbbbbdec""
+Output: [10]
+ 
+
+Constraints:
+
+1 <= s.length <= 500
+s consists of lowercase English letters.","Hash Table
+Two Pointers
+String
+Greedy",Medium,"def partitionLabels(self, s: str) -> List[int]:
+        last = {ch : i for i, ch in enumerate(s)}
+        ans = []
+        lo = hi = 0
+        for i, ch in enumerate(s):
+            hi = max(hi, last[ch])
+            if i == hi:
+                ans.append(hi - lo + 1)
+                lo = hi + 1
+        return ans",Ye Gao (https://github.com/gaosanyong),"class Solution:
+    def partitionLabels(self, S: str) -> List[int]:
+        last_occurences = {}
+        for i in range(len(s)):
+            last_occurences[s[i]] = i
+
+        res = []
+        i = 0
+        while i < len(s):
+            left = i
+            right = last_occurences[s[i]]
+
+            ptr = i + 1
+            while ptr < right:
+                right = max(right, last_occurences[s[ptr]])
+                ptr += 1
+
+            res.append(right - left + 1)
+            i = right + 1
+
+        return res",Zhenye (Nathan) Na (https://github.com/Zhenye-Na),"class Solution:
+    def partitionLabels(self, S: str) -> List[int]:
+        tr = {}
+        for i, a in enumerate(S):
+            if a not in tr:
+                tr[a] = [i, i]
+            else:
+                tr[a][1] = i
+        rgs = list(tr.values())
+        rgs.sort()
+        merged = []
+        for rg in rgs:
+            if not merged:
+                merged.append(list(rg))
+                continue
+            if merged[-1][1] >= rg[0]:
+                merged[-1][1] = max(merged[-1][1], rg[1])
+            else:
+                merged.append(list(rg))
+        return [rg[1] - rg[0] + 1 for rg in merged]",franklingu (https://github.com/franklingu),"def partitionLabels(s):
+    # Step 1: Record the last index of each character
+    last = {ch: i for i, ch in enumerate(s)}
+    
+    res = []
+    start = end = 0
+    
+    # Step 2: Traverse the string to find partitions
+    for i, ch in enumerate(s):
+        end = max(end, last[ch])  # extend the window to the farthest last occurrence
+        if i == end:
+            res.append(end - start + 1)
+            start = i + 1  # start of next partition
+    
+    return res",GPT-4,"def partitionLabels(s: str) -> list[int]:
+    # Find the last occurrence of each character
+    last_occurrence = {}
+    for i, char in enumerate(s):
+        last_occurrence[char] = i
+    
+    # Partition the string
+    result = []
+    start = 0
+    end = 0
+    
+    for i, char in enumerate(s):
+        # Update the end of current partition
+        end = max(end, last_occurrence[char])
+        
+        # If we've reached the end of the current partition
+        if i == end:
+            # Add the length of this partition to result
+            result.append(end - start + 1)
+            # Update start position for next partition
+            start = i + 1
+    
+    return result",Claude 3.7 Sonnet,"def partitionLabels(s):
+    last_occurrence = {char: idx for idx, char in enumerate(s)}
+    result = []
+    start = 0
+    end = 0
+    
+    for idx, char in enumerate(s):
+        end = max(end, last_occurrence[char])
+        if idx == end:
+            result.append(end - start + 1)
+            start = end + 1
+    
+    return result",DeepSeek-V3

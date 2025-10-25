@@ -1,0 +1,3686 @@
+Collected By,Problem No.,Problem Title,Problem Prompt/Description,Primary Category,Difficulty,Sol-1,Sol-1 Source/Author Link,Sol-2,Sol-2 Source/Author Link,Sol-3,Sol-3 Source/Author Link,AI Sol-1,AI Sol-1 Model,AI Sol-2,AI Sol-2 Model,AI Sol-3,AI Sol-3 Model
+Iftekhar,19_20-1-1-python,LCM -- Least Common Multiple,"Similar to the already known ""Greatest Common Divisor"" (GCD),
+the Least Common Multiple (LCM) is also used in elementary mathematical
+applications, for example in the multiplication of heterogeneous fractions. This
+has applications ranging from the adaptation of cooking recipes to other
+portion quantities to the calculation of planetary orbits.
+
+The LCM is defined as follows:
+$lcm(n_1, n_2)=\frac{n_1 \cdot n_2}{gcd(n_1,n_2)}$.
+
+Implement a function that calculates the LCM of two given values.
+It may be based on the GCD implementation from the lecture.
+
+Note: The use of ""import"" is not allowed.",Math,Easy,"def GCD(a, b):
+# GCD-Implementation der Vorlesung
+    if a < b:
+        a, b = b, a
+
+
+    r = a % b
+    if r != 0:
+        return   GCD(b, r)
+
+    else:
+        return b
+
+def LCM(a, b):
+    return a * b / GCD(a, b)",3QDYQU4I,"def   GGT(a, b):    
+    if a < b:   
+     
+        a, b = b, a    
+    r = a % b 
+
+   
+    if r > 0:        
+        return GGT(b, r)    
+    else:        
+        return b
+
+
+
+def LCM(a, b):
+    return a *b / GGT (a,   b)",4PPDVAQT,"def LCM(a, b):
+    mult = a * b
+    return mult/GCD(a, b)
+
+def GCD(x, y):
+
+
+    if x < y:
+        x, y =   y, x
+
+    r = x % y
+    if r != 0:
+
+        return   GCD(y, r)
+    else:
+        return y",5SQ7WPEA,"def gcd(a, b):
+    while b != 0:
+        a, b = b, a % b
+    return a
+
+def lcm(n1, n2):
+    if n1 == 0 or n2 == 0:
+        return 0  # LCM is 0 if either number is 0
+    return (n1 * n2) // gcd(n1, n2)",GPT-4,"def gcd(a, b):
+    """"""Calculate the Greatest Common Divisor of a and b.""""""
+    while b:
+        a, b = b, a % b
+    return a
+
+def lcm(a, b):
+    """"""Calculate the Least Common Multiple of a and b.""""""
+    return a * b // gcd(a, b)",Claude 3.7 Sonnet,"def gcd(a, b):
+    while b:
+        a, b = b, a % b
+    return a
+
+def lcm(a, b):
+    return abs(a * b) // gcd(a, b)",DeepSeek-V3
+Iftekhar,19_20-2-1-python,Queue,"Implement a class ""Queue"" that works like a queue (as described in the
+the lecture). The class should have at least the
+methods isEmpty(), head(), enqueue(x) and dequeue(). The
+queue does not need to hold more than 100 elements.
+
+Note 1: In the Java test, the stack is expected to store ""strings"".
+Since Python is dynamically typed, this does not apply.
+
+Note 2: It is not allowed to use ""import""!",Queue,Medium,"class Queue:
+    """"""Klasse, die eine selbstgebaute Queue darstellt.
+    """"""
+    def __init__(self):
+        self.queue =list()
+        self.maxSize = 100
+        self.start = 0
+        self.rear = 0
+
+    def isEmpty(self):
+        """"""Prueft, ob die Queue leer ist.
+        :return: True, wenn die Queue leer ist;
+            False, sonst
+        """"""
+        if(self.start==self.rear):
+            return True
+        return False
+
+    def head(self):
+        """"""Gibt den Wert des ersten Elements in der Queue
+            zurueck.
+        :return: Den Wert des ersten Elementes in der Queue
+        """"""
+        x = self.queue[self.start]
+        return x
+
+    def enqueue(self, x):
+        """"""Haengt ein Element an die Queue an.
+        :param x: Anzuhaengendes Element
+        """"""
+        if(self.size() >= self.maxSize):
+            return (""Queue full"")
+        self.queue.append( x )
+        self.rear+=1
+
+
+
+    def dequeue(self):
+        """"""Entfernt das erste Element aus der Queue
+        :return: Erstes Element
+        """"""
+        if(self.size()<= 0):
+            self.resetQueue()
+            return (""Queue Empty"")
+        x = self.queue[self.start]
+        self.start +=  1
+
+        return x
+        
+    def size(self):
+        return self.rear - self.start
+
+
+
+
+        
+    def    resetQueue(self):
+        self.rear = 0
+        self.start = 0
+        self.queue = list()",6RPRP4IE,"class Queue:
+    """"""Klasse, die eine selbstgebaute Queue darstellt.
+    """"""
+    def __init__(self):
+        self.elements: list = list()
+
+    def isEmpty(self):
+        """"""Prueft, ob die Queue leer ist.
+        :return: True, wenn die Queue leer ist;
+
+            False, sonst
+        """"""
+        if len(self.elements) == 0:
+            return True
+
+        return False
+
+
+
+    def head(self):
+        """"""Gibt den Wert des ersten Elements in der Queue
+            zurueck.
+        :return: Den Wert des ersten Elementes in der Queue
+        """"""
+
+        if len(self.elements) >   0:
+            return self.elements[0]
+        else:
+            raise IndexError
+
+
+    def enqueue(self, x):
+        """"""Haengt ein Element an die Queue an.
+        :param x: Anzuhaengendes Element
+        """"""
+        if len(self.elements) < 100:
+            self.elements.append(x)
+
+
+
+
+        else:
+            raise IndexError
+
+    def dequeue(self):
+        """"""Entfernt das erste Element    aus der Queue
+        :return: Erstes Element
+        """"""
+        if len(self.elements) > 0:
+            return self.elements.pop(0)
+        else:
+
+
+            raise IndexError",7H5QQ662,"class Queue:
+    """"""Klasse, die eine selbstgebaute Queue darstellt.
+    """"""
+
+    def __init__(self):
+        self._queue = []
+
+    def isEmpty(self):
+        """"""Prueft, ob die Queue leer ist.
+        :return: True, wenn die Queue leer ist;
+            False, sonst
+        """"""
+        if len(self._queue) == 0:
+            return True
+        else:
+            return False
+
+
+    def head(self):
+
+
+        """"""Gibt den Wert des ersten Elements in der Queue
+            zurueck.
+
+        :return: Den Wert des ersten Elementes in der Queue
+        """"""
+        return self._queue[0]
+
+    def enqueue(self    , x):
+        """"""Haengt ein Element an die Queue an.
+        :param x: Anzuhaengendes  Element
+        """"""
+        self._queue.append(x)
+
+    def dequeue(self):
+
+
+        """"""Entfernt das erste Element aus der Queue
+        :return: Erstes Element
+        """"""
+        return self._queue.pop(0)",BUQGY7N7,"class Queue:
+    def __init__(self):
+        self.items = [None] * 100  # Fixed size
+        self.front = 0
+        self.rear = 0
+
+    def isEmpty(self):
+        return self.front == self.rear
+
+    def enqueue(self, x):
+        if self.rear >= 100:
+            print(""Queue is full!"")
+            return
+        self.items[self.rear] = x
+        self.rear += 1
+
+    def dequeue(self):
+        if self.isEmpty():
+            print(""Queue is empty!"")
+            return None
+        item = self.items[self.front]
+        self.front += 1
+        return item
+
+    def head(self):
+        if self.isEmpty():
+            print(""Queue is empty!"")
+            return None
+        return self.items[self.front]",GPT-4,"class Queue:
+    def __init__(self):
+        """"""Initialize an empty queue with a maximum size of 100.""""""
+        self.items = [None] * 100  # Preallocate space for 100 elements
+        self.front = 0  # Index of the front element
+        self.rear = 0   # Index where the next element will be inserted
+        self.size = 0   # Current number of elements in the queue
+
+    def isEmpty(self):
+        """"""Return True if the queue is empty, False otherwise.""""""
+        return self.size == 0
+
+    def head(self):
+        """"""Return the element at the front of the queue without removing it.
+        Raises an error if the queue is empty.""""""
+        if self.isEmpty():
+            raise IndexError(""Queue is empty"")
+        return self.items[self.front]
+
+    def enqueue(self, x):
+        """"""Add an element to the rear of the queue.
+        Raises an error if the queue is full.""""""
+        if self.size == 100:
+            raise IndexError(""Queue is full"")
+        
+        self.items[self.rear] = x
+        self.rear = (self.rear + 1) % 100  # Wrap around if necessary
+        self.size += 1
+
+    def dequeue(self):
+        """"""Remove and return the element at the front of the queue.
+        Raises an error if the queue is empty.""""""
+        if self.isEmpty():
+            raise IndexError(""Queue is empty"")
+        
+        x = self.items[self.front]
+        self.front = (self.front + 1) % 100  # Wrap around if necessary
+        self.size -= 1
+        return x",Claude 3.7 Sonnet,"class Queue:
+    def __init__(self):
+        self.items = []
+        self.max_size = 100
+
+    def isEmpty(self):
+        return len(self.items) == 0
+
+    def head(self):
+        if not self.isEmpty():
+            return self.items[0]
+        else:
+            return None  # or raise an exception like ""Queue is empty""
+
+    def enqueue(self, x):
+        if len(self.items) < self.max_size:
+            self.items.append(x)
+        else:
+            raise Exception(""Queue is full"")  # or handle it differently
+
+    def dequeue(self):
+        if not self.isEmpty():
+            return self.items.pop(0)
+        else:
+            return None  # or raise an exception like ""Queue is empty""",DeepSeek-V3
+Iftekhar,19_20-2-2-python,Stack,"The Reverse Polish Notation / Postfix Notation is a special notation for
+for mathematical expressions, where the numbers are given first, followed by the
+operators. The expression (1 * 2)+(3 * 4) would be 1 2 * 3 4 * + in this notation.
+
+A calculator for this notation can be represented well with the help of a stack.
+The notation is processed from left to right.
+If a number is processed, it is put on the stack.
+If an operator is encountered, then the uppermost two numbers are taken from the stack,
+the operator is executed and the result is put back on the stack.
+After the calculation, the result is the only number on the stack.
+
+In this task you are asked to implement such a calculator in a method.
+It should be able to process the operators plus (+), minus (-), times (*)
+and division (/, rounded down). You will receive a stack with the following
+known methods, which you have to use in your implementation:
+
+* emptystack()
+* head()
+* push(int i)
+* pop()
+
+The method receives as input a list of strings in which the
+numbers and operators are already separated (e.g..: input =
+[""1"", ""2"", ""*"", ""3"", ""4"", ""*"", ""+""]). Strings can be converted with ""int(myString)"".
+You will also get a stack, which you should use.
+The method should return the correct result as an integer.
+
+You can assume that the input is a correct formula.
+",Stack,Medium,"def Calculator(inputarray, stack):
+
+
+    for i in range(len(inputarray)):
+        if inputarray[i] not in ""/*+-"":
+
+
+            stack.push( inputarray[i])
+
+        if inputarray[i] in ""/*+-"":
+            last = str(stack.pop())
+            first = str(stack.pop())
+            result =   eval(first+inputarray[i]+last)
+            stack.push(result)
+
+    return result",BVAP5NM4,"def Calculator(inputarray, stack):
+    for element in inputarray:
+
+
+        if element == ""+"":
+            a = stack.pop()
+
+
+            b = stack.pop()
+
+            c = b + a
+            stack.push(c)
+        elif element == ""-"":
+
+
+            a = stack.pop()
+            b = stack.pop()
+
+            c = b - a
+
+
+
+            stack.push(c)
+
+
+
+        elif element == ""*"":
+            a = stack.pop()
+            b = stack.pop()
+            c = b *   a
+            stack.push(c)
+        elif element == ""/"":
+
+
+            a = stack.pop()
+            b = stack.pop()
+
+
+            c = b / a
+
+
+            stack.push(c)
+        
+        else:
+
+
+
+            stack.push(int(element))
+                
+
+
+    return stack.pop()",C36JD6CE,"def Calculator(inputarray, stack = []):
+    inputarray = list(reversed(inputarray))
+    # print(inputarray)
+    ops = {'+': lambda x, y: x + y,
+          '-': lambda x, y: x - y,
+          '*': lambda x, y: x * y,
+
+          '/': lambda x, y: x / y}
+
+    while len(inputarray) != 0:
+
+        current_element = inputarray.pop()
+        # print(current_element)
+        
+        if current_element in ops.keys():
+    
+          # print(""emptystack"",stack.emptystack())
+          if not stack.emptystack():
+
+
+                second_num = stack.pop()
+                # print('first:', first_num)
+                first_num = stack.pop()
+
+                # print('second :',second_num)
+                result = ops[current_element](first_num,second_num)
+                stack.push(result)
+          else:
+              print('there is nothing in stack')
+              return   0
+
+
+        else: 
+          stack.push(int(current_element))
+          # print(stack)
+
+    return stack.pop()",C6P7CKBX,"def calculateRPN(input, stack):
+    for token in input:
+        if token in [""+"", ""-"", ""*"", ""/""]:
+            b = stack.pop()
+            a = stack.pop()
+
+            if token == ""+"":
+                result = a + b
+            elif token == ""-"":
+                result = a - b
+            elif token == ""*"":
+                result = a * b
+            elif token == ""/"":
+                # Floor division
+                result = a // b if a * b >= 0 else -(abs(a) // abs(b))
+
+            stack.push(result)
+        else:
+            # It's a number, push it to the stack
+            stack.push(int(token))
+
+    return stack.pop()
+",GPT-4,"def calculate_rpn(input_list, stack):
+    """"""
+    Calculate the result of a Reverse Polish Notation expression.
+    
+    Args:
+        input_list: List of strings representing numbers and operators in RPN
+        stack: A stack implementation with methods emptystack(), head(), push(), pop()
+    
+    Returns:
+        The result of the calculation as an integer
+    """"""
+    # Make sure the stack is empty at the beginning
+    while not stack.emptystack():
+        stack.pop()
+    
+    # Process each token in the input list
+    for token in input_list:
+        if token in [""+"", ""-"", ""*"", ""/""]:
+            # If it's an operator, pop the top two values from the stack
+            b = stack.pop()  # Second operand
+            a = stack.pop()  # First operand
+            
+            # Perform the operation and push the result back to the stack
+            if token == ""+"":
+                stack.push(a + b)
+            elif token == ""-"":
+                stack.push(a - b)
+            elif token == ""*"":
+                stack.push(a * b)
+            elif token == ""/"":
+                # Integer division (rounds down)
+                stack.push(a // b)
+        else:
+            # If it's a number, convert to integer and push to stack
+            stack.push(int(token))
+    
+    # The result should be the only element left on the stack
+    return stack.pop()",Claude 3.7 Sonnet,"def rpn_calculator(input_list, stack):
+    for token in input_list:
+        if token in '+-*/':
+            # It's an operator, pop two numbers
+            b = stack.pop()
+            a = stack.pop()
+            if token == '+':
+                stack.push(a + b)
+            elif token == '-':
+                stack.push(a - b)
+            elif token == '*':
+                stack.push(a * b)
+            elif token == '/':
+                stack.push(a // b)
+        else:
+            # It's a number, push to stack
+            stack.push(int(token))
+    # The result is the only number left on the stack
+    return stack.pop()",DeepSeek-V3
+Iftekhar,19_20-3-1-python,List Sorting,"Implement any search algorithm from the lecture
+that sorts the given list.
+
+The list has the following operations, which get as input indexes of the
+list elements:
+
+* Swap(int x, int y) <- Swaps the items at position x and y.
+
+* Larger(int x, int y) <- Returns true if the item at
+position x is greater than the item at position y
+
+* Smaller(int x, int y) <- Returns true if the item at
+position y is greater than the element at position x
+
+* Equal(int x, int y) <- Returns true if the element at
+position y is equal to the element at position x
+
+* Length() <- Returns the length of the list
+",Sorting,Medium,"def listSorter(listToSort: ListToSort) -> ListToSort:
+    return myQuicksort(listToSort, 0, listToSort.Length() -1   )
+    
+
+def myQuicksort(listToSort, l, r):
+    if r-l > 0:
+        p = partition(listToSort, l, r)
+        myQuicksort(listToSort, l, p-1)
+        myQuicksort(listToSort, p, r)
+    return listToSort
+    
+def partition(listToSort, l, r):
+    p = r
+
+    while l < r:
+        while listToSort.Smaller(l, p) or (listToSort.Equal(l, p) and l < r):
+            l = l+1
+        while listToSort.Larger(r, p) or (listToSort.Equal(r, p) and l < r):
+            r =  r-1
+            if r <    0:
+
+
+                break
+        if l < r:
+            listToSort.Swap(l, r)
+
+
+
+    listToSort.Swap(l, p)
+
+    return l",5TRPAFPX,"def listSorter(listToSort: ListToSort) -> ListToSort:
+    for i in range(listToSort.Length()):
+
+
+        for j in range(listToSort.Length()):
+
+            if listToSort.Smaller(i,j)  :
+                listToSort.Swap(i,j)
+
+    return     listToSort",FMFB2ERW,"def listSorter(listToSort: ListToSort) -> ListToSort:
+    for i in range(listToSort.Length()-1):
+        for j in range(listToSort.Length()-1-i):
+            if listToSort.Larger(j,j+1):
+                listToSort.Swap(j,j+1)
+    return(listToSort)",G632BNLN,"def sortList(myList):
+    n = myList.Length()
+    for i in range(n):
+        for j in range(0, n - i - 1):
+            if myList.Larger(j, j + 1):
+                myList.Swap(j, j + 1)
+",GPT-4,"def selection_sort(list_to_sort):
+    """"""
+    Sort a list using the Selection Sort algorithm.
+    
+    Args:
+        list_to_sort: A list object with the required operations
+        
+    The function sorts the list in-place (no return value needed)
+    """"""
+    n = list_to_sort.Length()
+    
+    # Iterate through the list
+    for i in range(n):
+        # Find the minimum element in the unsorted part
+        min_idx = i
+        for j in range(i + 1, n):
+            # Compare current minimum with the current element
+            if list_to_sort.Smaller(j, min_idx):
+                min_idx = j
+        
+        # Swap the found minimum element with the first element of the unsorted part
+        if min_idx != i:
+            list_to_sort.Swap(i, min_idx)",Claude 3.7 Sonnet,"def selection_sort(list_ops):
+    n = list_ops.Length()
+    for i in range(n):
+        # Assume the current position is the smallest
+        min_idx = i
+        for j in range(i + 1, n):
+            # Find the smallest element in the unsorted part
+            if list_ops.Larger(min_idx, j):
+                min_idx = j
+        # Swap the found smallest element with the first element of the unsorted part
+        if i != min_idx:
+            list_ops.Swap(i, min_idx)",DeepSeek-V3
+Iftekhar,19_20-4-1-python,Search trees: Insertion,"These tasks will be about search trees. Our search trees are built from
+""nodes"", analogous to the lecture. A node looks like this:
+
+class Node:
+Â * key
+Â * left
+Â * right
+Â * parent
+
+In the lecture you have already seen an algorithm for searching in a search tree.
+
+You are to implement different methods for the search trees.
+For this task, implement a method ""insert"" that inserts a
+""Node"" into the search tree and returns the new search tree.
+The nodes can be reused as desired. The function
+is passed the root of the search tree and the new node.",Trees,Easy,"# Node in parameter represents root of tree
+def wholeTree(root):
+
+
+
+
+    if root is not None:
+        wholeTree(root.left)
+
+
+        wholeTree(root.right)
+        return root
+        
+def insert(root,insert):
+    x = root
+    y = None
+    while x is not None   :
+        y = x
+        if insert.key < x.key: x = x.left
+        else: x = x.right
+    insert.parent = y
+    if y is None: root = insert
+    elif (insert.key < y.key): y.left = insert
+
+
+    else: y.right = insert
+
+    return (wholeTree(root)   )",J24DZKBZ,"def insert(root, target):
+    
+    
+    if root == None: 
+        root = Node()
+        root.key = target.key
+        return root
+    
+
+
+    #rechts rum
+    if target.key > root.key:
+        #akt Wert == None
+
+        if root.right == None:     
+            root.right = target
+
+
+            target.parent = root
+        else:
+            insert(root.right, target)
+
+
+            
+    #links rum     
+    else: 
+        if root.left == None:   
+            root.left = target
+
+
+            target.parent = root
+
+        else:
+            insert(root.left, target)
+
+
+            
+    return root",LDR4Y4L3,"# Node in parameter represents root of tree
+def insert(root, target):
+    if not root:
+        return target
+
+
+
+    if target.key < root.key:
+        if root.left:
+
+            insert(root.   left , target)
+        else:
+
+            root.left = target
+            root.left.parent = root
+    
+    elif target.key >= root.key:
+        if root.right:
+            insert(root.right, target)
+        else:
+
+
+            root.right = target
+            root.right.parent = root
+        
+        
+    return root",NZJES6ZV,"class Node:
+    def __init__(self, key):
+        self.key = key
+        self.left = None
+        self.right = None
+        self.parent = None
+
+def insert(root, new_node):
+    if root is None:
+        return new_node
+
+    if new_node.key < root.key:
+        if root.left is None:
+            root.left = new_node
+            new_node.parent = root
+        else:
+            insert(root.left, new_node)
+    else:
+        if root.right is None:
+            root.right = new_node
+            new_node.parent = root
+        else:
+            insert(root.right, new_node)
+
+    return root
+",GPT-4,"def insert(root, new_node):
+    """"""
+    Insert a new node into a binary search tree.
+    
+    Args:
+        root: The root node of the binary search tree
+        new_node: The node to be inserted
+        
+    Returns:
+        The root of the modified search tree
+    """"""
+    # If the tree is empty, the new node becomes the root
+    if root is None:
+        return new_node
+    
+    # Start from the root
+    current = root
+    
+    # Traverse the tree to find the insertion point
+    while True:
+        # If the new key is less than the current node's key
+        if new_node.key < current.key:
+            # If there is no left child, insert here
+            if current.left is None:
+                current.left = new_node
+                new_node.parent = current
+                break
+            # Otherwise, continue down the left subtree
+            else:
+                current = current.left
+        # If the new key is greater than or equal to the current node's key
+        else:
+            # If there is no right child, insert here
+            if current.right is None:
+                current.right = new_node
+                new_node.parent = current
+                break
+            # Otherwise, continue down the right subtree
+            else:
+                current = current.right
+    
+    # Return the root of the tree
+    return root",Claude 3.7 Sonnet,"class Node:
+    def __init__(self, key):
+        self.key = key
+        self.left = None
+        self.right = None
+        self.parent = None
+
+def insert(root, new_node):
+    if root is None:
+        return new_node
+    current = root
+    parent = None
+    while current is not None:
+        parent = current
+        if new_node.key < current.key:
+            current = current.left
+        else:
+            current = current.right
+    new_node.parent = parent
+    if new_node.key < parent.key:
+        parent.left = new_node
+    else:
+        parent.right = new_node
+    return root",DeepSeek-V3
+Iftekhar,19_20-4-2-python,Search trees: Removal ,"These tasks will again be about search trees. Reminder:
+Our search trees are built from ""nodes"", analogous to the lecture.
+A node looks like this:
+
+class Node:
+Â * key
+Â * left
+Â * right
+Â * Parent
+
+For this task, implement a method ""delete"" which deletes a
+""Node"" in the search tree and returns the new search tree. Use the
+the method from the lecture slides, i.e. the one with ""TREE-MINIMUM"".
+The nodes can be reused as desired. The function gets the root
+of the search tree and the node to be deleted.
+",Trees,Easy,"def tree_minimum(node):
+    while node.left != None: node = node.left
+    return node
+
+
+
+# Node in parameter represents root of tree
+def tree_delete_node(root, delete):
+
+    y = None # der (nach Tausch) zu lÃ¶schende Knoten
+    if delete.left == None or delete.right ==    None: y = delete
+    else: y = tree_minimum(delete.right)
+    x = None           # Kind von y, das nicht None ist
+    if y.left != None: x = y.left
+    else: x = y.right
+    # entferne y aus der Baumstruktur
+    if x != None: x.parent = y.parent
+
+    if y.parent == None: root = x
+    elif y == y.parent.left: y.parent.left = x
+    else: y.parent.right = x
+
+
+    # kopiere Daten von y nach z
+    if y !=   delete: delete.key = y.key
+    
+    return root
+
+
+def search(node, k):
+    while node != None and k != node.key:
+
+
+        if k < node.key: node = node.left
+
+        else: node = node.right
+    return node
+
+
+
+
+def delete(root, delete):
+    return tree_delete_node(root, delete)
+
+
+
+
+
+def inorder_tree_walk(x):
+    if x != None:
+        inorder_tree_walk(x.left)
+        print(x.key)
+        inorder_tree_walk(x.right)",OMREAFIQ,"# Node in parameter represents root of tree
+def delete(root, delete):
+
+
+    if delete.left == None or delete.right == None:
+        y = delete
+    else:
+        y = t_min(delete.right)
+    if y.left != None:
+        x = y.left
+    else: x = y.right
+
+
+
+    if x!= None:
+        x.parent = y.parent
+
+    if y.parent == None:
+
+
+        root = x
+    else:
+        if y == y.parent.left:
+
+
+
+            y.parent.left = x
+        else:
+            y.parent.right = x
+    if y != delete:
+
+
+
+        delete.key = y.key
+    return root
+    
+
+
+def t_min(node):
+
+
+
+    while node.left !=None:
+
+        node =     node.left
+
+
+
+    return node",OTLDMOQQ,"# Node in parameter represents root of tree
+
+def delete(root, delete):
+
+
+    if delete.left == None or delete.right == None: delete_node = delete
+    else: delete_node = TREE_SUCCESSOR(delete.right)
+    if delete_node.left != None: not_nil_child = delete_node.left
+    else: not_nil_child = delete_node.right
+
+
+    if not_nil_child != None: not_nil_child.parent = delete_node.parent
+    if delete_node.parent == None: root = not_nil_child
+    else:
+        if delete_node == delete_node.parent.left: delete_node.parent.left = not_nil_child
+
+
+        else: delete_node.parent.right = not_nil_child
+    if delete_node != delete: delete.key = delete_node.key
+
+    return root
+
+def TREE_SUCCESSOR(node) :
+    while node.left !=  None: node = node.left
+    return node",PFNSZINL,"class Node:
+    def __init__(self, key):
+        self.key = key
+        self.left = None
+        self.right = None
+        self.parent = None
+
+def insert(root, new_node):
+    if root is None:
+        return new_node
+    if new_node.key < root.key:
+        if root.left is None:
+            root.left = new_node
+            new_node.parent = root
+        else:
+            insert(root.left, new_node)
+    else:
+        if root.right is None:
+            root.right = new_node
+            new_node.parent = root
+        else:
+            insert(root.right, new_node)
+    return root
+
+def tree_minimum(node):
+    while node.left is not None:
+        node = node.left
+    return node
+
+def transplant(root, u, v):
+    if u.parent is None:
+        root = v
+    elif u == u.parent.left:
+        u.parent.left = v
+    else:
+        u.parent.right = v
+    if v is not None:
+        v.parent = u.parent
+    return root
+
+def delete(root, node):
+    if node.left is None:
+        root = transplant(root, node, node.right)
+    elif node.right is None:
+        root = transplant(root, node, node.left)
+    else:
+        successor = tree_minimum(node.right)
+        if successor.parent != node:
+            root = transplant(root, successor, successor.right)
+            successor.right = node.right
+            successor.right.parent = successor
+        root = transplant(root, node, successor)
+        successor.left = node.left
+        successor.left.parent = successor
+    return root
+
+def inorder(node):
+    if node:
+        inorder(node.left)
+        print(node.key, end="" "")
+        inorder(node.right)
+
+# Example usage
+if __name__ == ""__main__"":
+    root = Node(15)
+    nodes = [Node(6), Node(18), Node(3), Node(7), Node(17), Node(20), Node(2), Node(4), Node(13), Node(9)]
+    for n in nodes:
+        insert(root, n)
+
+    print(""In-order before deletion:"")
+    inorder(root)
+    print()
+
+    root = delete(root, nodes[0])  # Delete Node(6)
+
+    print(""In-order after deleting 6:"")
+    inorder(root)
+    print()
+",GPT-4,"def delete(root, node_to_delete):
+    """"""
+    Delete a node from a binary search tree using the algorithm with TREE-MINIMUM.
+    
+    Args:
+        root: The root node of the binary search tree
+        node_to_delete: The node to be deleted
+        
+    Returns:
+        The root of the modified search tree
+    """"""
+    # Case 1: Node has no left child
+    if node_to_delete.left is None:
+        # Replace node with its right child
+        transplant(root, node_to_delete, node_to_delete.right)
+    
+    # Case 2: Node has left child but no right child
+    elif node_to_delete.right is None:
+        # Replace node with its left child
+        transplant(root, node_to_delete, node_to_delete.left)
+    
+    # Case 3: Node has both left and right children
+    else:
+        # Find the successor (minimum node in right subtree)
+        successor = tree_minimum(node_to_delete.right)
+        
+        # If the successor is not the immediate right child
+        if successor.parent != node_to_delete:
+            # Replace successor with its right child
+            transplant(root, successor, successor.right)
+            # Connect successor to node's right child
+            successor.right = node_to_delete.right
+            successor.right.parent = successor
+        
+        # Replace node with successor
+        transplant(root, node_to_delete, successor)
+        # Connect successor to node's left child
+        successor.left = node_to_delete.left
+        successor.left.parent = successor
+    
+    # Update root if we deleted the root node
+    if root == node_to_delete:
+        if node_to_delete.left is None:
+            root = node_to_delete.right
+        elif node_to_delete.right is None:
+            root = node_to_delete.left
+        else:
+            root = successor
+    
+    return root
+
+def transplant(root, u, v):
+    """"""
+    Replace the subtree rooted at node u with the subtree rooted at node v.
+    
+    Args:
+        root: The root of the tree
+        u: The node to be replaced
+        v: The node to replace with (can be None)
+    """"""
+    # If u is the root
+    if u.parent is None:
+        pass  # Root update is handled in the delete function
+    # If u is a left child
+    elif u == u.parent.left:
+        u.parent.left = v
+    # If u is a right child
+    else:
+        u.parent.right = v
+    
+    # Update parent pointer of v if v is not None
+    if v is not None:
+        v.parent = u.parent
+
+def tree_minimum(node):
+    """"""
+    Find the node with the minimum key in the subtree rooted at node.
+    
+    Args:
+        node: The root of the subtree
+        
+    Returns:
+        The node with the minimum key
+    """"""
+    current = node
+    while current.left is not None:
+        current = current.left
+    return current",Claude 3.7 Sonnet,"class Node:
+    def __init__(self, key):
+        self.key = key
+        self.left = None
+        self.right = None
+        self.parent = None
+
+def tree_minimum(node):
+    while node.left is not None:
+        node = node.left
+    return node
+
+def delete(root, node_to_delete):
+    if node_to_delete.left is None and node_to_delete.right is None:
+        # Case 1: Node has no children
+        if node_to_delete.parent is None:
+            # Node is the root
+            return None
+        elif node_to_delete.parent.left == node_to_delete:
+            node_to_delete.parent.left = None
+        else:
+            node_to_delete.parent.right = None
+    elif node_to_delete.left is None or node_to_delete.right is None:
+        # Case 2: Node has one child
+        child = node_to_delete.left if node_to_delete.left is not None else node_to_delete.right
+        if node_to_delete.parent is None:
+            # Node is the root
+            child.parent = None
+            return child
+        elif node_to_delete.parent.left == node_to_delete:
+            node_to_delete.parent.left = child
+        else:
+            node_to_delete.parent.right = child
+        child.parent = node_to_delete.parent
+    else:
+        # Case 3: Node has two children
+        successor = tree_minimum(node_to_delete.right)
+        node_to_delete.key = successor.key
+        delete(root, successor)
+    return root",DeepSeek-V3
+Iftekhar,19_20-5-1-python,Graphs: BFS,"This task is about the implementation of graphs and very
+simple graph algorithms. In Java we implement graphs with the
+the help of arrays. We look at graphs with unweighted edges.
+To represent a graph in Java, we give all nodes a number (starting with 0),
+which corresponds to the index of the adjacency list in the list. Example:
+
+graph = [
+    [1, 2],
+    [0],
+    [1]
+]
+
+Each of these edges can now be considered as directed, going out
+from the node with the index number to the node with the corresponding
+number (see image for a graphical visualization).
+
+Now we want to implement some simple algorithms for the graphs,
+starting with breadth-first search. How this
+algorithm works can be found in the lecture, see also Cormen et
+al, chap. 22. The inputs are assumed to be unweighted, directed graphs,
+so it is not always the case that for each edge there is also a back edge
+running in the opposite direction.
+
+The outputs shall contain the nodes of the graph in the order
+as they are processed by the corresponding search.
+The nodes are to be traversed in the order in which they are arranged in the adjacency list.",Graphs,Medium,"import queue
+
+def bfs(graph, start):
+    result = [start]
+
+    color = [0] * len(graph)
+    color[start] = 2
+
+
+
+    q = queue.Queue(len(graph))
+    q.put(start)
+    while(not q.empty()):
+
+
+
+        u =      q.get()
+        for v in graph[u]:
+            if(color[v] ==  0) :
+                color[v] = 1
+                result   += [v]
+                q.put(v)
+        color[u] = 2
+
+
+    return result",QECWV7HK,"def bfs(graph, start):
+    queue = [start]
+
+    checked = []
+    
+    
+    while len(queue)    > 0:
+        current = queue.pop(0)
+
+
+        for node in graph[current]:
+
+            if node not in checked and node not in queue and node != current:
+                queue.append(node  )
+        checked.append(current)
+        
+    return checked",SEATKBAK,"def bfs(graph, start):
+    visited =[start]  
+
+
+    Q =   [start]
+    while(Q):
+
+        u = Q.pop()
+
+        for n in graph[u]:
+            if   n not in  visited:
+                Q = [n] + Q
+                visited.append(n)
+
+
+    return visited",SRMT6YIX,"def bfs(graph, start):
+    visited = [False] * len(graph)
+    queue = [start]
+    visited[start] = True
+    output = []
+
+    while queue:
+        current = queue.pop(0)
+        output.append(current)
+
+        for neighbor in graph[current]:
+            if not visited[neighbor]:
+                visited[neighbor] = True
+                queue.append(neighbor)
+
+    return output
+",GPT-4,"from collections import deque
+
+def breadth_first_search(graph, start_node):
+    """"""
+    Perform breadth-first search on a directed graph.
+    
+    Args:
+        graph: A directed graph represented as an adjacency list
+        start_node: The node to start the search from
+        
+    Returns:
+        A list of nodes in the order they are processed by BFS
+    """"""
+    # Number of nodes in the graph
+    n = len(graph)
+    
+    # Initialize visited array and result list
+    visited = [False] * n
+    result = []
+    
+    # Create a queue for BFS
+    queue = deque()
+    
+    # Mark the start node as visited and enqueue it
+    visited[start_node] = True
+    queue.append(start_node)
+    
+    # BFS loop
+    while queue:
+        # Dequeue a node and add it to the result
+        current = queue.popleft()
+        result.append(current)
+        
+        # Get all adjacent vertices of the dequeued node
+        # If an adjacent node has not been visited, mark it
+        # visited and enqueue it
+        for neighbor in graph[current]:
+            if not visited[neighbor]:
+                visited[neighbor] = True
+                queue.append(neighbor)
+    
+    return result",Claude 3.7 Sonnet,"from collections import deque
+
+def bfs(graph, start):
+    visited = [False] * len(graph)
+    queue = deque()
+    traversal_order = []
+    
+    visited[start] = True
+    queue.append(start)
+    
+    while queue:
+        current_node = queue.popleft()
+        traversal_order.append(current_node)
+        
+        for neighbor in graph[current_node]:
+            if not visited[neighbor]:
+                visited[neighbor] = True
+                queue.append(neighbor)
+    
+    return traversal_order",DeepSeek-V3
+Iftekhar,19_20-5-2-python,Graphs: DFS,"As a second algorithm - analogous to the first task - a depth
+depth-first search is to be implemented.
+
+Here, too, the nodes are to be visited in the order in which they appear in the adjacency list.",Graphs,Medium,"def dfs(graph, start):
+    x = []
+    x.append(start)
+    result = []
+
+
+    while len(x) >0:
+        current =  x.pop()
+
+        graph[current].reverse()
+        x = x + graph[current]
+        graph[current] = []
+
+
+        if current not in result:
+            result.append(current)
+
+    return result",SW3OAVTI,"def dfs(graph, start):
+    visited = list()
+    besucht = list()
+
+
+    for i in range(len(graph)):
+        visited.append(False)
+
+    def dfs_visit(start):
+        visited[start] = True
+        besucht.append(start)
+
+
+        for v in graph[start]:
+
+
+
+            if visited[v] == False:
+                dfs_visit(v)
+
+
+
+
+    dfs_visit(start)
+    return (besucht)",Y3YJOVOH,"def dfsRec(graph, start, visited):
+    if visited[start] == False:
+        
+      visited[start]=True
+      result = [start]
+    
+      for elem in graph[start]:
+        result += dfsRec(graph,elem, visited)
+
+
+      return result
+
+    return   []  
+
+
+def  dfs(graph,start):
+
+  visited = [False]*len(graph)
+  return dfsRec(graph, start, visited)",ZLV7YBN2,"def dfs(graph, start, visited=None, output=None):
+    if visited is None:
+        visited = [False] * len(graph)
+    if output is None:
+        output = []
+
+    visited[start] = True
+    output.append(start)
+
+    for neighbor in graph[start]:
+        if not visited[neighbor]:
+            dfs(graph, neighbor, visited, output)
+
+    return output
+",GPT-4,"def depth_first_search(graph, start_node):
+    """"""
+    Perform depth-first search on a directed graph.
+    
+    Args:
+        graph: A directed graph represented as an adjacency list
+        start_node: The node to start the search from
+        
+    Returns:
+        A list of nodes in the order they are processed by DFS
+    """"""
+    # Number of nodes in the graph
+    n = len(graph)
+    
+    # Initialize visited array and result list
+    visited = [False] * n
+    result = []
+    
+    # Define DFS recursive function
+    def dfs_recursive(node):
+        # Mark current node as visited and add to result
+        visited[node] = True
+        result.append(node)
+        
+        # Recur for all adjacent vertices
+        for neighbor in graph[node]:
+            if not visited[neighbor]:
+                dfs_recursive(neighbor)
+    
+    # Start DFS from the given start node
+    dfs_recursive(start_node)
+    
+    return result",Claude 3.7 Sonnet,"def dfs(graph, start):
+    visited = [False] * len(graph)
+    stack = []
+    traversal_order = []
+    
+    stack.append(start)
+    
+    while stack:
+        current_node = stack.pop()
+        if not visited[current_node]:
+            visited[current_node] = True
+            traversal_order.append(current_node)
+            # Push neighbors in reverse order to process them in the correct order
+            for neighbor in reversed(graph[current_node]):
+                if not visited[neighbor]:
+                    stack.append(neighbor)
+    
+    return traversal_order",DeepSeek-V3
+Iftekhar,19_20-6-1-python,Dynamic Programming: Edit Distance,"In this task the edit distance of two given strings is implemented.
+This is defined as the minimum number of insert, delete and replace operations
+of single characters to convert the one string into the other.
+Important: The implementation must NOT use recursive calls.",Dynamic Programming,Hard,"def editDistance(pre, after):
+    if len(pre) > len(after):
+        pre, after = after, pre
+
+    result = range(len(pre) + 1)
+
+
+    for i, b in  enumerate(after):
+        tmp = [i+1]
+        for j, a in enumerate(pre):
+
+            if a !=  b:
+
+                tmp.append(1 + min((result[j], result[j + 1], tmp[-1])))
+            else:
+                tmp.append(result[j])
+
+
+        result = tmp
+    return result[-1]",4PPDVAQT,"def editDistance(a, b):
+    if len(a) > len(b):
+        a, b = b, a
+
+    total = range(len(a) + 1)
+    for i_b, s_b in     enumerate(b):
+
+        tmpdist = [i_b+1]
+        for i_a, s_a in enumerate(a):
+            if s_a == s_b:
+
+                tmpdist.append(total[i_a])
+            else:
+
+
+
+                tmpdist.append(1+ min((total[i_a],   total[i_a + 1], tmpdist[-1])))
+        total = tmpdist
+    return  total[-1]",5XRZQT3Q,"def editDistance(a, b):
+    m = len(a)
+
+    n =  len(b)
+
+    edit_matrix = [[0]*(n+1) for _ in range(m+1)]
+    for i in range(1, m+1):
+
+
+        edit_matrix[i][0] =    edit_matrix[i-1][0] + 1
+    for j in range(1, n+1):
+
+        edit_matrix[0][j] = edit_matrix[0][j-1] + 1
+
+
+        for i in range(1, m+1):
+
+            insert = edit_matrix[i][j-1] + 1
+            delete = edit_matrix[i-1][j] + 1
+
+            
+            if a[i-1] == b[j-1]:
+                replace = edit_matrix[i-1][j-1]
+            else:
+                replace = edit_matrix[i-1][j-1] + 1
+
+            edit_matrix[i][j] =    min(insert , delete, replace )
+
+    return edit_matrix[m][n]",BVAP5NM4,"def edit_distance(s1, s2):
+    m = len(s1)
+    n = len(s2)
+
+    # Create a (m+1) x (n+1) matrix
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+
+    # Fill in base cases
+    for i in range(m + 1):
+        dp[i][0] = i  # Deleting all characters from s1
+    for j in range(n + 1):
+        dp[0][j] = j  # Inserting all characters into s1 to match s2
+
+    # Fill the table
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if s1[i - 1] == s2[j - 1]:
+                # Characters match, no operation needed
+                dp[i][j] = dp[i - 1][j - 1]
+            else:
+                # Choose the best among insert, delete, and replace
+                dp[i][j] = 1 + min(
+                    dp[i - 1][j],    # Delete
+                    dp[i][j - 1],    # Insert
+                    dp[i - 1][j - 1] # Replace
+                )
+
+    return dp[m][n]",GPT-4,"def edit_distance(str1, str2):
+    """"""
+    Calculate the edit distance between two strings.
+    
+    Args:
+        str1: First string
+        str2: Second string
+        
+    Returns:
+        The minimum number of single-character operations (insertions, 
+        deletions, or substitutions) required to transform str1 into str2
+    """"""
+    # Get the lengths of the strings
+    m = len(str1)
+    n = len(str2)
+    
+    # Create a table to store results of subproblems
+    # dp[i][j] represents the edit distance between 
+    # str1[0...i-1] and str2[0...j-1]
+    dp = [[0 for x in range(n + 1)] for x in range(m + 1)]
+    
+    # Fill dp[][] in bottom-up manner
+    for i in range(m + 1):
+        for j in range(n + 1):
+            # If first string is empty, only option is to
+            # insert all characters of second string
+            if i == 0:
+                dp[i][j] = j
+            
+            # If second string is empty, only option is to
+            # delete all characters of first string
+            elif j == 0:
+                dp[i][j] = i
+            
+            # If last characters are the same, ignore the last char
+            # and recur for the remaining string
+            elif str1[i - 1] == str2[j - 1]:
+                dp[i][j] = dp[i - 1][j - 1]
+            
+            # If the last characters are different, consider all
+            # possibilities and find the minimum
+            else:
+                dp[i][j] = 1 + min(
+                    dp[i - 1][j],      # Delete
+                    dp[i][j - 1],      # Insert
+                    dp[i - 1][j - 1]   # Replace
+                )
+    
+    # Return the edit distance between the entire strings
+    return dp[m][n]",Claude 3.7 Sonnet,"def edit_distance(str1, str2):
+    m = len(str1)
+    n = len(str2)
+    
+    # Create a DP table of size (m+1) x (n+1)
+    dp = [[0] * (n + 1) for _ in range(m + 1)]
+    
+    # Initialize the first row and column
+    for i in range(m + 1):
+        dp[i][0] = i
+    for j in range(n + 1):
+        dp[0][j] = j
+    
+    # Fill the DP table
+    for i in range(1, m + 1):
+        for j in range(1, n + 1):
+            if str1[i-1] == str2[j-1]:
+                dp[i][j] = dp[i-1][j-1]
+            else:
+                dp[i][j] = 1 + min(dp[i-1][j],    # Deletion
+                                   dp[i][j-1],    # Insertion
+                                   dp[i-1][j-1])  # Substitution
+    
+    return dp[m][n]",DeepSeek-V3
+Iftekhar,19_20-6-2-python,Dynamic Programming: Knapsack,"The Knapsack problem is an optimization problem. Which items
+from an existing selection should be packed into a limited
+backpack(Knapsack) in order to maximize the value to be transported?
+This problem is in generall NP-complete and therefore
+probably not efficiently solvable. Assuming that the
+volumes of the objects are integers, we can find an algorithm
+that solves this problem using dynamic programming. We are looking for
+the implementation of an algorithm, which for a given list of objects and a
+list of items and a maximum backpack volume outputs the value
+that can be transported at most. The list of items
+consists of two lists, one contains the volumes and one the values.
+values. So the input ([0.5, 0.3], [2, 5], 3 ) gives two items,
+the first with volume 2 and value 0.5, the second with volume 5 and value 0.3.
+The last value indicates the volume of the Knapsack, in this case
+the correct output of the algorithm would be 0.5 because only
+the 1st item fits into the backpack at all. With a larger volume
+of 7, the correct output would be 0.8. It is important to note that the solution
+is NOT 1.5, so it is not possible to use the same object more than once.",Dynamic Programming,Hard,"def knapSack(value, volume, capacity):
+    assert len(value) == len(volume)
+
+    for x in volume:
+        assert x == round(x)
+
+    ratio = []
+    i = 0
+    for item in volume:
+        if volume[i]>0:
+            ratio.append([value[i] / volume[i], value[i], volume[i]])
+        else:
+            ratio.append([10000000, value[i], volume[i]])  # yes this is cheating, i know
+        i = i + 1
+    
+    # sorts the items primarily by its ratio and secondly by their value
+    ratio =  sorted(ratio, key =  lambda x:(-x[0],-x[1]))
+
+
+    
+    i = 0
+    sack = []
+    volumeSum = 0
+    valueSum = 0
+
+
+    # adding the items to the knapsack from the best to the worst ration until full:
+    for item in ratio:
+        if volumeSum + item[2] <= capacity:
+            sack.append(i)
+
+
+            volumeSum = volumeSum +   item[2]
+            valueSum = valueSum + item[1]
+        i = i + 1
+
+
+
+    return valueSum",C36JD6CE,"def knapSack(value, volume, capacity):
+    if len(value) == 0    or len(volume) == 0:
+        return 0
+
+
+ 
+
+    matrix = [[0 for col in range(capacity+1)] for row in range(len(volume))]
+
+    for   row in range(len(volume)):  # going through the matrix we set up
+        for col in range(capacity+1):
+            if volume[row] >    col:  # this is the check to see if the item can go into our knap-sack
+                matrix[row][col] = matrix[row-1][col]  # get the item above and place
+            else:
+
+                matrix[row][col] = max(matrix[row-1][col], matrix[row-1][col-volume[row]]+ value[row])
+    packed = []
+    col = capacity
+
+
+
+    for row in range(len(volume)-1,-1,-1): 
+        if row == 0 and matrix[row][col] != 0:
+            packed.insert(0,row)
+
+
+
+        if matrix[row][col] != matrix[row-1][col]:
+
+            packed.insert(0,row)
+
+            col -= volume[row]
+    return matrix[len(volume)-1][capacity]",FMFB2ERW,"def knapSack(  value, volume, capacity ):
+
+
+    c=capacity
+
+    assert len(value) == len(volume)
+    for x in volume:
+        assert x == round(x)
+    rel=[]
+
+
+    for i  in range(len(value)):
+        if volume[i]==0:
+            rel.append((value[i],i))
+        else:    
+            rel.append(((value[i]/volume[i]),i))
+        if rel[i-1][0]==rel[i][0]:
+            if value[rel[i][1]]>value[rel[i-1][1]]:
+                temp=rel[i-1]
+                rel[i-1]=rel[i]
+
+                rel[i]=temp
+    rel=  sorted(rel,key=lambda x:x[0],reverse=True)
+    rel=sorted(rel,key=lambda x:value[x[1]],reverse=True)
+    v=0
+    for i in range(len(rel)):
+        if c-volume[rel[i][1]]>=0:
+            c=c-volume[rel[i][1]]
+            v+=value[rel[i][1]]
+    return v",G632BNLN,"def knapsack(values, volumes, max_volume):
+    n = len(values)
+    dp = [0.0] * (max_volume + 1)
+
+    for i in range(n):
+        v = volumes[i]
+        val = values[i]
+        # Go backward to avoid reusing the same item
+        for j in range(max_volume, v - 1, -1):
+            dp[j] = max(dp[j], dp[j - v] + val)
+
+    return dp[max_volume]
+",GPT-4,"def knapsack(values, volumes, max_volume):
+    """"""
+    Solve the 0-1 Knapsack problem using dynamic programming.
+    
+    Args:
+        values: List of values for each item
+        volumes: List of volumes (weights) for each item
+        max_volume: Maximum capacity of the knapsack
+        
+    Returns:
+        The maximum value that can be achieved
+    """"""
+    n = len(values)  # Number of items
+    
+    # Create a 2D DP table
+    # dp[i][j] represents the maximum value that can be obtained
+    # using the first i items and a knapsack of capacity j
+    dp = [[0 for _ in range(max_volume + 1)] for _ in range(n + 1)]
+    
+    # Fill the DP table in bottom-up manner
+    for i in range(1, n + 1):
+        for j in range(1, max_volume + 1):
+            # If the volume of the current item is more than the 
+            # knapsack capacity, we can't include it
+            if volumes[i-1] > j:
+                dp[i][j] = dp[i-1][j]
+            else:
+                # Otherwise, we take the maximum of two cases:
+                # 1. Item is not included
+                # 2. Item is included
+                dp[i][j] = max(
+                    dp[i-1][j],  # Item not included
+                    dp[i-1][j-volumes[i-1]] + values[i-1]  # Item included
+                )
+    
+    # The result is in the bottom-right cell
+    return dp[n][max_volume]",Claude 3.7 Sonnet,"def knapsack(volumes, values, capacity):
+    n = len(volumes)
+    dp = [0.0] * (capacity + 1)
+    
+    for i in range(n):
+        volume = volumes[i]
+        value = values[i]
+        for w in range(capacity, volume - 1, -1):
+            if dp[w - volume] + value > dp[w]:
+                dp[w] = dp[w - volume] + value
+    return dp[capacity]",DeepSeek-V3
+Chong,20_21-1-1-python,Exponentiation by squaring ,"Input: $a,b,c \in \mathbb{N}_0  \land 1 \leq a \leq 100 \land 0 \leq b \leq 10^9 \land 1 \leq c \leq 10^{10}$
+
+Output: $a^b \; mod \; c$
+
+Let $a^b \; mod \; c$ be calculated in the function expo(a,b,c). Make sure
+that your algorithm has a run time of $O(log \; b + log \; c)$.
+Your solution must not contain the string ""import"" and ""**"" as a
+substring. For easier debugging, you can divide your result
+in each calculation step by modulo $c$. For example (The example
+can also be found commented out in the answer field):
+
+def add(a,b,c,d,e):
+    res = (a+b) % 10000007
+    res = (res+c) % 10000007
+    res = (res+d) % 10000007
+    res = (res+e) % 10000007
+    return (res+1000) % 10000007
+
+Hint:
+
+Use ""//"" (without the quotes) to perform integer division in
+Python and to avoid floats.
+
+If $b$ is even, then:
+
+$a^b = (a^{\frac{b}{2}})^2 = a^{\frac{b}{2}} \cdot a^{\frac{b}{2}}$
+
+If $b$ is odd, then:
+
+$a^b = a^{b-1} \cdot a$",Math,Easy,"def expo(a,b,c):
+    i=1
+    ergebnis = 1
+    a=a%c
+
+
+    while(b>0):
+        if((b&1)==1):
+            ergebnis = (ergebnis*a)%c
+
+        b = b >>  1    
+        a = (a*a)%c
+        i += 1
+
+    return ergebnis    
+
+
+
+
+'''
+def addiere(a,b,c,d,e):
+
+    res = (a+b) % 1000000007
+
+
+    res = (res+c) % 1000000007
+
+    res = (res+d) % 1000000007
+
+    res = (res+e) %  1000000007
+
+    return (res+1000) % 1000000007
+'''",2V5AQFDC,"def expo(a, b, c):
+    j=b
+    res=1
+    res1=a%c
+    
+    while j>0:
+
+
+        if j%2!=0:
+            res=(res1*res)%c
+
+
+            j-=1
+        res1=(res1*res1)%c
+
+        j=j/2
+
+    return res
+'''
+
+
+def addiere(a,b,c,d,e):
+
+    res = (a+b) % 1000000007
+
+
+
+    res = (res+c) % 1000000007
+
+    res = (res+d) % 1000000007
+
+
+
+    res = (res+e) % 1000000007
+
+    return (res+1000) % 1000000007
+'''",2Y5M6RZI,"def expo(a,b,c):
+    return fast_exp(a,b,c)
+
+def fast_exp(b,   e, m):
+    r = 1
+    if e & 1:
+        r = b
+
+    while e:
+
+        e >>= 1
+        b = (b * b) % m
+        if e & 1 : r = (r * b) % m
+    return r
+'''
+def addiere(a,b,c,d,e):
+
+    res = (a+b) % 1000000007
+
+    res = (res+c) % 1000000007
+
+    res = (res+d) % 1000000007
+
+    res = (res+e) % 1000000007
+
+    return (res+1000) % 1000000007
+'''",32TQUOSC,"def expo(a, b, c):
+    result = 1
+    a = a % c
+    while b > 0:
+        if b % 2 == 1:
+            result = (result * a) % c
+        a = (a * a) % c
+        b = b // 2
+    return result
+
+# Example usage:
+# print(expo(2, 10, 1000))  # Expected: 24, since 2^10 = 1024, 1024 % 1000 = 24",GPT-4,"def expo(a, b, c):
+    """"""
+    Calculate (a^b) % c efficiently using modular exponentiation
+    
+    Parameters:
+    a (int): Base value, 1 <= a <= 100
+    b (int): Exponent value, 0 <= b <= 10^9
+    c (int): Modulo value, 1 <= c <= 10^10
+    
+    Returns:
+    int: (a^b) % c
+    """"""
+    # Handle base cases
+    if b == 0:
+        return 1 % c
+    
+    if a == 0:
+        return 0
+    
+    # Initialize result
+    result = 1
+    
+    # Update a to a % c
+    a = a % c
+    
+    # Process exponent bit by bit
+    while b > 0:
+        # If b is odd, multiply result with current a
+        if b % 2 == 1:
+            result = (result * a) % c
+        
+        # Square the base and reduce it modulo c
+        a = (a * a) % c
+        
+        # Divide b by 2 (right shift)
+        b = b // 2
+    
+    return result",Claude 3.7 Sonnet,"def expo(a, b, c):
+    result = 1
+    a = a % c
+    while b > 0:
+        if b % 2 == 1:
+            result = (result * a) % c
+        a = (a * a) % c
+        b = b // 2
+    return result",DeepSeek-V3
+Chong,20_21-1-2-python,Sorting,"Input: An array $A = [a_1, a_2,...,a_n]$ with $2 \leq n \leq 10^6$
+and $\forall 1\leq i \leq n: -10^6 \leq a_i \leq 10^6$
+
+Output:  Array A sorted in ascending order: $A = [a_1, a_2,...,a_n]$,
+where $\forall 1 \leq i \leq j \leq n: \; a[i] \leq a[j]$
+
+Implement a sorting procedure in the function ""solution"", which takes
+as argument an array ""A"".  Your procedure should
+either have a worst-case run time of $O(n \; log \; n)$ or an
+average-case run time of $O(n \; log \; n)$ (this should be guaranteed by
+randomization). Your solution must not contain the string
+""sort"" and ""numpy"" as substring. Importing the random
+library is explicitly allowed!
+
+Hint:
+
+Make absolutely sure that you randomize your algorithm using the
+Python Random Library. You can ignore this hint
+if your implementation has a worst-case runtime of $O(n \; log \; n)$.",Sorting,Medium,"def Merge(l, r, A):
+    
+    l.append(10**6)
+    r.append(10**6)
+    
+    i=0
+    j=0
+    
+    for k in range(len(A)):
+        if l[i] <= r[j]:
+            A[k]=l[i]
+            i += 1
+        else:
+            A[k] =r[j]
+            j+=1
+
+
+def solution(A):
+    
+    if len(A)>1:
+        mid=len(A)//2
+        L=A[:mid]
+        R=A[mid:]
+        
+        solution(L)
+        solution(R)
+        Merge(L, R, A)
+    return(A)",2Y5M6RZI,"import math
+
+def solution(A):
+    r = len(A)
+    if 1 < r :
+        p = math.floor((r)/2)
+        A1 = A[0:p]
+
+        A2 = A[p:r]
+
+
+        A1 = solution(A1)
+        A2 = solution(A2)
+
+
+        A = A1 + A2
+        merge(A,p,r)
+    return A
+
+
+
+def merge(A,p,r):
+
+    n1 = p 
+
+
+    n2 = r - p 
+    L = list()
+    R = list()
+
+    for i in range(0, n1)  :
+        L.append(A[i])
+    for j in   range(0,n2):
+
+
+        R.append(A[p + j])
+    L.append(3000000)
+
+
+    R.append(3000000)
+    i = 0; j = 0
+    for  k in range(0,r):
+
+
+        if L[i] <= R[j]:
+            A[k] = L[i]
+
+
+            i = i + 1
+        else:
+            A[k]     = R[j]
+            j = j + 1
+    return A",32TQUOSC,"def solution(A):
+    
+    if len(A) <= 1:
+        return A
+        
+    p = len(A) // 2
+    A_l = solution(A[:p])
+    A_r = solution(A[p:])
+    B = merge(A_l, A_r)
+
+    return B
+
+
+def merge(A_l, A_r):
+    
+    
+    n = len(A_l) + len(A_r)
+    
+    B = [None] * n
+    
+    A_l.append(10**7)
+    A_r.append(10**7)
+    
+    i = 0
+    j = 0
+    for k in range(0,n):
+        if A_l[i] <= A_r[j]:
+            B[k] = A_l[i]
+            i += 1
+        
+        else:
+            B[k] = A_r[j]
+            j += 1
+            
+    return B",3VWSD24O,"def solution(A):
+    if len(A) <= 1:
+        return A
+
+    mid = len(A) // 2
+    left = solution(A[:mid])
+    right = solution(A[mid:])
+    return merge(left, right)
+
+def merge(left, right):
+    result = []
+    i = j = 0
+    while i < len(left) and j < len(right):
+        if left[i] <= right[j]:
+            result.append(left[i])
+            i += 1
+        else:
+            result.append(right[j])
+            j += 1
+    while i < len(left):
+        result.append(left[i])
+        i += 1
+    while j < len(right):
+        result.append(right[j])
+        j += 1
+    return result
+
+# Example usage:
+# A = [3, 1, -2, 7, 0]
+# print(solution(A))  # Output: [-2, 0, 1, 3, 7]",GPT-4,"import random
+
+def solution(A):
+    """"""
+    Sorts array A in ascending order using randomized quicksort
+    
+    Parameters:
+    A (list): Array to be sorted
+    
+    Returns:
+    list: Sorted array in ascending order
+    """"""
+    if not A or len(A) <= 1:
+        return A
+    
+    # Create a copy of the array to avoid modifying the input
+    result = A.copy()
+    
+    # Call quicksort algorithm on the entire array
+    quicksort(result, 0, len(result) - 1)
+    
+    return result
+
+def quicksort(arr, low, high):
+    """"""
+    Recursive quicksort implementation
+    
+    Parameters:
+    arr (list): Array to be sorted
+    low (int): Starting index
+    high (int): Ending index
+    """"""
+    if low < high:
+        # Partition the array and get the pivot index
+        pivot_idx = partition(arr, low, high)
+        
+        # Recursively sort elements before and after pivot
+        quicksort(arr, low, pivot_idx - 1)
+        quicksort(arr, pivot_idx + 1, high)
+
+def partition(arr, low, high):
+    """"""
+    Partitions the array and returns the pivot index
+    
+    Parameters:
+    arr (list): Array to be partitioned
+    low (int): Starting index
+    high (int): Ending index
+    
+    Returns:
+    int: Pivot index
+    """"""
+    # Choose a random pivot to avoid worst-case scenarios
+    pivot_idx = random.randint(low, high)
+    
+    # Swap the pivot with the last element
+    arr[pivot_idx], arr[high] = arr[high], arr[pivot_idx]
+    
+    pivot = arr[high]
+    i = low - 1
+    
+    # Place all elements smaller than pivot on left side
+    for j in range(low, high):
+        if arr[j] <= pivot:
+            i += 1
+            arr[i], arr[j] = arr[j], arr[i]
+    
+    # Place pivot in its correct position
+    arr[i + 1], arr[high] = arr[high], arr[i + 1]
+    
+    return i + 1",Claude 3.7 Sonnet,"import random
+
+def solution(A):
+    if len(A) <= 1:
+        return A
+    pivot = random.choice(A)
+    left = [x for x in A if x < pivot]
+    middle = [x for x in A if x == pivot]
+    right = [x for x in A if x > pivot]
+    return solution(left) + middle + solution(right)",DeepSeek-V3
+Chong,20_21-2-1-python,Logistics at the North Pole ,"Input: Two arrays $A = [a_1, a_2,...,a_n], B = [b_1, b_2, ..., b_m]$
+mit  $1 \leq m, n  \leq 4 \cdot 10^6$
+and $\forall 1\leq i  \leq n:  0 \leq a_i,b_i  \leq 10^6$.
+Moreover, $\max(A) \leq |B| - 1$
+
+Output:  A binary string $s$ of length $m$ , where the $i$-th digit is
+is defined as follows:
+
+$s[i] = \begin{cases} 1, &\text{if } |A|_i \leq B[i] \ 0, &\text{if } |A|_i > B[i] \end{cases}$
+
+where $|A|_i$ describes how often the number $i$ occurs in the array $A$.
+
+Timelimit: 5 CPU seconds
+
+It is Christmas and Santa Claus has little time left: He must
+come up with a system to deliver all presents in time.
+For this he uses the following system: First, all the cuddly
+toys are delivered, then all books, and so on. The category of the
+$i-$th gift is $A[i]$. Unfortunately Santa's sleigh does not
+have an infinitely large capacity: For objects of the
+category $i$, Santa's sleigh has a maximum capacity of $B[ i]$.
+Now he would like to know if it is possible to deliver all objects of a
+category in one run. For this he wants
+you to generate a string with the following properties:
+the $i$-th digit is a one if it is possible to deliver all objects of the
+category $i$ in one pass and $0$ if this is not possible.
+As a reminder, Santa Claus can deliver all objects of the
+category $i$ in one pass if $|A|_i \leq B[i]$ holds.
+Since Santa does not have much time left, your algorithm must have
+a run time of $O(n + m)$.
+
+Hint:
+
+(1) The substring ""import"", ""eval"",""sort"", ""sol_calc"" or ""getattr"" must
+not appear in your solution. 
+
+(2) Unlike defined in Cormen, arrays and strings of length
+$n$ start at 0 and end at $n-1$.",Hash Table,Medium,"def calc(values, limits):
+    amount = [0] * len(limits)
+
+
+
+    for value in values:
+        amount[value] += 1
+
+
+    result = ''
+    for i in  range(len(limits)):
+        result += '0' if amount[i] > limits[i]   else '1'
+
+
+    return  result",4AI2JRC4,"def calc(A,B):
+    k = len(B)
+    str = """"
+    count = 0
+
+
+
+    C = [0] * k
+
+    for j in A:
+        C[A[count]] += 1 # zählt, wie oft j in A vorkommt
+        count += 1
+    for i in range(0,k):
+        if   C[i] <= B[i]:
+
+            str +=   ""1""
+        else:
+            str += ""0""
+    return str",4K3M4DFG,"def calc(A,B):
+    C = [0] * (10**6+1)
+
+    for i in range(0,len(A)):
+        C[A[i]] += 1
+    S = str()
+
+
+    for j in range(0,len(B)):
+        if C[j] <= B[j]:
+            S += '1'
+        else:
+
+            S += '0'
+    return S",NFQDGIJ2,"def solution(A, B):
+    # Step 1: Count frequencies of elements in A
+    freq = [0] * len(B)  # Since max(A) ≤ len(B) - 1
+
+    for num in A:
+        freq[num] += 1
+
+    # Step 2: Build the binary string
+    result = ['0'] * len(B)
+    for i in range(len(B)):
+        if freq[i] <= B[i]:
+            result[i] = '1'
+
+    return ''.join(result)
+
+# Example usage:
+# A = [0, 1, 1, 2]
+# B = [1, 2, 1]
+# print(solution(A, B))  # Output: ""111""
+",GPT-4,"def solution(A, B):
+    """"""
+    Determine for each category if Santa can deliver all gifts in one trip
+    
+    Parameters:
+    A (list): Categories of gifts, where A[i] is the category of the ith gift
+    B (list): Maximum capacity of Santa's sleigh for each category
+    
+    Returns:
+    str: Binary string where the ith character is '1' if all gifts of category i 
+         can be delivered in one trip, '0' otherwise
+    """"""
+    # Count how many gifts of each category exist
+    category_counts = [0] * (len(B))
+    
+    # Count occurrences of each category in A
+    for category in A:
+        category_counts[category] += 1
+    
+    # Build the result binary string
+    result = """"
+    for i in range(len(B)):
+        if category_counts[i] <= B[i]:
+            result += ""1""
+        else:
+            result += ""0""
+    
+    return result",Claude 3.7 Sonnet,"def solve(A, B):
+    # Step 1: Count the frequency of each element in A
+    max_category = len(B) - 1
+    freq = [0] * (max_category + 1)
+    for num in A:
+        freq[num] += 1
+    
+    # Step 2: Compare each frequency with B and construct the result string
+    s = []
+    for i in range(len(B)):
+        if freq[i] <= B[i]:
+            s.append('1')
+        else:
+            s.append('0')
+    return ''.join(s)",DeepSeek-V3
+Chong,20_21-3-1-python,Knapsack (revised version 2020/21),"The Knapsack problem is an optimization problem. Which items from an existing
+selection should be packed into a limited backpack(Knapsack) in order
+to maximize the value to be transported? This problem is in general NP-complete
+and therefore probably not efficiently solvable. Assuming that the volumes
+of the objects are integers, we can find an algorithm that solves this problem
+using dynamic programming. We are looking for an implementation of an algorithm,
+which for a given list of objects and a list of items and a maximum backpack
+volume outputs the value which can be transported at most. The list of items
+consists of two lists, one contains the volumes and one the values. So the
+input ([0.5, 0.3], [2, 5], 3 ) gives two items, the first with volume 2 and
+value 0.5, the second with volume 5 and value 0.3. The last value indicates
+the volume of the Knapsack, in this case the correct output of the algorithm
+would be 0.5, because only the 1st item fits into the backpack at all. With a
+larger volume of 7, the correct output would be 0.8. It is important to note
+that the solution is NOT 1.5, so it is not possible to use the same object
+more than once.
+
+Your algorithm must have a run time of $O(n^2)$, where $n$ is the number of items.
+
+Time: 1 CPU second
+
+NOTE:
+
+Items can also have a weight of 0!",Dynamic Programming,Medium,"def knapSack(value, volume, capacity):
+    assert len(value) == len(volume)
+
+    for x in volume:
+
+
+        assert x == round(x)
+
+
+    #Baue 2D Array für die Zwischenschritte
+    Results = [[0 for i in range(capacity + 1)] for j in range(len(value) + 2)]
+    #print (Results)
+    for i in range(1 , len(value)+1): # geht die verschiedenen Elemente durch
+        #print (i)
+
+        for j in range(1 , capacity+1): # geht die verschiedenen Gewichte durch
+            #print (j)
+            if j< volume[i - 1]:
+                 Results[i][j] = Results[i - 1][j]
+            else:
+                Results[i][j] = max(Results[i - 1][j] , value[i-1] + Results[i-1][ j - volume[i-1] ])
+            #print (Results)
+
+
+
+    return Results[len(value)][capacity]",BPAUTHVK,"def knapSack(val, wt, W):
+    n = len(wt)
+    K = [[0 for x in range(W + 1)] for x in range(n + 1)]
+ 
+    for i in range(n + 1):
+        for w in range(W + 1):
+            if i == 0 or w == 0:
+                K[i][w] = 0
+            elif wt[i-1] <= w:
+                K[i][w] = max(val[i-1]
+                          + K[i-1][w-wt[i-1]],  
+                              K[i-1][w])
+            else:
+                K[i][w] = K[i-1][w]
+ 
+    return K[n][W]","def knapSack(value, volume, capacity):
+    assert len(value) == len(volume)
+
+    for x in volume:
+        assert x == round(x)
+
+    #Baue 2D Array für die Zwischenschritte
+    Results = [[0 for i in range(capacity + 1)] for j in range(len(value) + 2)]
+    #print (Results)
+    for i in range(1 , len(value)+1): # geht die verschiedenen Elemente durch
+        #print (i)
+        for j in range(1 , capacity+1): # geht die verschiedenen Gewichte durch
+            #print (j)
+            if j < volume[i - 1]:
+                 Results[i][j] = Results[i - 1][j]
+            else:
+                Results[i][j] = max(Results[i - 1][j] , value[i-1] + Results[i-1][ j - volume[i-1] ])
+            #print (Results)
+
+
+
+    return Results[len(value)][capacity]","def knapSack(value, volume, capacity):
+    assert len(value) == len(volume)
+
+    for x in  volume:
+        assert x == round(x)
+
+
+    # Matrix mit leeren Einträgen, die im Verlauf ""entwickelt"" werden
+    knapsack = [[0 for x in range(capacity + 1)] for x in range(len(value) + 1)]
+
+    # für alle möglichen Werte [0, N]
+
+    for i in range(len(value) + 1):
+        # für alle Kapazitäten [0, capacity]
+        for vol in range(capacity + 1):
+            # Wert = 0 oder momentane Kapazität = 0: 0
+            if i == 0 or vol == 0:
+                knapsack[i][vol] = 0
+
+            # falls Volumen des vorheringen Objekts <= momentanes Volumen
+            elif volume[i - 1] <= vol:
+
+                knapsack[i][vol] = max(
+                    value[i - 1] +   knapsack[i - 1][vol - volume[i - 1]],
+                    knapsack[i- 1][vol],
+                )
+            else:
+
+
+                # falls >= speichere vorheringen Wert im jetzigen Index
+                knapsack[i][vol] = knapsack[i - 1][vol]
+
+    # letzter Eintrag ist größmöglicher Gewinn
+    return knapsack[len(value)][capacity]",CT774TDG,"def knapsack(values, volumes, capacity):
+    n = len(values)
+    dp = [0.0] * (capacity + 1)  # dp[v] stores the max value for volume v
+
+    for i in range(n):
+        vol = volumes[i]
+        val = values[i]
+        if vol > capacity:
+            continue  # Item can't be used at all
+        # Traverse backwards to ensure each item is used at most once
+        for v in range(capacity, vol - 1, -1):
+            dp[v] = max(dp[v], dp[v - vol] + val)
+    
+    return max(dp)
+
+# Example usage:
+# print(knapsack([0.5, 0.3], [2, 5], 3))  # Output: 0.5
+# print(knapsack([0.5, 0.3], [2, 5], 7))  # Output: 0.8",GPT-4,"def knapsack_solution(values, weights, max_weight):
+    """"""
+    Solves the 0/1 Knapsack problem using dynamic programming
+    
+    Parameters:
+    values (list): List of values for each item
+    weights (list): List of weights/volumes for each item
+    max_weight (int): Maximum weight capacity of the knapsack
+    
+    Returns:
+    float: Maximum possible value that can be carried in the knapsack
+    """"""
+    n = len(values)  # Number of items
+    
+    # Initialize DP table with zeros
+    # dp[i][w] represents the maximum value that can be obtained
+    # using the first i items and a knapsack of capacity w
+    dp = [[0 for _ in range(max_weight + 1)] for _ in range(n + 1)]
+    
+    # Fill the DP table
+    for i in range(1, n + 1):
+        for w in range(max_weight + 1):
+            # If current item's weight is less than or equal to the capacity w
+            if weights[i-1] <= w:
+                # We have two choices:
+                # 1. Include the current item
+                # 2. Exclude the current item
+                # We take the maximum of these two
+                dp[i][w] = max(values[i-1] + dp[i-1][w - weights[i-1]], dp[i-1][w])
+            else:
+                # If current item's weight is greater than capacity w,
+                # we can't include it, so we just take the value without it
+                dp[i][w] = dp[i-1][w]
+    
+    # Return the maximum value that can be obtained
+    return dp[n][max_weight]",Claude 3.7 Sonnet,"def knapsack(volumes, values, capacity):
+    n = len(volumes)
+    # Initialize a 1D DP array where dp[w] represents the maximum value achievable with capacity w
+    dp = [0.0] * (capacity + 1)
+    
+    for i in range(n):
+        volume = volumes[i]
+        value = values[i]
+        # Iterate from the end to the beginning to avoid overwriting values that are yet to be processed
+        for w in range(capacity, volume - 1, -1):
+            if dp[w - volume] + value > dp[w]:
+                dp[w] = dp[w - volume] + value
+    return dp[capacity]",DeepSeek-V3
+Chong,20_21-3-2-python,Longest path DAG ,"Input: A natural number $1 \leq N \leq 2500$, which indicates how many
+vertices the graph $G$ has, and a two-dimensional array $A$ of size
+size $1 \leq M \leq 10^6$ of integers
+$A = [[a^{1}_1,a^{2}_1],[a^{1}_2,a^{2}_2],...,[a^{1}_M,a^{2}_M]]$ which is
+encodes the set of edges of $G$.  If $[a,b] \in A$, then there is a
+directed edge from the vertex $a$ to the vertex $b$. You may assume
+that there are no directed cycles in $G$. For example: Let $N = 3$
+and $A = [[1,2],[2,3]]$ then the following graph is obtained:
+
+[]
+
+Output: The length of the longest directed path in $G$.
+Your algorithm has to compute the solution in $O(N+M)$.
+
+Time limit: 1 CPU second
+
+Hint:
+
+(1) The libraries java.util.Arrays, java.util.ArrayList, java.lang.Math
+are already imported automatically.
+
+(2) If you have difficulties with this task: Ignore
+the runtime restrictions and first implement a naive 
+recursive solution. Then use dynamic programming
+(memoization) to achieve the desired runtime.
+
+(3) Some test cases have been hidden and are not displayed to
+prevent hardcoding of the solutions.",Graphs,Medium,"def dfs(node, graph, memo):
+    if len(graph[node]) == 0:
+        return 0
+    elif memo[node] != -1:
+        return memo[node]
+    else:
+
+        sol = 0
+        for child in graph[node]:
+            sol = max(sol, dfs(child, graph, memo) + 1)
+        memo[node] = sol
+        return memo[node]
+
+
+
+def calc(N, A):
+
+
+    graph = [[] for _ in range(N + 1)]
+    memo = [-1]   * (N + 1)
+    graph[0] = [x for x in range(1, N + 1)]
+
+    for edge in  A:
+        start, end = edge
+        graph[start].append(end)
+
+
+    return dfs(0, graph, memo) - 1",6NLIZVZG,"def getSubPathLength(n,    adjazenz, subPathLengths ):
+    if subPathLengths[n] == 0:
+
+        maxLen = 0
+        for b in adjazenz[n]:
+
+
+           maxLen = max(getSubPathLength(b, adjazenz, subPathLengths) + 1, maxLen)
+        subPathLengths[n] = maxLen
+        return maxLen
+    else:
+        return subPathLengths[n]
+
+def calc(N,A):
+    adjazenz = []
+    
+    for n in range(N):
+        adjazenz.append([])
+    
+
+
+    for a, b in A:
+        adjazenz[a - 1].append(b - 1)
+    
+    subPathLengths = [0] * N
+    
+    for n in range(N):
+        getSubPathLength(n, adjazenz, subPathLengths)
+    
+    maxLen = 0
+
+
+
+    for length in subPathLengths:
+        maxLen = max(maxLen, length)
+    ",ZWD5JXGT,"def dfs(node, graph, memo):
+    if len(graph[node]) == 0:
+        return 0
+
+
+    elif memo[node] != -1:
+        return memo[node]
+    else:
+
+        sol = 0
+        for child in graph[node]:
+            sol = max(sol, dfs(child, graph, memo) + 1)
+        memo[node] = sol
+        return memo[node]
+
+
+
+def calc(N, A):
+    graph = [[] for _ in range(N + 1)]
+
+
+    memo = [-1] * (N + 1)
+    graph[0] = [x for x in range(1, N + 1)]
+    for edge in A:
+        start, end = edge
+        graph[start].append(end)
+    return dfs(0, graph, memo) - 1",ZSV3V3PX,"from collections import defaultdict, deque
+
+def longest_path(N, A):
+    # Build the graph and in-degree count
+    graph = defaultdict(list)
+    indegree = [0] * (N + 1)
+    for u, v in A:
+        graph[u].append(v)
+        indegree[v] += 1
+
+    # Topological sorting using Kahn's algorithm
+    queue = deque()
+    for i in range(1, N + 1):
+        if indegree[i] == 0:
+            queue.append(i)
+
+    # Distance array: length of longest path ending at node i
+    dist = [0] * (N + 1)
+    while queue:
+        u = queue.popleft()
+        for v in graph[u]:
+            if dist[v] < dist[u] + 1:
+                dist[v] = dist[u] + 1
+            indegree[v] -= 1
+            if indegree[v] == 0:
+                queue.append(v)
+
+    return max(dist)
+
+# Example usage:
+# N = 3
+# A = [[1, 2], [2, 3]]
+# print(longest_path(N, A))  # Output: 2",GPT-4,"def solution(N, A):
+    """"""
+    Find the length of the longest directed path in a directed acyclic graph.
+    
+    Parameters:
+    N (int): Number of vertices in the graph (1-indexed)
+    A (list): List of directed edges [u, v] where u -> v
+    
+    Returns:
+    int: Length of the longest directed path in the graph
+    """"""
+    # Build adjacency list representation of the graph
+    graph = [[] for _ in range(N + 1)]
+    in_degree = [0] * (N + 1)
+    
+    for u, v in A:
+        graph[u].append(v)
+        in_degree[v] += 1
+    
+    # Initialize queue with nodes having no incoming edges
+    queue = []
+    for i in range(1, N + 1):
+        if in_degree[i] == 0:
+            queue.append(i)
+    
+    # Initialize distances array for dynamic programming
+    # distance[i] represents the length of the longest path ending at node i
+    distance = [0] * (N + 1)
+    
+    # Process nodes in topological order
+    while queue:
+        node = queue.pop(0)
+        
+        # Process all outgoing edges
+        for neighbor in graph[node]:
+            # Update the longest path to neighbor
+            distance[neighbor] = max(distance[neighbor], distance[node] + 1)
+            
+            # Decrease in-degree and potentially add to queue
+            in_degree[neighbor] -= 1
+            if in_degree[neighbor] == 0:
+                queue.append(neighbor)
+    
+    # The answer is the maximum distance among all nodes
+    return max(distance)",Claude 3.7 Sonnet,"import sys
+from collections import defaultdict, deque
+
+def longest_path(N, A):
+    # Build the graph and in-degree count
+    graph = defaultdict(list)
+    in_degree = [0] * (N + 1)
+    for a, b in A:
+        graph[a].append(b)
+        in_degree[b] += 1
+    
+    # Initialize the queue with vertices having in_degree 0
+    queue = deque()
+    for v in range(1, N + 1):
+        if in_degree[v] == 0:
+            queue.append(v)
+    
+    # Initialize DP array
+    dp = [1] * (N + 1)
+    
+    # Process vertices in topological order
+    while queue:
+        u = queue.popleft()
+        for v in graph[u]:
+            if dp[v] < dp[u] + 1:
+                dp[v] = dp[u] + 1
+            in_degree[v] -= 1
+            if in_degree[v] == 0:
+                queue.append(v)
+    
+    return max(dp[1:N + 1])
+
+def main():
+    input = sys.stdin.read().split()
+    ptr = 0
+    N = int(input[ptr])
+    ptr += 1
+    M = int(input[ptr])
+    ptr += 1
+    A = []
+    for _ in range(M):
+        a = int(input[ptr])
+        ptr += 1
+        b = int(input[ptr])
+        ptr += 1
+        A.append([a, b])
+    print(longest_path(N, A))
+
+if __name__ == '__main__':
+    main()",DeepSeek-V3
+Chong,21_22-1-1-python,Divide and Conquer Recurrence ,"Input: $n_0 \in \mathbb{N}_0: \; 0 \leq n_0 \leq 10^{9}$ 
+
+Output: $a_{n_0} \; mod \; 10^9+7$ with
+$a_{n+1}=2 a_{n}+1 \; \; n \in \mathbb{N}_0, a_{0}=0$
+
+Calculate in $O(\: log \: n)$ the output for any input
+in the function ""def calc(n):"" that takes only an integer as a parameter.
+For the implementation you must not use the keyword
+""import"", ""**"", ""eval"" , ""checkCalc"", ""globals"", ""pow"" or ""expo"".
+
+For easier debugging, you can divide your result in each calculation step by modulo $10^9+7$. For example:
+
+def calc(a,b,c):
+
+    res = (a+b) % 10000007
+
+    res = (res+c) % 10000007
+
+    return (res+1000) % 10000007
+
+Hints:
+
+1. Find a closed form for the recurrence.
+
+2. Use ""//"" (without the quotation marks) to perform integer division in
+Python and to avoid floats.
+
+3. If $b$ is even, then:
+
+$a^b = (a^{\frac{b}{2}})^2 = a^{\frac{b}{2}} \cdot a^{\frac{b}{2}}$
+
+If $b$ is odd, then:
+
+$a^b = a^{b-1} \cdot a$",Divide and Conquer,Hard,"def exp(n):
+    if (n==1):
+
+        return 2
+    elif (n/2 % 2==0):
+        j = exp(n/2)
+        return j*j %    1000000007
+    else:
+
+        return exp(n-1)*2 % 1000000007
+
+def calc(n):
+    if (n==0):
+
+        return 0
+    return (exp(n)-1) % 1000000007",22RVWBZ6,"def calc(n):
+    if (n < 1):
+        return 0
+    if (n == 1):
+
+
+        return 1
+    if (n % 2 == 0):
+
+        u = (calc(n/2) + 1)
+        return (u*u - 1) % 1000000007
+    else: 
+        return ((calc(n-1)+1)*   2 -1) % 1000000007",255OJ5MB,"def calc(n):
+    if n == 0:
+        return   0
+    else:
+        if n%2 == 0:
+            n = (n//2)%1000000007
+            res = (calc(n))%1000000007
+
+            res = (res+1)%1000000007
+            res = (res*res)%1000000007
+            return (res-1)%1000000007
+
+
+        else:
+            n = (n-1)%1000000007
+            res = calc(n)%1000000007
+            res = (res*2)%1000000007
+            return res+1",2HRKTEF5,"def calc(n):
+    MOD = 10**9 + 7
+    result = 1
+    base = 2
+
+    while n > 0:
+        if n % 2 == 1:
+            result = (result * base) % MOD
+        base = (base * base) % MOD
+        n = n // 2
+
+    return (result - 1 + MOD) % MOD  # ensure non-negative result
+",GPT-4,"def calc(n):
+    """"""
+    Calculate a_n mod (10^9+7) where a_n+1 = 2*a_n + 1 and a_0 = 0
+    
+    The closed form solution is a_n = 2^n - 1
+    
+    Parameters:
+    n (int): Index value n_0 where 0 <= n_0 <= 10^9
+    
+    Returns:
+    int: a_n mod (10^9+7)
+    """"""
+    MOD = 1000000007  # 10^9 + 7
+    
+    # Base case
+    if n == 0:
+        return 0
+    
+    # Calculate 2^n mod MOD using binary exponentiation
+    result = 1
+    base = 2
+    
+    while n > 0:
+        # If n is odd, multiply result with current base
+        if n % 2 == 1:
+            result = (result * base) % MOD
+        
+        # Square the base
+        base = (base * base) % MOD
+        
+        # Integer division of n by 2
+        n = n // 2
+    
+    # Return (2^n - 1) mod MOD
+    return (result - 1) % MOD",Claude 3.7 Sonnet,"def calc(n):
+    mod = 10**9 + 7
+    if n == 0:
+        return 0
+    result = 1
+    power = 2
+    exponent = n
+    while exponent > 0:
+        if exponent % 2 == 1:
+            result = (result * power) % mod
+        power = (power * power) % mod
+        exponent = exponent // 2
+    return (result - 1) % mod",DeepSeek-V3
+Chong,21_22-1-2-python,Divide and Conquer Function ,"Let $N \in \mathbb{N} \land N \leq 10^{18}$ and
+$f_N:\mathbb{N}_0 \mapsto \{0,1\}, \; n \mapsto \begin{cases}1, & \text { if } n \geq N \ 0, & \text { if } n < N \end{cases}$
+a binary function, where $N$ is unknown. The goal of the task is to calculate $N$ 
+in $O(log \: n)$.
+
+Input: A binary function $f_N$, where $N$ is unknown.
+
+Output: $N$.
+
+The function $f_N$ is available as argument in the
+implementation.  For the implementation you must not use the keyword
+""import"" , ""globals"" or ""eval"". Calculate the output
+in $O(log \: n)$ in the function ""calc(f)"".
+
+Hints:
+
+1. Analyze the monotonicity of the function.
+
+2. Let $x \in \mathbb{N}$ with $f_N(x) = 0$. What do we know for all
+values $y \in \mathbb{N}, y < x$? Now let $f_N(x) = 1$. What do we know
+for all values $z \in \mathbb{N}, x < z$?",Divide and Conquer,Medium,"def calc(f,l=1,r=1000000000000000000):
+    
+    if l==r:
+
+
+        return l
+    m=(r+l) //  2
+    
+    if f(m)==1:
+
+        return calc(f,l,m)
+
+    else:
+        return calc(f,m+1,r)",3QD4AKHA,"def calc(f):
+    return binSearch(0, 10**18, f)
+    
+def binSearch(l, r, f):
+    m = (l + r) // 2
+    if f(m) == 1:
+
+        if(f(m - 1) == 0):
+            return m
+
+
+        return binSearch(l, m - 1, f)
+    return binSearch(m +   1, r, f)",4AMCEGTP,"def calc (f) :
+    l = 0
+
+    r = (10**18)+1
+    
+    while (l<r):
+        m = (l+r) // 2
+        if f(m) == 1:
+            if f(m-1) == 0:
+
+                return int(m)
+            r = m - 1
+
+
+        else:
+            l = m + 1
+    return int(l)",4IIMNJUZ,"def calc(f):
+    # Step 1: Exponentially search for upper bound
+    low = 0
+    high = 1
+    while f(high) == 0:
+        low = high
+        high *= 2
+
+    # Step 2: Binary search between low and high
+    while low < high:
+        mid = (low + high) // 2
+        if f(mid) == 1:
+            high = mid
+        else:
+            low = mid + 1
+
+    return low
+",GPT-4,"def calc(f):
+    """"""
+    Find the value of N using binary search, where f(n) returns 0 for n < N and 1 for n >= N
+    
+    Parameters:
+    f: The binary function f_N where N is unknown
+    
+    Returns:
+    int: The value of N
+    """"""
+    # Binary search to find N
+    # We know that N <= 10^18, so we can set our upper bound accordingly
+    left = 0
+    right = 10**18
+    
+    while left < right:
+        mid = left + (right - left) // 2
+        
+        if f(mid) == 0:
+            # If f(mid) is 0, then mid < N, so we search in the right half
+            left = mid + 1
+        else:
+            # If f(mid) is 1, then mid >= N, so we search in the left half
+            right = mid
+    
+    # When the loop terminates, left == right and this value is N
+    return left",Claude 3.7 Sonnet,"def calc(f):
+    low = 0
+    high = 1 << 60  # Sufficiently large upper bound
+    while low < high:
+        mid = (low + high) // 2
+        if f(mid):
+            high = mid
+        else:
+            low = mid + 1
+    return low",DeepSeek-V3
+Chong,21_22-2-1-python,Logistics at the North Pole,"It's Christmas and Santa Claus has little time left: he must
+to come up with a system to deliver all the presents on time.
+To do this, he uses the following system: first, all the cuddly
+toys are delivered, then all the books, and so on. The category of the
+$i-$th gift is $A[i]$. Unfortunately the sleigh of
+Santa Claus does not have an infinitely large capacity: For objects of the
+category $i$, Santa's sleigh has a maximum capacity of $B[ i]$.
+Now he would like to know if it is possible to deliver all the
+objects of a category in one run. For this he wants
+you to generate a string with the following properties:
+the $i$-th digit is a one, if it is possible to deliver
+all objects of the category $i$ in one pass and $0$,
+if this is not possible. As a reminder, Santa Claus can
+deliver all objects of category $i$ in one pass,
+if $|A|_i \leq B[i]$ holds. Since Santa does not have much time left
+your algorithm must have a runtime of $O(n + m)$.
+
+Input: Two arrays $A = [a_1, a_2,...,a_n], B = [b_1, b_2, ..., b_m]$
+with $1 \leq m, n \leq 4 \cdot 10^6$
+and $\forall 1\leq i \leq n: 0 \leq a_i,b_i \leq 10^6$. Furthermore
+it holds: $\max(A) \leq |B| - 1$
+
+Output:  A binary string $s$ of length $m$ , where the $i$-th digit is
+is defined as follows:
+
+$s[i] = \begin{cases} 1, &\text{when } |A|_i \leq B[i] \ 0, &\text{when } |A|_i > B[i] \end{cases}$
+
+where $|A|_i$ describes how many times the number $i$ occurs in the array $A$.
+
+Timelimit: 5 CPU seconds
+
+Hint:
+
+(1) The substring ""import"", ""eval"", ""sort"", ""sol_calc"", or ""getattr""
+must not appear in your solution. 
+
+(2) Unlike defined in Cormen, arrays and strings of length
+$n$ start at 0 and end at $n-1$ .",Array,Medium,"def calc(A,B):
+    
+  output = """"
+  
+  counts = {}
+  
+  for i in range(len(A)): # O(n)
+
+
+    # counts[A[i]] += 1
+    if A[i] not in counts:
+      counts[A[i]] = 0
+    counts[A[i]] += 1
+
+
+  for i in range(len(B)): # O(m)
+    if i not in counts:
+      counts[i]   = 0
+
+    output += ""1"" if counts[i] <= B[i] else ""0""
+
+  return output # total : O(n) + O(m) = O(n+m)",6OMSOHDR,"def calc(A,  B):
+    C = [0]*len(B)
+
+
+    s = """"
+
+
+    for i in A:
+        C[i] += 1
+
+    for i in range(len(B)):
+        s = s + str(int(C[i] <= B[i]))
+    return s
+pass",6PPAR4TV,"def calc(A, B  ):
+    length = len(B)
+    C = [0 for _ in range(length)]
+    s = """"
+
+
+    for i in range(len(A)):
+        C[A[i]] = C[A[i]] + 1
+
+
+    for i in range(length):
+
+
+        if B[i] >= C[i]:
+            s += ""1""
+        else:
+            s += ""0""
+    return s",7J2AB6TW,"def santa_delivery(A, B):
+    m = len(B)
+    freq = [0] * m  # since max(A) ≤ m - 1
+
+    # Step 1: Count frequencies of each category in A
+    for a in A:
+        freq[a] += 1
+
+    # Step 2: Compare with capacity B[i]
+    result = ['0'] * m
+    for i in range(m):
+        if freq[i] <= B[i]:
+            result[i] = '1'
+
+    return ''.join(result)
+
+# Example usage:
+# A = [0, 1, 1, 2]
+# B = [1, 2, 1]
+# Output should be: ""111""
+# print(santa_delivery(A, B))",GPT-4,"def solution(A, B):
+    """"""
+    Determine if Santa can deliver all gifts of each category in one trip
+    
+    Parameters:
+    A (list): Array where A[i] represents the category of the i-th gift
+    B (list): Array where B[i] represents the maximum capacity for category i
+    
+    Returns:
+    str: Binary string where the i-th digit is '1' if all gifts of category i 
+         can be delivered in one trip, and '0' otherwise
+    """"""
+    # Count how many items of each category we have
+    category_counts = [0] * len(B)
+    
+    # Count occurrences of each category in array A
+    for category in A:
+        category_counts[category] += 1
+    
+    # Build the result binary string
+    result = """"
+    for i in range(len(B)):
+        # Check if number of items in category i can fit in sleigh's capacity for that category
+        if category_counts[i] <= B[i]:
+            result += ""1""
+        else:
+            result += ""0""
+    
+    return result",Claude 3.7 Sonnet,"def solve(A, B):
+    # Step 1: Count the frequency of each category in A
+    max_category = len(B) - 1
+    freq = [0] * (max_category + 1)
+    for num in A:
+        freq[num] += 1
+    
+    # Step 2: Compare each frequency with B and construct the result string
+    result = []
+    for i in range(len(B)):
+        if freq[i] <= B[i]:
+            result.append('1')
+        else:
+            result.append('0')
+    return ''.join(result)",DeepSeek-V3
+Chong,21_22-2-2-python,Transporting Goods ,"In a large warehouse, one robot is responsible for transporting
+goods from warehouse X to warehouse Y. The robot worked $n$ days.
+On the $i-$th (for $0\leq i\leq n-1$) day, the robot moved $x_i$ goods
+from the first warehouse to the second warehouse. These values are stored in a
+list of length $n$ of non-negative integers:
+$A = [x_0,...,x_{n-1}]$. Now we want to process a list of
+queries $B = [(l_1,r_1),...,(l_n,r_n)]$. 
+
+For this one would like to know how many goods the robot has tranported between the days
+$l_i$ and $r_i$ with $0\leq l_i \leq r_i \leq n-1$ for
+$1\leq i\leq n$. Here $[l_i,r_i]$ forms a closed
+interval. For example, for $A = [x_0,x_1] = [4,5]$ and queries
+$B =[(l_1,r_1),(l_2,r_2)] = [(1,1),(0,1)]$ we get
+$[\sum_{i=l_1}^{r_1}x_i,\sum_{i=l_2}^{r_2}x_i] = [\sum_{i=1}^{1}x_i,\sum_{i=0}^{1}x_i] = [5, 4 + 5]$.
+
+So for each query, we want to return a list of the following
+form:
+
+$[\sum_{i=l_1}^{r_1}x_i,...,\sum_{i=l_n}^{r_n}x_i]$. This calculation
+shall be done in $O(n)$.
+
+The string ""check_calc"" or ""eval"" must not appear in your solution.
+
+Input: a list of length $n$ of non-negative integers:
+$A = [x_0,...,x_{n-1}]$ and a list of two-tuples of length
+$O(n)$ $B = [(l_1,r_1),...,(l_n,r_n)]$ with $0\leq l_i \leq r_i \leq n-1$
+for $1\leq i\leq n$).
+
+Output: A list of length $n$ of non-negative integers:
+
+$[\sum_{i=l_1}^{r_1}x_i,...,\sum_{i=l_n}^{r_n}x_i]$ computed in $O(n)$.
+
+Here the string ""check_calc"" or ""eval"" must not appear in your solution
+
+Note: Let $l_j \geq 1$. Then: 
+
+$\sum_{i=l_j}^{r_j}x_i= \sum_{k=0}^{r_j}x_k - \sum_{k=0}^{l_j - 1}x_k$","Array, Prefix Sum",Hard,"def calc(A,B):
+    c = A.copy()
+    res = []
+
+    for i in range(1,len(A)):
+        c[i] = c[i-1]+c[i]
+
+
+    for i in range(len(B)):
+        if B[i][0] == 0:
+            res.append(c[B[i][1]])
+        else:
+            res.append(c[B[i][1]]  - c[B[i][0]-1])
+
+
+
+    return res",22RVWBZ6,"def calc(a,b):
+
+    for i in range(1, len(a)): a[i]  += a[i-1]
+    return [a[r] if l == 0 else a[r]-a[l-1] for l,r in b]",2HRKTEF5,"def calc(A,B):
+    sums = []
+    s = 0
+    for transporte in A:
+        start_end = [ s]
+        s += transporte
+
+        start_end.append(s)
+        sums.append(start_end)
+
+
+    return [sums[r][1]-sums[l][0] for l,r in B]",2ZFCVB6S,"def goods_transported(A, B):
+    n = len(A)
+    # Step 1: Build prefix sum array
+    prefix = [0] * (n + 1)
+    for i in range(n):
+        prefix[i + 1] = prefix[i] + A[i]
+
+    # Step 2: Answer each query in O(1)
+    result = []
+    for l, r in B:
+        total = prefix[r + 1] - prefix[l]
+        result.append(total)
+    
+    return result
+
+# Example usage:
+# A = [4, 5]
+# B = [(1, 1), (0, 1)]
+# print(goods_transported(A, B))  # Output: [5, 9]",GPT-4,"def solution(A, B):
+    """"""
+    Calculate the sum of goods transported within specified intervals
+    
+    Parameters:
+    A (list): List where A[i] represents the number of goods transported on day i
+    B (list): List of queries, where each query is a tuple (l, r) representing the start and end days
+    
+    Returns:
+    list: List of sums, where each element corresponds to the sum of goods transported for each query
+    """"""
+    n = len(A)
+    
+    # Calculate prefix sums for O(1) range sum queries
+    prefix_sums = [0] * (n + 1)
+    for i in range(n):
+        prefix_sums[i + 1] = prefix_sums[i] + A[i]
+    
+    # Process each query
+    results = []
+    for l, r in B:
+        # Sum of goods transported between days l and r inclusive
+        # This is prefix_sums[r+1] - prefix_sums[l]
+        sum_transported = prefix_sums[r + 1] - prefix_sums[l]
+        results.append(sum_transported)
+    
+    return results",Claude 3.7 Sonnet,"def solve(A, B):
+    # Step 1: Compute the prefix sum array
+    prefix_sum = [0] * len(A)
+    prefix_sum[0] = A[0]
+    for i in range(1, len(A)):
+        prefix_sum[i] = prefix_sum[i-1] + A[i]
+    
+    # Step 2: Process each query
+    result = []
+    for l, r in B:
+        if l == 0:
+            result.append(prefix_sum[r])
+        else:
+            result.append(prefix_sum[r] - prefix_sum[l-1])
+    return result",DeepSeek-V3
+Chong,21_22-3-1-python,Billboard ,"(This task is a slightly modified old exam task from the
+WS 2020/21)
+
+A company obtains permission to place billboards on one side of a road.
+Along the $n \in \mathbb{N}$ kilometers long road, there are $n+1$ suitable
+locations at intervals of exactly one kilometer. For the location at kilometer
+$i \in\{0,1, \ldots, n\}$ advertisers are willing to pay an amount $w_i$
+with $0 < w_{i} < 10^9$ to the company. However, the road traffic regulation states
+that there must be at least two kilometers between every two billboards.
+So if the company places a billboard at kilometer $i$, then at kilometer $i-1$ and $i+1$
+no billboard may be placed.
+
+Help the company determine a selection of locations that will
+maximizes the total profit from renting the sites.
+
+Input: an array $W$ of size $n+1$ for a
+$n \in \mathbb{N} \land 1 \leq n \leq 1000$.
+
+Output: The maximum profit that can be obtained from the billboards.
+
+The output must be calculated in $O(n)$.",Dynamic Programming,Hard,"def opt(W):
+    if len(W) == 1:
+        return W[0]
+    elif len(W) == 2:
+        return max(W[0], W[1])
+
+    A = [0] * (len(W))
+
+
+    A[0] = W[0]
+    A[1] = W[1]
+
+
+
+    for i in range(2, len(W)):
+
+        A[i] = max(A[i-1], W[i] + A[i-2])
+
+
+    return A[len(W)- 1  ]",7J2AB6TW,"def opt(values):
+    value_array = [0] * len(values)
+    value_array[0] = values[0]
+
+
+    value_array[1] = values[1]
+
+
+    for i in   range(1,len(values)):
+        if value_array[i-1] > values[i] + value_array[i-2]:
+            value_array[i] = value_array[i-1]
+        else:
+ 
+            value_array[i] = values[i] + value_array[i-2]
+
+    return(value_array[-1])",7XBTEU4B,"def opt(w) :
+
+    size = len(w)
+    maxW = [0] * (size+1)
+    next = 0
+    
+    for i in range(1, size+1) :
+         
+        if i <= 2 :
+            maxW[i] = max(maxW[i - 1], w[next])
+    
+        else :
+            maxW[i] = max(maxW[i - 2] + w[next], maxW[i - 1])
+        next += 1
+     
+    return maxW[size]",BJV6BLYS,"def max_billboard_profit(W):
+    n = len(W)
+    if n == 0:
+        return 0
+    if n == 1:
+        return W[0]
+
+    dp = [0] * n
+    dp[0] = W[0]
+    dp[1] = max(W[0], W[1])
+
+    for i in range(2, n):
+        dp[i] = max(dp[i - 1], dp[i - 2] + W[i])
+
+    return dp[-1]
+
+# Example usage:
+# W = [4, 5, 6, 3, 2, 8]
+# print(max_billboard_profit(W))  # Output: optimal profit considering spacing rule",GPT-4,"def max_billboard_profit(W):
+    n = len(W) - 1  # Since W has n+1 elements (0 to n)
+    
+    # Handle base cases
+    if n == 0:
+        return W[0]
+    if n == 1:
+        return max(W[0], W[1])
+    
+    # dp[i] represents the maximum profit up to position i
+    dp = [0] * (n + 1)
+    
+    # Initialize the base cases
+    dp[0] = W[0]
+    dp[1] = max(W[0], W[1])
+    
+    # Fill the dp array
+    for i in range(2, n + 1):
+        # Two options: either place a billboard at position i or don't
+        # If we place at i, we can't place at i-1, so we take dp[i-2] + W[i]
+        # If we don't place at i, we take dp[i-1]
+        dp[i] = max(dp[i-1], dp[i-2] + W[i])
+    
+    return dp[n]",Claude 3.7 Sonnet,"def max_billboard_profit(W):
+    n = len(W)
+    if n == 1:
+        return W[0]
+    dp = [0] * n
+    dp[0] = W[0]
+    dp[1] = max(W[0], W[1])
+    for i in range(2, n):
+        dp[i] = max(dp[i-1], dp[i-2] + W[i])
+    return dp[-1]",DeepSeek-V3
+Chong,21_22-3-2-python,Longest path DAG ,"The goal of this task is to find the longest path in the dag (directed acyclic
+graph) in $O(N+M)$. 
+
+Input: A natural number $1 \leq N \leq 2500$, which indicates how many
+nodes the graph $G$ has. A two dimensional array $A$ of the
+size $1 \leq M \leq 10^6$ of integers
+$A = [[a^{1}_1,a^{2}_1],[a^{1}_2,a^{2}_2],...,[a^{1}_M,a^{2}_M]]$, which
+encodes the node and edge set of $G$.  If $[a,b] \in A$, then
+there is a directed edge from the node$a$ to the node $b$. You
+may assume that there are no directed cycles in $G$. An
+example: let $N = 3$ and the edges $A = [[1,2],[2,3]]$ then the result is
+the following graph:
+
+[]
+
+Output: The length of the longest directed path in $G$.
+Your algorithm must compute the solution in $O(N+M)$.
+
+Time limit: 4 CPU seconds ($O(N+M)$ ).
+
+Hint:
+
+(1) The substring ""import"", ""eval"", ""sol_calc"", or ""getattr"" must not
+appear in your solution. 
+
+(2) If you have difficulties with this task: Ignore
+the runtime restrictions and first implement a naive 
+recursive solution. Then use dynamic programming
+(memoization) to achieve the desired runtime.
+
+(3) Some test cases have been hidden and are not displayed to 
+prevent hardcoding of the solutions.
+(4) If you have difficulties with the task, read the following
+pages from Cormen (Introduction to algorithms third edition) pp.
+384-389 (from the subitem ""overlapping subproblems"") and/or
+https://en.wikipedia.org/wiki/Overlapping_subproblems.",Graphs,Hard,"def calc(N, A):
+  g = [[] for _ in range(N + 1)]
+  m = [-1] * (N + 1)
+  g[0]   =  [x for x in range(1, N + 1)]
+  for e in A:
+
+    start, end = e
+    g[start].append(end)
+  return dfs(0, g, m) - 1
+  
+
+
+
+
+def dfs(node, g, m):
+
+  if len(g[node]) == 0:
+    return 0
+  elif m[node] != -1:
+    return m[node]
+  else:
+
+    ergebnis = 0
+    for child in g[node]:
+
+
+      ergebnis = max(ergebnis,    dfs(child, g, m) + 1)
+    m[node] = ergebnis
+    return m[node]",EOF4GG5B,"def calc(N,A):
+    Knoten = []
+    LP = []
+    for e in range (N):
+        Knoten.append([])
+        LP.append(None)
+
+
+    for i in range (len(A)):
+        Knoten[A[i][1]-1].append(A[i][0])
+
+    maxPfad(Knoten,LP,N,0)
+    return(max(LP) )
+
+
+def maxPfad( Knoten,LP,N,s):
+    if (len(Knoten[s])    == 0):
+        LP[s] = 0
+        if (s < N-1):
+            maxPfad(Knoten,LP,N,s+1)
+    else:
+        maxi = 0
+        for i in range (len(Knoten[s])):
+            if (LP[Knoten[s][i]-1] != None and LP[Knoten[s][i]-1] >= maxi):
+
+
+                maxi = LP[Knoten[s][i]-1] + 1
+                LP[s] = maxi
+        if (s < N-1):
+            maxPfad(Knoten,LP,N,s+1)",GUVEKSFT,"def calc(n, tree):
+ weight = [None for _ in range(n)]
+    
+    neigh = [[] for _ in range(n)]
+    for edge in tree:
+
+        neigh[edge[0]-1].append(edge[1]-1)
+
+    s = []
+
+
+
+    for u in range(n):
+        if weight[u] is None:
+
+
+            s.append( u)
+            while s != []:
+                v = s[-1]
+                if not neigh[v]:  # can be made shorter, will be slightly slower then.
+                    weight[v] = 0
+                    s.pop()
+                elif all([not weight[i] is None for i in neigh[v]]):
+                    weight[v] = 1 + max([weight[i] for i in neigh[v]])
+                    s.pop() 
+
+
+                else:
+                    for kid in neigh[v]:
+                        if weight[kid] is None:
+                            s.append(kid)
+    return  max(weight)",I2RHNDKA,"from collections import deque, defaultdict
+
+def longest_path_in_dag(N, A):
+    # Step 1: Build graph and compute in-degrees
+    graph = defaultdict(list)
+    indegree = [0] * (N + 1)
+    for u, v in A:
+        graph[u].append(v)
+        indegree[v] += 1
+
+    # Step 2: Kahn's algorithm for topological sort
+    queue = deque()
+    for i in range(1, N + 1):
+        if indegree[i] == 0:
+            queue.append(i)
+
+    topo_order = []
+    while queue:
+        u = queue.popleft()
+        topo_order.append(u)
+        for v in graph[u]:
+            indegree[v] -= 1
+            if indegree[v] == 0:
+                queue.append(v)
+
+    # Step 3: DP over topological order
+    dist = [0] * (N + 1)
+    for u in topo_order:
+        for v in graph[u]:
+            dist[v] = max(dist[v], dist[u] + 1)
+
+    return max(dist)",GPT-4,"def longest_path_in_dag(N, edges):
+    # Create adjacency list representation of the graph
+    graph = [[] for _ in range(N + 1)]  # 1-indexed nodes
+    for u, v in edges:
+        graph[u].append(v)
+    
+    # Array to store the longest path ending at each node
+    memo = [-1] * (N + 1)
+    
+    # Topological sort using DFS
+    visited = [False] * (N + 1)
+    topo_order = []
+    
+    def dfs(node):
+        visited[node] = True
+        
+        for neighbor in graph[node]:
+            if not visited[neighbor]:
+                dfs(neighbor)
+        
+        topo_order.append(node)
+    
+    # Run DFS for each unvisited node
+    for node in range(1, N + 1):
+        if not visited[node]:
+            dfs(node)
+    
+    # Reverse topological order
+    topo_order.reverse()
+    
+    # Compute longest path using DP
+    def dp(node):
+        if memo[node] != -1:
+            return memo[node]
+        
+        # Base case: if node has no outgoing edges
+        if not graph[node]:
+            memo[node] = 0
+            return 0
+        
+        # Try all outgoing edges and take the maximum
+        max_length = 0
+        for neighbor in graph[node]:
+            max_length = max(max_length, 1 + dp(neighbor))
+        
+        memo[node] = max_length
+        return max_length
+    
+    # Find the longest path starting from each node in topological order
+    longest = 0
+    for node in topo_order:
+        longest = max(longest, dp(node))
+    
+    return longest
+
+def solution(N, A):
+    return longest_path_in_dag(N, A)",Claude 3.7 Sonnet,"from collections import deque
+
+def longest_path(N, A):
+    # Build the graph and in-degree count
+    graph = [[] for _ in range(N + 1)]
+    in_degree = [0] * (N + 1)
+    for u, v in A:
+        graph[u].append(v)
+        in_degree[v] += 1
+    
+    # Initialize the queue with nodes having in_degree 0
+    queue = deque()
+    for u in range(1, N + 1):
+        if in_degree[u] == 0:
+            queue.append(u)
+    
+    # Initialize DP array
+    dp = [1] * (N + 1)
+    
+    # Process nodes in topological order
+    while queue:
+        u = queue.popleft()
+        for v in graph[u]:
+            if dp[v] < dp[u] + 1:
+                dp[v] = dp[u] + 1
+            in_degree[v] -= 1
+            if in_degree[v] == 0:
+                queue.append(v)
+    
+    return max(dp[1:N + 1])
+
+# Example usage:
+N = 3
+A = [[1, 2], [2, 3]]
+print(longest_path(N, A))  # Output: 3",DeepSeek-V3
